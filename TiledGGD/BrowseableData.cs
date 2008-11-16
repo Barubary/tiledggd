@@ -66,6 +66,12 @@ namespace TiledGGD
         /// The actual data. Should only be set within the load() method.
         /// </summary>
         protected byte[] Data { get { return this.data; } set { this.data = value; } }
+        /// <summary>
+        /// Get a byte of data
+        /// </summary>
+        /// <param name="idx">The index of the byte</param>
+        /// <returns>The byte at index idx, or 0 if it's out of range</returns>
+        protected byte getData(long idx) { try { return this.data[idx]; } catch (IndexOutOfRangeException) { return 0; } }
         #endregion
 
         #endregion

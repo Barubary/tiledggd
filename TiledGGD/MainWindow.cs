@@ -22,6 +22,8 @@ namespace TiledGGD
 
         private static MainWindow mainWindow;
 
+        private Size previousSize;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,10 +39,10 @@ namespace TiledGGD
 
             paletteData = new PaletteData(PaletteFormat.FORMAT_3BPP, PaletteOrder.ORDER_BGR);
             graphicsData = new GraphicsData(paletteData);
-            GraphicsData.GraphFormat = GraphicsFormat.FORMAT_4BPP;
-            graphicsData.Tiled = false;
-            graphicsData.WidthSkipSize = 8;
-            graphicsData.Zoom = 2;
+            GraphicsData.GraphFormat = GraphicsFormat.FORMAT_16BPP;
+            GraphicsData.Tiled = false;
+            GraphicsData.WidthSkipSize = 8;
+            GraphicsData.Zoom = 2;
 
             //this.GraphicsPanel.Height = 1000;
 
@@ -58,6 +60,21 @@ namespace TiledGGD
 
             setupMenuActions();
 
+            this.ResizeEnd += new EventHandler(ReconfigurePanels);
+
+            this.previousSize = this.Size;
+
+        }
+
+        void ReconfigurePanels(object sender, EventArgs e)
+        {
+            int dw = this.Size.Width - this.previousSize.Width;
+
+            this.PalettePanel.Location = new Point(this.PalettePanel.Location.X + dw, this.PalettePanel.Location.Y);
+            this.DataPanel.Location = new Point(this.DataPanel.Location.X + dw, this.DataPanel.Location.Y);
+            this.GraphicsPanel.Size = new Size(this.GraphicsPanel.Size.Width + dw, this.GraphicsPanel.Size.Height);
+
+            this.previousSize = this.Size;
         }
 
         private void setupMenuActions()
@@ -81,13 +98,12 @@ namespace TiledGGD
                 case Keys.P: paletteData.TogglePaletteOrder(); break;
                 case Keys.N: paletteData.DoSkip(true); break;
                 case Keys.M: paletteData.DoSkip(false); break;
-                case Keys.C: if (e.Control) graphicsData.copyToClipboard(); else if (e.Alt) paletteData.copyToClipboard(); break;
                 case Keys.Up: graphicsData.decreaseHeight(); break;
                 case Keys.Down: graphicsData.increaseHeight(); break;
                 case Keys.Left: graphicsData.decreaseWidth(); break;
                 case Keys.Right: graphicsData.increaseWidth(); break;
-                case Keys.Subtract: graphicsData.Zoom /= 2; break;
-                case Keys.Add: graphicsData.Zoom *= 2; break;
+                case Keys.Subtract: GraphicsData.Zoom /= 2; break;
+                case Keys.Add: GraphicsData.Zoom *= 2; break;
                 case Keys.PageDown: graphicsData.DoSkip(true); break;
                 case Keys.PageUp: graphicsData.DoSkip(false); break;
             }
@@ -96,12 +112,28 @@ namespace TiledGGD
 
         void PalettePanel_DragDrop(object sender, DragEventArgs e)
         {
-            paletteData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+            try
+            {
+                paletteData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+                DoRefresh();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
         }
 
         void GraphicsPanel_DragDrop(object sender, DragEventArgs e)
         {
-            graphicsData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+            try
+            {
+                graphicsData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+                DoRefresh();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
         }
 
         void palGraphDragEnter(object sender, DragEventArgs e)
@@ -137,9 +169,57 @@ namespace TiledGGD
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.aboutBox.IsDisposed)
+            if (this.aboutBox == null || this.aboutBox.IsDisposed)
                 this.aboutBox = new AboutBox();
             this.aboutBox.Visible = true;
+        }
+
+        private void imbppToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender == bitPerPixelToolStripMenuItem)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_1BPP;
+            else if (sender == bitPerPixelToolStripMenuItem1)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_2BPP;
+            else if (sender == bitPerPixelToolStripMenuItem2)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_4BPP;
+            else if (sender == bitPerPixelToolStripMenuItem3)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_8BPP;
+            else if (sender == bitPerPixelToolStripMenuItem4)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_16BPP;
+            else if (sender == bitPerPixelToolStripMenuItem5)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_24BPP;
+            else if (sender == bitPerPixelToolStripMenuItem6)
+                GraphicsData.GraphFormat = GraphicsFormat.FORMAT_32BPP;
+            else
+                throw new Exception("Invalid Menu Item event");
+            DoRefresh();
+        }
+
+        private void copyToClipboard(object sender, EventArgs e)
+        {
+            if (sender == copyGraphicsToolStripMenuItem)
+                graphicsData.copyToClipboard();
+            else if (sender == copyPaletteToolStripMenuItem)
+                paletteData.copyToClipboard();
+            else
+                throw new Exception("Invalid Copy To Clipboard event");
+        }
+
+        private void linearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender == linearToolStripMenuItem)
+                GraphicsData.Tiled = false;
+            else if (sender == tiledToolStripMenuItem)
+                GraphicsData.Tiled = true;
+            else
+                throw new Exception("Invalid Linear/Tiled event");
+        }
+
+        private void shortcutsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.controlShortBox == null || this.controlShortBox.IsDisposed)
+                this.controlShortBox = new ControlShorts();
+            this.controlShortBox.Visible = true;
         }
         
     }

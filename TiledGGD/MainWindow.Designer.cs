@@ -49,6 +49,15 @@ namespace TiledGGD
             this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tiledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.skipSizeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.byteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bytesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bytesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pixelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tileRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.widthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.heightRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formatToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bytesPerColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,22 +79,14 @@ namespace TiledGGD
             this.pixelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coloursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kBytesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipSizeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.byteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pixelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.widthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.heightRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.DataPanel = new TiledGGD.DataPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
-            this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutBox = new AboutBox();
+            this.aboutBox = new TiledGGD.AboutBox();
+            this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -168,7 +169,7 @@ namespace TiledGGD
             this.formatToolStripMenuItem,
             this.modeToolStripMenuItem,
             this.skipSizeToolStripMenuItem1,
-            this.copyToClipboardToolStripMenuItem});
+            this.copyGraphicsToolStripMenuItem});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.imageToolStripMenuItem.Text = "Image";
@@ -184,7 +185,7 @@ namespace TiledGGD
             this.bitPerPixelToolStripMenuItem5,
             this.bitPerPixelToolStripMenuItem6});
             this.formatToolStripMenuItem.Name = "formatToolStripMenuItem";
-            this.formatToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.formatToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.formatToolStripMenuItem.Text = "Format";
             // 
             // bitPerPixelToolStripMenuItem
@@ -192,42 +193,49 @@ namespace TiledGGD
             this.bitPerPixelToolStripMenuItem.Name = "bitPerPixelToolStripMenuItem";
             this.bitPerPixelToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem.Text = "1 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem1
             // 
             this.bitPerPixelToolStripMenuItem1.Name = "bitPerPixelToolStripMenuItem1";
             this.bitPerPixelToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem1.Text = "2 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem1.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem2
             // 
             this.bitPerPixelToolStripMenuItem2.Name = "bitPerPixelToolStripMenuItem2";
             this.bitPerPixelToolStripMenuItem2.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem2.Text = "4 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem2.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem3
             // 
             this.bitPerPixelToolStripMenuItem3.Name = "bitPerPixelToolStripMenuItem3";
             this.bitPerPixelToolStripMenuItem3.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem3.Text = "8 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem3.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem4
             // 
             this.bitPerPixelToolStripMenuItem4.Name = "bitPerPixelToolStripMenuItem4";
             this.bitPerPixelToolStripMenuItem4.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem4.Text = "16 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem4.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem5
             // 
             this.bitPerPixelToolStripMenuItem5.Name = "bitPerPixelToolStripMenuItem5";
             this.bitPerPixelToolStripMenuItem5.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem5.Text = "24 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem5.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // bitPerPixelToolStripMenuItem6
             // 
             this.bitPerPixelToolStripMenuItem6.Name = "bitPerPixelToolStripMenuItem6";
             this.bitPerPixelToolStripMenuItem6.Size = new System.Drawing.Size(150, 22);
             this.bitPerPixelToolStripMenuItem6.Text = "32 Bit per pixel";
+            this.bitPerPixelToolStripMenuItem6.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
             // 
             // modeToolStripMenuItem
             // 
@@ -235,7 +243,7 @@ namespace TiledGGD
             this.linearToolStripMenuItem,
             this.tiledToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.modeToolStripMenuItem.Text = "Mode";
             // 
             // linearToolStripMenuItem
@@ -243,12 +251,78 @@ namespace TiledGGD
             this.linearToolStripMenuItem.Name = "linearToolStripMenuItem";
             this.linearToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.linearToolStripMenuItem.Text = "Linear";
+            this.linearToolStripMenuItem.Click += new System.EventHandler(this.linearToolStripMenuItem_Click);
             // 
             // tiledToolStripMenuItem
             // 
             this.tiledToolStripMenuItem.Name = "tiledToolStripMenuItem";
             this.tiledToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.tiledToolStripMenuItem.Text = "Tiled";
+            this.tiledToolStripMenuItem.Click += new System.EventHandler(this.linearToolStripMenuItem_Click);
+            // 
+            // skipSizeToolStripMenuItem1
+            // 
+            this.skipSizeToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.byteToolStripMenuItem1,
+            this.bytesToolStripMenuItem,
+            this.bytesToolStripMenuItem1,
+            this.pixelToolStripMenuItem1,
+            this.tileRowToolStripMenuItem,
+            this.widthToolStripMenuItem,
+            this.heightRowsToolStripMenuItem});
+            this.skipSizeToolStripMenuItem1.Name = "skipSizeToolStripMenuItem1";
+            this.skipSizeToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.skipSizeToolStripMenuItem1.Text = "Skip size";
+            // 
+            // byteToolStripMenuItem1
+            // 
+            this.byteToolStripMenuItem1.Name = "byteToolStripMenuItem1";
+            this.byteToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.byteToolStripMenuItem1.Text = "1 Byte";
+            // 
+            // bytesToolStripMenuItem
+            // 
+            this.bytesToolStripMenuItem.Name = "bytesToolStripMenuItem";
+            this.bytesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.bytesToolStripMenuItem.Text = "2 Bytes";
+            // 
+            // bytesToolStripMenuItem1
+            // 
+            this.bytesToolStripMenuItem1.Name = "bytesToolStripMenuItem1";
+            this.bytesToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.bytesToolStripMenuItem1.Text = "4 Bytes";
+            // 
+            // pixelToolStripMenuItem1
+            // 
+            this.pixelToolStripMenuItem1.Name = "pixelToolStripMenuItem1";
+            this.pixelToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.pixelToolStripMenuItem1.Text = "1 Pixel Row";
+            // 
+            // tileRowToolStripMenuItem
+            // 
+            this.tileRowToolStripMenuItem.Name = "tileRowToolStripMenuItem";
+            this.tileRowToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.tileRowToolStripMenuItem.Text = "1 Tile Row";
+            // 
+            // widthToolStripMenuItem
+            // 
+            this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
+            this.widthToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.widthToolStripMenuItem.Text = "(Width) Rows";
+            // 
+            // heightRowsToolStripMenuItem
+            // 
+            this.heightRowsToolStripMenuItem.Name = "heightRowsToolStripMenuItem";
+            this.heightRowsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.heightRowsToolStripMenuItem.Text = "(Height) Rows";
+            // 
+            // copyGraphicsToolStripMenuItem
+            // 
+            this.copyGraphicsToolStripMenuItem.Name = "copyGraphicsToolStripMenuItem";
+            this.copyGraphicsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyGraphicsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.copyGraphicsToolStripMenuItem.Text = "Copy to clipboard";
+            this.copyGraphicsToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboard);
             // 
             // paletteToolStripMenuItem
             // 
@@ -257,11 +331,12 @@ namespace TiledGGD
             this.alphaLocationToolStripMenuItem,
             this.colourOrderToolStripMenuItem,
             this.skipSizeToolStripMenuItem,
-            this.copyToClipboardToolStripMenuItem1});
+            this.copyPaletteToolStripMenuItem});
             this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
             this.paletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
             this.paletteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.paletteToolStripMenuItem.Text = "Palette";
+            this.paletteToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboard);
             // 
             // formatToolStripMenuItem1
             // 
@@ -270,7 +345,7 @@ namespace TiledGGD
             this.bytesPerColourToolStripMenuItem1,
             this.bytesPerColourToolStripMenuItem2});
             this.formatToolStripMenuItem1.Name = "formatToolStripMenuItem1";
-            this.formatToolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.formatToolStripMenuItem1.Size = new System.Drawing.Size(207, 22);
             this.formatToolStripMenuItem1.Text = "Format";
             // 
             // bytesPerColourToolStripMenuItem
@@ -297,7 +372,7 @@ namespace TiledGGD
             this.endToolStripMenuItem,
             this.beginningToolStripMenuItem});
             this.alphaLocationToolStripMenuItem.Name = "alphaLocationToolStripMenuItem";
-            this.alphaLocationToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.alphaLocationToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.alphaLocationToolStripMenuItem.Text = "Alpha location";
             // 
             // endToolStripMenuItem
@@ -322,7 +397,7 @@ namespace TiledGGD
             this.gBRToolStripMenuItem,
             this.bRGToolStripMenuItem});
             this.colourOrderToolStripMenuItem.Name = "colourOrderToolStripMenuItem";
-            this.colourOrderToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.colourOrderToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.colourOrderToolStripMenuItem.Text = "Colour order";
             // 
             // bGRToolStripMenuItem
@@ -370,7 +445,7 @@ namespace TiledGGD
             this.coloursToolStripMenuItem,
             this.kBytesToolStripMenuItem});
             this.skipSizeToolStripMenuItem.Name = "skipSizeToolStripMenuItem";
-            this.skipSizeToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.skipSizeToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.skipSizeToolStripMenuItem.Text = "Skip size";
             // 
             // byteToolStripMenuItem
@@ -403,61 +478,28 @@ namespace TiledGGD
             this.kBytesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.kBytesToolStripMenuItem.Text = "64k Bytes";
             // 
-            // skipSizeToolStripMenuItem1
+            // copyPaletteToolStripMenuItem
             // 
-            this.skipSizeToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byteToolStripMenuItem1,
-            this.bytesToolStripMenuItem,
-            this.bytesToolStripMenuItem1,
-            this.pixelToolStripMenuItem1,
-            this.tileRowToolStripMenuItem,
-            this.widthToolStripMenuItem,
-            this.heightRowsToolStripMenuItem});
-            this.skipSizeToolStripMenuItem1.Name = "skipSizeToolStripMenuItem1";
-            this.skipSizeToolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
-            this.skipSizeToolStripMenuItem1.Text = "Skip size";
+            this.copyPaletteToolStripMenuItem.Name = "copyPaletteToolStripMenuItem";
+            this.copyPaletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.copyPaletteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.copyPaletteToolStripMenuItem.Text = "Copy to clipboard";
             // 
-            // byteToolStripMenuItem1
+            // otherToolStripMenuItem
             // 
-            this.byteToolStripMenuItem1.Name = "byteToolStripMenuItem1";
-            this.byteToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.byteToolStripMenuItem1.Text = "1 Byte";
+            this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.shortcutsToolStripMenuItem});
+            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+            this.otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.otherToolStripMenuItem.Text = "Other";
             // 
-            // bytesToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.bytesToolStripMenuItem.Name = "bytesToolStripMenuItem";
-            this.bytesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.bytesToolStripMenuItem.Text = "2 Bytes";
-            // 
-            // bytesToolStripMenuItem1
-            // 
-            this.bytesToolStripMenuItem1.Name = "bytesToolStripMenuItem1";
-            this.bytesToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.bytesToolStripMenuItem1.Text = "4 Bytes";
-            // 
-            // pixelToolStripMenuItem1
-            // 
-            this.pixelToolStripMenuItem1.Name = "pixelToolStripMenuItem1";
-            this.pixelToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.pixelToolStripMenuItem1.Text = "1 Pixel Row";
-            // 
-            // tileRowToolStripMenuItem
-            // 
-            this.tileRowToolStripMenuItem.Name = "tileRowToolStripMenuItem";
-            this.tileRowToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.tileRowToolStripMenuItem.Text = "1 Tile Row";
-            // 
-            // widthToolStripMenuItem
-            // 
-            this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
-            this.widthToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.widthToolStripMenuItem.Text = "(Width) Rows";
-            // 
-            // heightRowsToolStripMenuItem
-            // 
-            this.heightRowsToolStripMenuItem.Name = "heightRowsToolStripMenuItem";
-            this.heightRowsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.heightRowsToolStripMenuItem.Text = "(Height) Rows";
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // GraphicsPanel
             // 
@@ -478,39 +520,33 @@ namespace TiledGGD
             // 
             // PalettePanel
             // 
+            this.PalettePanel.AllowDrop = true;
             this.PalettePanel.Location = new System.Drawing.Point(516, 296);
             this.PalettePanel.Name = "PalettePanel";
             this.PalettePanel.Size = new System.Drawing.Size(256, 256);
             this.PalettePanel.TabIndex = 1;
             // 
-            // copyToClipboardToolStripMenuItem
+            // aboutBox
             // 
-            this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
-            this.copyToClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
+            this.aboutBox.ClientSize = new System.Drawing.Size(435, 283);
+            this.aboutBox.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.aboutBox.Location = new System.Drawing.Point(69, 69);
+            this.aboutBox.MaximizeBox = false;
+            this.aboutBox.MinimizeBox = false;
+            this.aboutBox.Name = "aboutBox";
+            this.aboutBox.Padding = new System.Windows.Forms.Padding(9);
+            this.aboutBox.ShowIcon = false;
+            this.aboutBox.ShowInTaskbar = false;
+            this.aboutBox.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.aboutBox.Text = "About TiledGGD";
+            this.aboutBox.Visible = false;
             // 
-            // copyToClipboardToolStripMenuItem1
+            // shortcutsToolStripMenuItem
             // 
-            this.copyToClipboardToolStripMenuItem1.Name = "copyToClipboardToolStripMenuItem1";
-            this.copyToClipboardToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.copyToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(207, 22);
-            this.copyToClipboardToolStripMenuItem1.Text = "Copy to clipboard";
-            // 
-            // otherToolStripMenuItem
-            // 
-            this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
-            this.otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.otherToolStripMenuItem.Text = "Other";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
+            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.shortcutsToolStripMenuItem.Text = "Shortcuts...";
+            this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -586,11 +622,13 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem kBytesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem widthToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem heightRowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyGraphicsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyPaletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private AboutBox aboutBox;
+        private ControlShorts controlShortBox;
+        private System.Windows.Forms.ToolStripMenuItem shortcutsToolStripMenuItem;
     }
 }
 

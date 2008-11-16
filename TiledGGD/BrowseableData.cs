@@ -34,29 +34,6 @@ namespace TiledGGD
         }
         #endregion
 
-        #region Field: SkipSize
-        /// <summary>
-        /// How far the data will be skipped ahead/back when pushing the appropriate button
-        /// </summary>
-        private long skipSize = 1;
-        /// <summary>
-        /// How far the data will be skipped ahead/back when pushing the appropriate button
-        /// </summary>
-        internal long SkipSize { get { return this.skipSize; } set { this.skipSize = Math.Abs(value); } }
-        #endregion
-
-        #region Field: SkipMethod
-        /// <summary>
-        /// The method used to skip data.
-        /// </summary>
-        private SkipMetric skipMeth;
-        internal SkipMetric SkipMethod
-        {
-            get { return this.skipMeth; }
-            set { this.skipMeth = value; }
-        }
-        #endregion
-
         #region Field: Data
         /// <summary>
         /// The actual data. Will only contiain bytes.
@@ -74,6 +51,16 @@ namespace TiledGGD
         protected byte getData(long idx) { try { return this.data[idx]; } catch (IndexOutOfRangeException) { return 0; } }
         #endregion
 
+        #region Field: Length
+        /// <summary>
+        /// The LongLength of the data
+        /// </summary>
+        public long Length
+        {
+            get { return this.data.LongLength; }
+        }
+        #endregion
+
         #endregion
 
         /// <summary>
@@ -86,12 +73,14 @@ namespace TiledGGD
         /// Skip SkipSize data
         /// </summary>
         /// <param name="positive">If the skip is to be in the positive direction.</param>
-        internal void DoSkip(bool positive)
+        abstract internal void DoSkip(bool positive);
+
+        protected void DoSkip(bool positive, long bytes)
         {
             if (positive)
-                this.Offset += this.SkipSize;
+                Offset += bytes;
             else
-                this.Offset -= this.SkipSize;
+                Offset -= bytes;
         }
 
         /// <summary>
@@ -118,13 +107,5 @@ namespace TiledGGD
         /// Copy the currently shown data onto the clipboard
         /// </summary>
         internal abstract void copyToClipboard();
-    }
-
-    public enum SkipMetric
-    {
-        BYTES,
-        ELEMENTS,
-        SCRWIDTH,
-        SCRHEIGHT
     }
 }

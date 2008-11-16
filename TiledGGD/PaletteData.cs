@@ -98,6 +98,30 @@ namespace TiledGGD
         }
         #endregion
 
+
+        #region Field: SkipSize
+        /// <summary>
+        /// How far the data will be skipped ahead/back when pushing the appropriate button
+        /// </summary>
+        private long skipSize = 1;
+        /// <summary>
+        /// How far the data will be skipped ahead/back when pushing the appropriate button
+        /// </summary>
+        internal long SkipSize { get { return this.skipSize; } set { this.skipSize = Math.Abs(value); } }
+        #endregion
+
+        #region Field: SkipMetric
+        /// <summary>
+        /// The metric used to skip data.
+        /// </summary>
+        private static PaletteSkipMetric skipMetric;
+        internal static PaletteSkipMetric SkipMetric
+        {
+            get { return skipMetric; }
+            private set { skipMetric = value; }
+        }
+        #endregion
+
         /// <summary>
         /// The size of a colour in the display panel
         /// </summary>
@@ -135,11 +159,12 @@ namespace TiledGGD
         {
             Graphics g = e.Graphics;
 
+            Color[] pal = this.getFullPaletteAsColor();
+
             for(int y=0; y<16; y++)
                 for (int x = 0; x < 16; x++)
                 {
-                    Color c = Color.FromArgb((int)getPalette((uint)(y * 16 + x)));
-                    Pen p = new Pen(c);
+                    Pen p = new Pen(pal[y * 16 + x]);
                     g.FillRectangle(p.Brush, x * palPixelSize.X, y * palPixelSize.Y, palPixelSize.X, palPixelSize.Y);
                 }
         }
@@ -150,26 +175,15 @@ namespace TiledGGD
         }
 
         #region Method: getPalette(int idx)
-        /// <summary>
-        /// Get the ARGB value of the idx'st palette
-        /// </summary>
-        /// <param name="idx">The index of the palette to get</param>
-        /// <returns>The ARGB value of the palette</returns>
-        internal uint getPalette(uint idx)
-        {
-            return getPalette(idx, this.Data, this.Offset, (int)palFormat, IsBigEndian);
-        }
 
         /// <summary>
-        /// Get the ARGB value of the idx'st palette or pixel
+        /// Get the ARGB value of the palette or pixel
         /// </summary>
-        /// <param name="idx">the index of the palette or pixel to get</param>
         /// <param name="data">the data to get the information from</param>
-        /// <param name="offset">the offset in the data the index 0 is</param>
         /// <param name="format">the format of the colour. just cast PaletteFormat or GraphicsFormat to an int</param>
         /// <param name="bendian">If the data is BigEndian or not. (LittleEndian otherwise)</param>
         /// <returns>The ARGB value of the palette or pixel, or pure black if the index is our of range</returns>
-        internal uint getPalette(uint idx, byte[] data, long offset, int format, bool bendian)
+        internal uint getPalette(byte[] data, int format, bool bendian)
         {
             uint bt;
             uint b1, b2, b3, b4;
@@ -183,13 +197,13 @@ namespace TiledGGD
                     case PaletteFormat.FORMAT_2BPP:
                         if (bendian)
                         {
-                            b1 = (UInt32)data[offset + idx * 2 + 1];
-                            b2 = (UInt32)data[offset + idx * 2];
+                            b1 = (uint)data[1];
+                            b2 = (uint)data[0];
                         }
                         else
                         {
-                            b1 = (UInt32)data[offset + idx * 2];
-                            b2 = (UInt32)data[offset + idx * 2 + 1];
+                            b1 = (uint)data[0];
+                            b2 = (uint)data[1];
                         }
                         bt = (b1 << 8) | b2;
                         // if alphalocation == none, assume alpha at start
@@ -221,15 +235,15 @@ namespace TiledGGD
                         // default: bgr
                         if (bendian)
                         {
-                            fst = b1 = (UInt32)data[offset + idx * 3];
-                            scn = b2 = (UInt32)data[offset + idx * 3 + 1];
-                            thd = b3 = (UInt32)data[offset + idx * 3 + 2];
+                            fst = b1 = (uint)data[0];
+                            scn = b2 = (uint)data[1];
+                            thd = b3 = (uint)data[2];
                         }
                         else
                         {
-                            fst = b3 = (UInt32)data[offset + idx * 3];
-                            scn = b2 = (UInt32)data[offset + idx * 3 + 1];
-                            thd = b1 = (UInt32)data[offset + idx * 3 + 2];
+                            fst = b3 = (uint)data[0];
+                            scn = b2 = (uint)data[1];
+                            thd = b1 = (uint)data[2];
                         }
                         break;
                     #endregion
@@ -238,17 +252,17 @@ namespace TiledGGD
                     case PaletteFormat.FORMAT_4BPP:
                         if (bendian)
                         {
-                            b1 = (UInt32)data[offset + idx * 4];
-                            b2 = (UInt32)data[offset + idx * 4 + 1];
-                            b3 = (UInt32)data[offset + idx * 4 + 2];
-                            b4 = (UInt32)data[offset + idx * 4 + 3];
+                            b1 = (UInt32)data[0];
+                            b2 = (UInt32)data[1];
+                            b3 = (UInt32)data[2];
+                            b4 = (UInt32)data[3];
                         }
                         else
                         {
-                            b4 = (UInt32)data[offset + idx * 4];
-                            b3 = (UInt32)data[offset + idx * 4 + 1];
-                            b2 = (UInt32)data[offset + idx * 4 + 2];
-                            b1 = (UInt32)data[offset + idx * 4 + 3];
+                            b4 = (UInt32)data[0];
+                            b3 = (UInt32)data[1];
+                            b2 = (UInt32)data[2];
+                            b1 = (UInt32)data[3];
                         }
                         // deafult: (a)bgr(a)
                         // assume argb if no a
@@ -339,6 +353,7 @@ namespace TiledGGD
         }
         #endregion
 
+        #region Methods: getFullPalette
         internal int[] getFullPalette()
         {
             int[] fullpal = new int[256];
@@ -479,6 +494,7 @@ namespace TiledGGD
                 colpal[i] = Color.FromArgb(intpal[i]);
             return colpal;
         }
+        #endregion
 
         internal void parsePalOrder(ref byte fst, ref byte scn, ref byte thd, ref byte a, out int argb)
         {
@@ -530,7 +546,7 @@ namespace TiledGGD
             }
         }
 
-        #region Methods: TogglePaletteOrder()
+        #region Toggle Methods
         /// <summary>
         /// Toggle the palette order. Will automatically redraw the window. Use TogglePaletteOrder(false) to surpress the redrawing.
         /// </summary>
@@ -551,10 +567,45 @@ namespace TiledGGD
             else
                 palOrder = (PaletteOrder)palord;
         }
+        internal void toggleSkipSize()
+        {
+            switch (SkipMetric)
+            {
+                case PaletteSkipMetric.METRIC_BYTES:
+                    switch (SkipSize)
+                    {
+                        case 1: SkipMetric = PaletteSkipMetric.METRIC_COLOURS; break;
+                        case 0x10000: SkipSize = 1; break;
+                    } break;
+                case PaletteSkipMetric.METRIC_COLOURS:
+                    switch (SkipSize)
+                    {
+                        case 1: SkipSize = 16; break;
+                        case 16: SkipSize = 256; break;
+                        case 256: SkipMetric = PaletteSkipMetric.METRIC_BYTES; SkipSize = 0x10000; break;
+                    } break;
+            }
+        }
         #endregion
+
+        internal override void DoSkip(bool positive)
+        {
+            switch (SkipMetric)
+            {
+                case PaletteSkipMetric.METRIC_BYTES:
+                    DoSkip(positive, SkipSize); break;
+                case PaletteSkipMetric.METRIC_COLOURS:
+                    switch (PalFormat)
+                    {
+                        case PaletteFormat.FORMAT_2BPP: DoSkip(positive, SkipSize * 2); break;
+                        case PaletteFormat.FORMAT_3BPP: DoSkip(positive, SkipSize * 3); break;
+                        case PaletteFormat.FORMAT_4BPP: DoSkip(positive, SkipSize * 4); break;
+                    } break;
+            }
+        }
     }
 
-    #region Palette enums (PaletteFormat, PaletteOrder, AlphaLocation
+    #region Palette enums (PaletteFormat, PaletteOrder, AlphaLocation, PaletteSkipMetric
     public enum PaletteFormat : int
     {
         FORMAT_2BPP = 5,
@@ -575,6 +626,11 @@ namespace TiledGGD
         START,
         END,
         NONE
+    }
+    public enum PaletteSkipMetric
+    {
+        METRIC_BYTES,
+        METRIC_COLOURS
     }
     #endregion
 }

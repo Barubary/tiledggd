@@ -58,6 +58,12 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="BrowseableData.cs" />
+    <Compile Include="ControlShorts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlShorts.Designer.cs">
+      <DependentUpon>ControlShorts.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -77,6 +83,10 @@
     <EmbeddedResource Include="AboutBox.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlShorts.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ControlShorts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <SubType>Designer</SubType>

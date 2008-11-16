@@ -38,11 +38,11 @@ namespace TiledGGD
             paletteData = new PaletteData(PaletteFormat.FORMAT_3BPP, PaletteOrder.ORDER_BGR);
             graphicsData = new GraphicsData(paletteData);
             GraphicsData.GraphFormat = GraphicsFormat.FORMAT_4BPP;
-            graphicsData.Tiled = true;
+            graphicsData.Tiled = false;
             graphicsData.WidthSkipSize = 8;
             graphicsData.Zoom = 2;
 
-            this.GraphicsPanel.Height = 1000;
+            //this.GraphicsPanel.Height = 1000;
 
             GraphicsPanel.DragEnter += new DragEventHandler(palGraphDragEnter);
             PalettePanel.DragEnter += new DragEventHandler(palGraphDragEnter);
@@ -88,6 +88,8 @@ namespace TiledGGD
                 case Keys.Right: graphicsData.increaseWidth(); break;
                 case Keys.Subtract: graphicsData.Zoom /= 2; break;
                 case Keys.Add: graphicsData.Zoom *= 2; break;
+                case Keys.PageDown: graphicsData.DoSkip(true); break;
+                case Keys.PageUp: graphicsData.DoSkip(false); break;
             }
 
         }
@@ -131,6 +133,13 @@ namespace TiledGGD
         public static void DoRefresh()
         {
             mainWindow.Refresh();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.aboutBox.IsDisposed)
+                this.aboutBox = new AboutBox();
+            this.aboutBox.Visible = true;
         }
         
     }

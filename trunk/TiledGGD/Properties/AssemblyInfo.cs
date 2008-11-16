@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TiledGGD")]
-[assembly: AssemblyDescription("GGD with some extra capabilities, \r\nlike a 2-dimensional tileset.\r\n\r\nSourcecode is availabe at http://code.google.com/p/tiledggd")]
+[assembly: AssemblyDescription("GGD with some extra capabilities.\r\n\r\nSourcecode is availabe at http://code.google.com/p/tiledggd")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TiledGGD")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1")]
-[assembly: AssemblyFileVersion("0.1")]
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]

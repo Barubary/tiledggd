@@ -30,6 +30,12 @@ namespace TiledGGD
             this.dataGridView1.Rows.Add("Zoom graphics out", "+");
             this.dataGridView1.Rows.Add("Skip graphics data forward", "PageDown");
             this.dataGridView1.Rows.Add("Skip graphics data backward", "PageUp");
+            this.dataGridView1.Rows.Add("Toggle Graphics Format", "B");
+            this.dataGridView1.Rows.Add("Toggle Tiled/Linear", "F");
+            this.dataGridView1.Rows.Add("Toggle Graphical Endianness", "Ctrl+E");
+            this.dataGridView1.Rows.Add("Toggle Palette Endianness", "Shift+E");
+            this.dataGridView1.Rows.Add("Toggle Graphics Skip size", "Ctrl+L");
+            this.dataGridView1.Rows.Add("Toggle Palette Skip size", "Shift+L");
 
         }
     }

@@ -64,9 +64,7 @@
     <Compile Include="ControlShorts.Designer.cs">
       <DependentUpon>ControlShorts.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DataPanelFiller.cs" />
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>

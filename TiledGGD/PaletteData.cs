@@ -586,6 +586,10 @@ namespace TiledGGD
                     } break;
             }
         }
+        internal void toggleEndianness()
+        {
+            IsBigEndian = !IsBigEndian;
+        }
         #endregion
 
         internal override void DoSkip(bool positive)

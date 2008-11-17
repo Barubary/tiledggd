@@ -15,6 +15,7 @@ namespace TiledGGD
         internal static GraphicsData GraphData { get { return graphicsData; } }
         private static PaletteData paletteData;
         internal static PaletteData PalData { get { return paletteData; } }
+        private static DataPanelFiller datafiller;
 
         private static Font fnt;
         public override Font Font { get { return base.Font; } set { base.Font = value; fnt = value; } }
@@ -37,12 +38,16 @@ namespace TiledGGD
             PalettePanel.Paint += new PaintEventHandler(PalettePanel_Paint);
             DataPanel.Paint += new PaintEventHandler(DataPanel_Paint);
 
+            datafiller = new DataPanelFiller(this.DataPanel);
+
             paletteData = new PaletteData(PaletteFormat.FORMAT_3BPP, PaletteOrder.ORDER_BGR);
             graphicsData = new GraphicsData(paletteData);
             GraphicsData.GraphFormat = GraphicsFormat.FORMAT_16BPP;
             GraphicsData.Tiled = false;
             GraphicsData.WidthSkipSize = 8;
             GraphicsData.Zoom = 2;
+
+            
 
             //this.GraphicsPanel.Height = 1000;
 
@@ -52,8 +57,10 @@ namespace TiledGGD
             GraphicsPanel.DragDrop += new DragEventHandler(GraphicsPanel_DragDrop);
             PalettePanel.DragDrop += new DragEventHandler(PalettePanel_DragDrop);
 
-            paletteData.load("D:/Sprites/Sonic/PAL1A.dat");
-            graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
+            //paletteData.load("D:/Sprites/Sonic/PAL1A.dat");
+            //graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
+            paletteData.load("H:/PLT/DrScheme.exe");
+            graphicsData.load("H:/PLT/DrScheme.exe");
             paletteData.SkipSize = 3;
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
@@ -106,6 +113,10 @@ namespace TiledGGD
                 case Keys.Add: GraphicsData.Zoom *= 2; break;
                 case Keys.PageDown: graphicsData.DoSkip(true); break;
                 case Keys.PageUp: graphicsData.DoSkip(false); break;
+                case Keys.B: graphicsData.toggleGraphicsFormat(); break;
+                case Keys.F: graphicsData.toggleTiled(); break;
+                case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); break;
+                case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); break;
             }
 
         }
@@ -165,6 +176,7 @@ namespace TiledGGD
         public static void DoRefresh()
         {
             mainWindow.Refresh();
+            datafiller.refresh();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -176,6 +188,10 @@ namespace TiledGGD
 
         private void imbppToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach (ToolStripMenuItem tsme in this.formatToolStripMenuItem.DropDownItems)
+                tsme.Checked = false;
+            (sender as ToolStripMenuItem).Checked = true;
+
             if (sender == bitPerPixelToolStripMenuItem)
                 GraphicsData.GraphFormat = GraphicsFormat.FORMAT_1BPP;
             else if (sender == bitPerPixelToolStripMenuItem1)

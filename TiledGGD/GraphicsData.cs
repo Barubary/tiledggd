@@ -209,11 +209,11 @@ namespace TiledGGD
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        private long skipSize = 1;
+        private static long skipSize = 1;
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        internal long SkipSize { get { return this.skipSize; } private set { this.skipSize = Math.Abs(value); } }
+        internal static long SkipSize { get { return skipSize; } private set { skipSize = Math.Abs(value); } }
         #endregion
 
         #region Field: SkipMetric

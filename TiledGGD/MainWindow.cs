@@ -57,10 +57,10 @@ namespace TiledGGD
             GraphicsPanel.DragDrop += new DragEventHandler(GraphicsPanel_DragDrop);
             PalettePanel.DragDrop += new DragEventHandler(PalettePanel_DragDrop);
 
-            //paletteData.load("D:/Sprites/Sonic/PAL1A.dat");
-            //graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
-            paletteData.load("H:/PLT/DrScheme.exe");
-            graphicsData.load("H:/PLT/DrScheme.exe");
+            paletteData.load("D:/Sprites/Sonic/PAL1A.dat");
+            graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
+            //paletteData.load("H:/PLT/DrScheme.exe");
+            //graphicsData.load("H:/PLT/DrScheme.exe");
             paletteData.SkipSize = 3;
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
@@ -118,8 +118,92 @@ namespace TiledGGD
                 case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); break;
                 case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); break;
             }
-
+            updateMenu();
         }
+
+        #region method: updateMenu
+        private void updateMenu()
+        {
+            // graphics format
+            foreach (ToolStripMenuItem tsme in this.formatToolStripMenuItem.DropDownItems)
+                tsme.Checked = false;
+            (this.formatToolStripMenuItem.DropDownItems[(int)GraphicsData.GraphFormat - 1] as ToolStripMenuItem).Checked = true;
+
+            // palette format
+            foreach (ToolStripMenuItem tsme in this.toolStripMenuItem1.DropDownItems)
+                tsme.Checked = false;
+            (this.formatToolStripMenuItem1.DropDownItems[(int)PaletteData.PalFormat - 5] as ToolStripMenuItem).Checked = true;
+
+            // graphics endianness
+            littleEndianToolStripMenuItem.Checked = !(bigEndianToolStripMenuItem.Checked = GraphicsData.IsBigEndian);
+
+            // palette endianness
+            littleEndianToolStripMenuItem1.Checked = !(bigEndianToolStripMenuItem1.Checked = PaletteData.IsBigEndian);
+
+            // graphics mode
+            linearToolStripMenuItem.Checked = !(tiledToolStripMenuItem.Checked = GraphicsData.Tiled);
+
+            // graphics skip size
+            foreach (ToolStripMenuItem tsme in this.skipSizeToolStripMenuItem1.DropDownItems)
+                tsme.Checked = false;
+            switch (GraphicsData.SkipMetric)
+            {
+                case GraphicsSkipMetric.METRIC_BYTES:
+                    switch (GraphicsData.SkipSize)
+                    {
+                        case 1: byteToolStripMenuItem1.Checked = true; break;
+                        case 2: bytesToolStripMenuItem.Checked = true; break;
+                        case 4: bytesToolStripMenuItem1.Checked = true; break;
+                        default: throw new Exception("Unknown graphics skip size: " + GraphicsData.SkipSize + " bytes");
+                    }
+                    break;
+                case GraphicsSkipMetric.METRIC_YPIX:
+                    switch (GraphicsData.SkipSize)
+                    {
+                        case 1: pixelToolStripMenuItem.Checked = true; break;
+                        case -1: tileRowToolStripMenuItem.Checked = true; break;
+                        default: throw new Exception("Unknown graphics skip size: " + GraphicsData.SkipSize + " rows");
+                    }
+                    break;
+                case GraphicsSkipMetric.METRIC_WIDTH: widthToolStripMenuItem.Checked = true; break;
+                case GraphicsSkipMetric.METRIC_HEIGHT: heightRowsToolStripMenuItem.Checked = true; break;
+                default: throw new Exception("Unknown graphics skip metric: " + GraphicsData.SkipMetric.ToString());
+            }
+
+            // palette alpha location
+            endToolStripMenuItem.Checked = !(beginningToolStripMenuItem.Checked = (PaletteData.alphaLoc != AlphaLocation.END));
+
+            // palette order
+            foreach (ToolStripMenuItem tsme in colourOrderToolStripMenuItem.DropDownItems)
+                tsme.Checked = false;
+            (colourOrderToolStripMenuItem.DropDownItems[(int)PaletteData.PalOrder] as ToolStripMenuItem).Checked = true;
+
+            // palette skip size
+            foreach (ToolStripMenuItem tsme in this.skipSizeToolStripMenuItem.DropDownItems)
+                tsme.Checked = false;
+            switch (PaletteData.SkipMetric)
+            {
+                case PaletteSkipMetric.METRIC_BYTES:
+                    switch (PaletteData.SkipSize)
+                    {
+                        case 1: byteToolStripMenuItem.Checked = true; break;
+                        case 0x10000: kBytesToolStripMenuItem.Checked = true; break;
+                        default: throw new Exception("Unknown palette skip size: " + PaletteData.SkipSize + " bytes");
+                    }
+                    break;
+                case PaletteSkipMetric.METRIC_COLOURS:
+                    switch (PaletteData.SkipSize)
+                    {
+                        case 1: pixelToolStripMenuItem.Checked = true; break;
+                        case 16: pixelsToolStripMenuItem.Checked = true; break;
+                        case 256: coloursToolStripMenuItem.Checked = true; break;
+                        default: throw new Exception("Unknown palette skip size: " + PaletteData.SkipSize + " colours");
+                    }
+                    break;
+                default: throw new Exception("Unknown palette skip metric: " + PaletteData.SkipMetric.ToString());
+            }
+        }
+        #endregion
 
         void PalettePanel_DragDrop(object sender, DragEventArgs e)
         {
@@ -179,6 +263,8 @@ namespace TiledGGD
             datafiller.refresh();
         }
 
+        #region toolstrip response methods
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.aboutBox == null || this.aboutBox.IsDisposed)
@@ -237,6 +323,8 @@ namespace TiledGGD
                 this.controlShortBox = new ControlShorts();
             this.controlShortBox.Visible = true;
         }
-        
+
+        #endregion
+
     }
 }

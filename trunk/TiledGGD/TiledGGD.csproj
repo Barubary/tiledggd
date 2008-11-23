@@ -64,7 +64,6 @@
     <Compile Include="ControlShorts.Designer.cs">
       <DependentUpon>ControlShorts.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataPanelFiller.cs" />
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -95,6 +94,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="TileSizeDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TileSizeDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -107,6 +110,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TileSizeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TileSizeDialog.Designer.cs">
+      <DependentUpon>TileSizeDialog.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

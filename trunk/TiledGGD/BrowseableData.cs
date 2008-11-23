@@ -55,13 +55,18 @@ namespace TiledGGD
         }
         #endregion
 
+        /// <summary>
+        /// If this BrowseableData has data
+        /// </summary>
+        internal bool HasData { get { return this.data != null; } }
+
         #region Field: Length
         /// <summary>
         /// The LongLength of the data
         /// </summary>
         public long Length
         {
-            get { return this.data.LongLength; }
+            get { try { return this.data.LongLength; } catch (Exception) { return 0; } }
         }
         #endregion
 

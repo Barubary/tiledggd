@@ -388,6 +388,9 @@ namespace TiledGGD
         internal int[] getFullPalette()
         {
             int[] fullpal = new int[256];
+            if (!this.HasData)
+                return fullpal;
+
             long currIdx = Offset;
             int bt;
             byte fst, scn, thd, a;

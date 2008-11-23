@@ -102,6 +102,8 @@ namespace TiledGGD
                 tileSize = value;
                 tileSize.X = Math.Abs(tileSize.X);
                 tileSize.Y = Math.Abs(tileSize.Y);
+                Height = Height;
+                Width = Width;
                 if (Tiled)
                     MainWindow.DoRefresh();
             }
@@ -305,6 +307,9 @@ namespace TiledGGD
             Color dark = Color.FromArgb(-0x7F181818), light = Color.FromArgb(-0x7FA8A8A8);
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
+            if (!this.HasData)
+                return bitmap;
+
             bool atEnd = false;
 
             if (Tiled)
@@ -397,6 +402,9 @@ namespace TiledGGD
             long dataOffset = Offset;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+
+            if (!this.HasData)
+                return bitmap;
 
             Color[] palette = paletteData.getFullPaletteAsColor();
 
@@ -493,6 +501,9 @@ namespace TiledGGD
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
+            if (!this.HasData)
+                return bitmap;
+
             Color[] palette = paletteData.getFullPaletteAsColor();
 
             bool atEnd = false;
@@ -586,6 +597,9 @@ namespace TiledGGD
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
+            if (!this.HasData)
+                return bitmap;
+
             Color[] palette = this.paletteData.getFullPaletteAsColor();
 
             bool atEnd = false;
@@ -648,6 +662,9 @@ namespace TiledGGD
             //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+
+            if (!this.HasData)
+                return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length >> 1);
             uint nNecessBytes = nPixels * 2;
@@ -725,6 +742,9 @@ namespace TiledGGD
             //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+
+            if (!this.HasData)
+                return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 3);
             uint nNecessBytes = nPixels * 3;
@@ -805,6 +825,9 @@ namespace TiledGGD
             //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+
+            if (!this.HasData)
+                return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 4);
             uint nNecessBytes = nPixels * 4;

@@ -15,11 +15,6 @@ namespace TiledGGD
         internal static GraphicsData GraphData { get { return graphicsData; } }
         private static PaletteData paletteData;
         internal static PaletteData PalData { get { return paletteData; } }
-        private static DataPanelFiller datafiller;
-
-        private static Font fnt;
-        public override Font Font { get { return base.Font; } set { base.Font = value; fnt = value; } }
-        public static Font MenuFont { get { return fnt; } }
 
         private static MainWindow mainWindow;
 
@@ -33,41 +28,8 @@ namespace TiledGGD
             this.DoubleBuffered = true;
             mainWindow = this;
 
-            fnt = this.Font;
-
-            GraphicsPanel.Paint += new PaintEventHandler(GraphicsPanel_Paint);
-            PalettePanel.Paint += new PaintEventHandler(PalettePanel_Paint);
-            DataPanel.Paint += new PaintEventHandler(DataPanel_Paint);
-
-            datafiller = new DataPanelFiller(this.DataPanel);
-
-            paletteData = new PaletteData(PaletteFormat.FORMAT_3BPP, PaletteOrder.ORDER_BGR);
-            graphicsData = new GraphicsData(paletteData);
-            GraphicsData.GraphFormat = GraphicsFormat.FORMAT_16BPP;
-            GraphicsData.Tiled = false;
-            GraphicsData.WidthSkipSize = 8;
-            GraphicsData.Zoom = 2;
-
-            
-
-            //this.GraphicsPanel.Height = 1000;
-
-            GraphicsPanel.DragEnter += new DragEventHandler(palGraphDragEnter);
-            PalettePanel.DragEnter += new DragEventHandler(palGraphDragEnter);
-
-            GraphicsPanel.DragDrop += new DragEventHandler(GraphicsPanel_DragDrop);
-            PalettePanel.DragDrop += new DragEventHandler(PalettePanel_DragDrop);
-
-            paletteData.load("D:/Sprites/Sonic/PAL1A.dat");
-            graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
-            //paletteData.load("H:/PLT/DrScheme.exe");
-            //graphicsData.load("H:/PLT/DrScheme.exe");
-            PaletteData.SkipSize = 16;
-            PaletteData.SkipMetric = PaletteSkipMetric.METRIC_COLOURS;
-
-            this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
-
-            this.ResizeEnd += new EventHandler(ReconfigurePanels);
+            paletteData = new PaletteData(PaletteFormat.FORMAT_2BPP, PaletteOrder.ORDER_BGR);
+            graphicsData = new GraphicsData(paletteData);           
 
             this.previousSize = this.Size;
 
@@ -208,26 +170,26 @@ namespace TiledGGD
         {
             try
             {
-                paletteData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+                string fname = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                paletteData.load(fname);
+                if (!graphicsData.HasData)
+                    graphicsData.load(fname);
                 DoRefresh();
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex.StackTrace);
-            }
+            catch (Exception) { }
         }
 
         void GraphicsPanel_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
-                graphicsData.load(((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString());
+                string fname = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                graphicsData.load(fname);
+                if (!paletteData.HasData)
+                    paletteData.load(fname);
                 DoRefresh();
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex.StackTrace);
-            }
+            catch (Exception) { }
         }
 
         void palGraphDragEnter(object sender, DragEventArgs e)
@@ -380,7 +342,6 @@ namespace TiledGGD
         public static void DoRefresh()
         {
             mainWindow.Refresh();
-            datafiller.refresh();
         }
         #endregion
 
@@ -641,6 +602,8 @@ namespace TiledGGD
             if (res == DialogResult.OK || res == DialogResult.Yes)
             {
                 graphicsData.load(ofd.FileName);
+                if (!paletteData.HasData)
+                    paletteData.load(ofd.FileName);
                 DoRefresh();
             }
         }
@@ -659,6 +622,8 @@ namespace TiledGGD
             if (res == DialogResult.OK || res == DialogResult.Yes)
             {
                 paletteData.load(ofd.FileName);
+                if (!graphicsData.HasData)
+                    graphicsData.load(ofd.FileName);
                 DoRefresh();
             }
         }
@@ -702,6 +667,13 @@ namespace TiledGGD
         }
         #endregion
 
+        private void setTileSizeTSMI_Click(object sender, EventArgs e)
+        {
+            TileSizeDialog tsd = new TileSizeDialog(GraphicsData.TileSize);
+            tsd.ShowDialog();
+            GraphicsData.TileSize = tsd.NewTileSize;
+            this.DataPanel_Paint(this, null);
+        }
 
         #endregion
 

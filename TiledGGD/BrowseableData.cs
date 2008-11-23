@@ -19,10 +19,10 @@ namespace TiledGGD
         /// <summary>
         /// The current offset of the data
         /// </summary>
-        protected long Offset
+        public long Offset
         {
             get { return this.offset; }
-            set
+            protected set
             {
                 long newoffset = Math.Max(0, Math.Min(this.data.Length - 1, value));
                 if (newoffset != this.offset)

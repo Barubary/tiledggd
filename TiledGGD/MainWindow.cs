@@ -120,10 +120,11 @@ namespace TiledGGD
                 case Keys.PageUp: graphicsData.DoSkip(false); break;
                 case Keys.B: graphicsData.toggleGraphicsFormat(); break;
                 case Keys.F: graphicsData.toggleTiled(); break;
-                case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); break;
-                case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); break;
+                case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); else return; break;
+                case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); else return; break;
             }
             updateMenu();
+            DoRefresh();
         }
         #endregion
 
@@ -155,29 +156,7 @@ namespace TiledGGD
             // graphics skip size
             foreach (ToolStripMenuItem tsme in this.graphSSTSMI.DropDownItems)
                 tsme.Checked = false;
-            switch (GraphicsData.SkipMetric)
-            {
-                case GraphicsSkipMetric.METRIC_BYTES:
-                    switch (GraphicsData.SkipSize)
-                    {
-                        case 1: graphSS_1byteTSMI.Checked = true; break;
-                        case 2: graphSS_2bytesTSMI.Checked = true; break;
-                        case 4: graphSS_4bytesTSMI.Checked = true; break;
-                        default: throw new Exception("Unknown graphics skip size: " + GraphicsData.SkipSize + " bytes");
-                    }
-                    break;
-                case GraphicsSkipMetric.METRIC_YPIX:
-                    switch (GraphicsData.SkipSize)
-                    {
-                        case 1: palSS_1colTSMI.Checked = true; break;
-                        case -1: graphSS_1trTSMI.Checked = true; break;
-                        default: throw new Exception("Unknown graphics skip size: " + GraphicsData.SkipSize + " rows");
-                    }
-                    break;
-                case GraphicsSkipMetric.METRIC_WIDTH: graphSS_widthTSMI.Checked = true; break;
-                case GraphicsSkipMetric.METRIC_HEIGHT: graphSS_heightTSMI.Checked = true; break;
-                default: throw new Exception("Unknown graphics skip metric: " + GraphicsData.SkipMetric.ToString());
-            }
+            (this.graphSSTSMI.DropDownItems[(int)GraphicsData.SkipSize] as ToolStripMenuItem).Checked = true;
 
             // palette alpha location
             palAlpha_endTSMI.Checked = !(palAlpha_startTSMI.Checked = (PaletteData.alphaLoc != AlphaLocation.END));
@@ -211,6 +190,16 @@ namespace TiledGGD
                     break;
                 default: throw new Exception("Unknown palette skip metric: " + PaletteData.SkipMetric.ToString());
             }
+
+            // width skip size
+            foreach (ToolStripMenuItem tsmi in this.graphWSSTSMI.DropDownItems)
+                tsmi.Checked = false;
+            (this.graphWSSTSMI.DropDownItems[(int)Math.Log(GraphicsData.WidthSkipSize, 2)] as ToolStripMenuItem).Checked = true;
+
+            // height skip size
+            foreach (ToolStripMenuItem tsmi in this.graphHSSTSMI.DropDownItems)
+                tsmi.Checked = false;
+            (this.graphHSSTSMI.DropDownItems[(int)Math.Log(GraphicsData.HeightSkipSize, 2)] as ToolStripMenuItem).Checked = true;
         }
         #endregion
 
@@ -253,9 +242,124 @@ namespace TiledGGD
         #region paint methods
         void DataPanel_Paint(object sender, PaintEventArgs e)
         {
-            // TODO
-            if (false)
-                throw new Exception("TODO");
+            string val;
+
+            #region graphics data
+            this.listBox1.Items.Clear();
+
+            this.listBox1.Items.Add("Graphics Data:");
+
+            this.listBox1.Items.Add("Source File: \t" + GraphicsData.Filename);
+
+            this.listBox1.Items.Add("Offset:\t\t0x" + String.Format("{0:X}", graphicsData.Offset));
+
+            this.listBox1.Items.Add("Panel Size:\t" + GraphicsData.Width + " x " + GraphicsData.Height);
+
+            this.listBox1.Items.Add("Tile Size:\t\t" + GraphicsData.TileSize.X + " x " + GraphicsData.TileSize.Y);
+
+            switch (GraphicsData.GraphFormat)
+            {
+                case GraphicsFormat.FORMAT_1BPP: val = "1 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_2BPP: val = "2 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_4BPP: val = "4 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_8BPP: val = "8 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_16BPP: val = "16 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_24BPP: val = "24 bits/pixel"; break;
+                case GraphicsFormat.FORMAT_32BPP: val = "32 bits/pixel"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox1.Items.Add("Format:\t\t" + val);
+
+            switch (GraphicsData.IsBigEndian)
+            {
+                case true: val = "Big Endian"; break;
+                case false: val = "Little Endian"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox1.Items.Add("Endianness:\t" + val);
+
+            switch (GraphicsData.Tiled)
+            {
+                case true: val = "Tiled"; break;
+                case false: val = "Linear"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox1.Items.Add("Mode:\t\t" + val);
+
+            switch (GraphicsData.SkipSize)
+            {
+                case GraphicsSkipSize.SKIPSIZE_1BYTE: val = "1 Bytes"; break;
+                case GraphicsSkipSize.SKIPSIZE_2BYTES: val = "2 Bytes"; break;
+                case GraphicsSkipSize.SKIPSIZE_4BYTES: val = "4 Bytes"; break;
+                case GraphicsSkipSize.SKIPSIZE_1PIXROW: val = "1 row of pixels"; break;
+                case GraphicsSkipSize.SKIPSIZE_1TILEROW: val = "1 row of tiles"; break;
+                case GraphicsSkipSize.SKIPSIZE_HEIGHTROWS: val = "(Height) rows of pixels"; break;
+                case GraphicsSkipSize.SKIPSIZE_WIDTHROWS: val = "(Width) rows of pixels"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox1.Items.Add("Skip Size:\t" + val);
+
+            this.listBox1.Items.Add("Width Skip Size:\t" + GraphicsData.WidthSkipSize + " pixels");
+            this.listBox1.Items.Add("Height Skip Size:\t" + GraphicsData.HeightSkipSize + " pixels");
+            #endregion
+
+            #region palette data
+            this.listBox2.Items.Clear();
+
+            this.listBox2.Items.Add("Palette Data:");
+
+            this.listBox2.Items.Add("Source File: \t" + PaletteData.Filename);
+
+            this.listBox2.Items.Add("Offset:\t\t0x" + String.Format("{0:X}", paletteData.Offset));
+
+            switch (PaletteData.PalFormat)
+            {
+                case PaletteFormat.FORMAT_2BPP: val = "2 Bytes/colour"; break;
+                case PaletteFormat.FORMAT_3BPP: val = "3 Bytes/colour"; break;
+                case PaletteFormat.FORMAT_4BPP: val = "4 Bytes/colour"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox2.Items.Add("Format:\t\t" + val);
+
+            val = PaletteData.PalOrder.ToString();
+            val = val.Substring(6);
+            this.listBox2.Items.Add("Colour Order:\t" + val);
+
+            switch (PaletteData.IsBigEndian)
+            {
+                case true: val = "Big Endian"; break;
+                case false: val = "Little Endian"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox2.Items.Add("Endianness:\t" + val);
+
+            switch (PaletteData.alphaLoc)
+            {
+                case AlphaLocation.START: val = "Start"; break;
+                case AlphaLocation.END: val = "End"; break;
+                case AlphaLocation.NONE: val = "Start"; break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox2.Items.Add("Alpha Location:\t" + val);
+
+            switch (PaletteData.SkipMetric)
+            {
+                case PaletteSkipMetric.METRIC_BYTES:
+                    if (PaletteData.SkipSize == 1) val = "1 Byte";
+                    else if (PaletteData.SkipSize == 0x10000) val = "64k Bytes";
+                    else val = "ERROR";
+                    break;
+                case PaletteSkipMetric.METRIC_COLOURS:
+                    if (PaletteData.SkipSize == 1) val = "1 Colour";
+                    else val = PaletteData.SkipSize + " Colours";
+                    break;
+                default: val = "ERROR"; break;
+            }
+            this.listBox2.Items.Add("Skip Size:\t" + val);
+
+
+
+            #endregion
         }
 
         void PalettePanel_Paint(object sender, PaintEventArgs e)
@@ -371,35 +475,8 @@ namespace TiledGGD
         #region graphical skip size
         private void graphSSTSMI_Click(object sender, EventArgs e)
         {
-            if (sender == graphSS_1byteTSMI)
-            {
-                GraphicsData.SkipSize = 1;
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_BYTES;
-            }
-            else if (sender == graphSS_2bytesTSMI)
-            {
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_BYTES;
-                GraphicsData.SkipSize = 2;
-            }
-            else if (sender == graphSS_4bytesTSMI)
-            {
-                GraphicsData.SkipSize = 4;
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_BYTES;
-            }
-            else if (sender == graphSS_1pixTSMI)
-            {
-                GraphicsData.SkipSize = 1;
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_YPIX;
-            }
-            else if (sender == graphSS_1trTSMI)
-            {
-                GraphicsData.SkipSize = -1;
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_YPIX;
-            }
-            else if (sender == graphSS_widthTSMI)
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_WIDTH;
-            else if (sender == graphSS_heightTSMI)
-                GraphicsData.SkipMetric = GraphicsSkipMetric.METRIC_HEIGHT;
+            if(graphSSTSMI.DropDownItems.Contains(sender as ToolStripMenuItem))
+                GraphicsData.SkipSize = (GraphicsSkipSize)graphSSTSMI.DropDownItems.IndexOf(sender as ToolStripMenuItem);
             else
                 throw new Exception("Invalid Graphics Skip Size action");
 
@@ -586,6 +663,45 @@ namespace TiledGGD
             }
         }
         #endregion
+
+        #region width skip size
+        private void graphWSSTSMI_Click(object sender, EventArgs e)
+        {
+            if (sender == graphWSS_1pixTSMI)
+                GraphicsData.WidthSkipSize = 1;
+            else if (sender == graphWSS_2pixTSMI)
+                GraphicsData.WidthSkipSize = 2;
+            else if (sender == graphWSS_4pixTSMI)
+                GraphicsData.WidthSkipSize = 4;
+            else if (sender == graphWSS_8pixTSMI)
+                GraphicsData.WidthSkipSize = 8;
+            else if (sender == graphWSS_16pixTSMI)
+                GraphicsData.WidthSkipSize = 16;
+            else
+                throw new Exception("Invalid graphics width skip size action");
+            updateMenu();
+        }
+        #endregion
+
+        #region height skip size
+        private void graphHSSTSMI_Click(object sender, EventArgs e)
+        {
+            if (sender == graphHSS_1pixTSMI)
+                GraphicsData.HeightSkipSize = 1;
+            else if (sender == graphHSS_2pixTSMI)
+                GraphicsData.HeightSkipSize = 2;
+            else if (sender == graphHSS_4pixTSMI)
+                GraphicsData.HeightSkipSize = 4;
+            else if (sender == graphHSS_8pixTSMI)
+                GraphicsData.HeightSkipSize = 8;
+            else if (sender == graphHSS_16pixTSMI)
+                GraphicsData.HeightSkipSize = 16;
+            else
+                throw new Exception("Invalid graphics height skip size action");
+            updateMenu();
+        }
+        #endregion
+
 
         #endregion
 

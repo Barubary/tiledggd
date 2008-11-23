@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections;
+using System.IO;
 
 namespace TiledGGD
 {
@@ -285,23 +286,25 @@ namespace TiledGGD
         #region Methods: paint
         internal override void paint(object sender, PaintEventArgs e)
         {
+            Bitmap img;
             switch (graphFormat)
             {
-                case GraphicsFormat.FORMAT_1BPP: paint1BPP(sender, e); return;
-                case GraphicsFormat.FORMAT_2BPP: paint2BPP(sender, e); return;
-                case GraphicsFormat.FORMAT_4BPP: paint4BPP(sender, e); return;
-                case GraphicsFormat.FORMAT_8BPP: paint8BPP(sender, e); return;
-                case GraphicsFormat.FORMAT_16BPP: paint16Bpp(sender, e); return;
-                case GraphicsFormat.FORMAT_24BPP: paint24Bpp(sender, e); return;
-                case GraphicsFormat.FORMAT_32BPP: paint32Bpp(sender, e); return;
+                case GraphicsFormat.FORMAT_1BPP: img = paint1BPP(); break;
+                case GraphicsFormat.FORMAT_2BPP: img = paint2BPP(); break;
+                case GraphicsFormat.FORMAT_4BPP: img = paint4BPP(); break;
+                case GraphicsFormat.FORMAT_8BPP: img = paint8BPP(); break;
+                case GraphicsFormat.FORMAT_16BPP: img = paint16Bpp(); break;
+                case GraphicsFormat.FORMAT_24BPP: img = paint24Bpp(); break;
+                case GraphicsFormat.FORMAT_32BPP: img = paint32Bpp(); break;
                 default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
             }
+            e.Graphics.DrawImage(img, 0, 0);
         }
 
         #region paint1BPP
-        internal void paint1BPP(object sender, PaintEventArgs e)
+        internal Bitmap paint1BPP(/*object sender, PaintEventArgs e*/)
         {
-            Graphics g = e.Graphics;
+            //Graphics g = e.Graphics;
 
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 8 + (uint)(nNecessBytes % 8 > 0 ? 1 : 0);
@@ -385,14 +388,14 @@ namespace TiledGGD
                 }
                 #endregion
             }
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
         }
         #endregion
 
         #region paint2BPP
-        internal void paint2BPP(object sender, PaintEventArgs e)
+        internal Bitmap paint2BPP(/*object sender, PaintEventArgs e*/)
         {
-            Graphics g = e.Graphics;
+            //Graphics g = e.Graphics;
 
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 4 + (uint)(nNecessBytes % 4 > 0 ? 1 : 0);
@@ -479,14 +482,14 @@ namespace TiledGGD
                 }
                 #endregion
             }
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
         }
         #endregion
 
         #region paint4BPP
-        internal void paint4BPP(object sender, PaintEventArgs e)
+        internal Bitmap paint4BPP(/*object sender, PaintEventArgs e*/)
         {
-            Graphics g = e.Graphics;
+            //Graphics g = e.Graphics;
 
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 4 + (uint)(nNecessBytes % 4 > 0 ? 1 : 0);
@@ -573,14 +576,14 @@ namespace TiledGGD
                 }
                 #endregion
             }
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
         }
         #endregion
 
         #region paint8BPP
-        internal void paint8BPP(object sender, PaintEventArgs pea)
+        internal Bitmap paint8BPP(/*object sender, PaintEventArgs pea*/)
         {
-            Graphics g = pea.Graphics;
+            //Graphics g = pea.Graphics;
 
             uint nNecessBytes = width * height;
 
@@ -588,7 +591,7 @@ namespace TiledGGD
             byte bt;
             long dataOffset = Offset;
 
-            Bitmap b = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
             Color[] palette = this.paletteData.getFullPaletteAsColor();
             
@@ -617,7 +620,7 @@ namespace TiledGGD
                     bt = getData(dataOffset++);
                     for (int zy = 0; zy < Zoom; zy++)
                         for (int zx = 0; zx < Zoom; zx++)
-                            b.SetPixel(x + zx, y + zy, palette[bt]);
+                            bitmap.SetPixel(x + zx, y + zy, palette[bt]);
 
                 }
                 #endregion
@@ -635,19 +638,19 @@ namespace TiledGGD
 
                     for (int zy = 0; zy < Zoom; zy++)
                         for (int zx = 0; zx < Zoom; zx++)
-                            b.SetPixel(x + zx, y + zy, palette[bt]);
+                            bitmap.SetPixel(x + zx, y + zy, palette[bt]);
                 }
                 
                 #endregion
             }
-            g.DrawImage(b, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
         }
         #endregion
 
         #region paint16BPP
-        internal void paint16Bpp(object sender, PaintEventArgs pea)
+        internal Bitmap paint16Bpp(/*object sender, PaintEventArgs pea*/)
         {
-            Graphics g = pea.Graphics;
+            //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
@@ -714,15 +717,15 @@ namespace TiledGGD
                 #endregion
             }
 
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
             
         }
         #endregion
 
         #region paint24BPP
-        internal void paint24Bpp(object sender, PaintEventArgs pea)
+        internal Bitmap paint24Bpp(/*object sender, PaintEventArgs pea*/)
         {
-            Graphics g = pea.Graphics;
+            //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
@@ -792,15 +795,15 @@ namespace TiledGGD
                 #endregion
             }
 
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
 
         }
         #endregion
 
         #region paint32BPP
-        internal void paint32Bpp(object sender, PaintEventArgs pea)
+        internal Bitmap paint32Bpp(/*object sender, PaintEventArgs pea*/)
         {
-            Graphics g = pea.Graphics;
+            //Graphics g = pea.Graphics;
 
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
@@ -868,7 +871,7 @@ namespace TiledGGD
                 #endregion
             }
 
-            g.DrawImage(bitmap, 0, 0);
+            return bitmap;// g.DrawImage(bitmap, 0, 0);
 
         }
         #endregion
@@ -877,7 +880,19 @@ namespace TiledGGD
 
         internal override void copyToClipboard()
         {
-            throw new Exception("Unimplemented method GraphicsData.copyToClipboard");
+            Bitmap img;
+            switch (GraphFormat)
+            {
+                case GraphicsFormat.FORMAT_1BPP: img = paint1BPP(); break;
+                case GraphicsFormat.FORMAT_2BPP: img = paint2BPP(); break;
+                case GraphicsFormat.FORMAT_4BPP: img = paint4BPP(); break;
+                case GraphicsFormat.FORMAT_8BPP: img = paint8BPP(); break;
+                case GraphicsFormat.FORMAT_16BPP: img = paint16Bpp(); break;
+                case GraphicsFormat.FORMAT_24BPP: img = paint24Bpp(); break;
+                case GraphicsFormat.FORMAT_32BPP: img = paint32Bpp(); break;
+                default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
+            }
+            Clipboard.SetImage(img);
         }
         
         #region Method: getPixel(idx)

@@ -107,7 +107,7 @@ namespace TiledGGD
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        internal static long SkipSize { get { return this.skipSize; } set { this.skipSize = Math.Abs(value); } }
+        internal static long SkipSize { get { return skipSize; } set { skipSize = Math.Abs(value); } }
         #endregion
 
         #region Field: SkipMetric
@@ -118,7 +118,7 @@ namespace TiledGGD
         internal static PaletteSkipMetric SkipMetric
         {
             get { return skipMetric; }
-            private set { skipMetric = value; }
+            set { skipMetric = value; }
         }
         #endregion
 
@@ -167,11 +167,20 @@ namespace TiledGGD
                     Pen p = new Pen(pal[y * 16 + x]);
                     g.FillRectangle(p.Brush, x * palPixelSize.X, y * palPixelSize.Y, palPixelSize.X, palPixelSize.Y);
                 }
+            
         }
 
         internal override void copyToClipboard()
         {
-            throw new Exception("The method PaletteData.CopyToClipboard is not yet implemented.");
+            Color[] pal = this.getFullPaletteAsColor();
+
+            Bitmap bmp = new Bitmap(128, 128);
+            for (int y = 0; y < 16; y++)
+                for (int x = 0; x < 16; x++)
+                    for (int yp = 0; yp < 8; yp++)
+                        for (int xp = 0; xp < 8; xp++)
+                            bmp.SetPixel(x * 8 + xp, y * 8 + yp, pal[y * 16 + x]);
+            Clipboard.SetImage(bmp);
         }
 
         #region Method: getPalette(int idx)
@@ -496,48 +505,49 @@ namespace TiledGGD
         }
         #endregion
 
+        #region method: parsePalOrder()
         internal void parsePalOrder(ref byte fst, ref byte scn, ref byte thd, ref byte a, out int argb)
         {
             switch (palOrder)
             {
                 #region case BGR
                 case PaletteOrder.ORDER_BGR:
-                    //b = fst; g = scn; r = thd;
+                    //bitmap = fst; g = scn; r = thd;
                     argb = (a << 24) | (thd << 16) | (scn << 8) | thd;
                     return;
                 #endregion
 
                 #region case BRG
                 case PaletteOrder.ORDER_BRG:
-                    //b = fst; r = scn; g = thd;
+                    //bitmap = fst; r = scn; g = thd;
                     argb = (a << 24) | (scn << 16) | (thd << 8) | fst;
                     return;
                 #endregion
 
                 #region case GBR
                 case PaletteOrder.ORDER_GBR:
-                    //g = fst; b = scn; r = thd;
+                    //g = fst; bitmap = scn; r = thd;
                     argb = (a << 24) | (thd << 16) | (fst << 8) | scn;
                     return;
                 #endregion
 
                 #region case GRB
                 case PaletteOrder.ORDER_GRB:
-                    //g = fst; r = scn; b = thd;
+                    //g = fst; r = scn; bitmap = thd;
                     argb = (a << 24) | (scn << 16) | (fst << 8) | thd;
                     return;
                 #endregion
 
                 #region case RBG
                 case PaletteOrder.ORDER_RBG:
-                    //r = fst; b = scn; g = thd;
+                    //r = fst; bitmap = scn; g = thd;
                     argb = (a << 24) | (fst << 16) | (thd << 8) | scn;
                     return;
                 #endregion
 
                 #region case RGB
                 case PaletteOrder.ORDER_RGB:
-                    //r = fst; g = scn; b = thd;
+                    //r = fst; g = scn; bitmap = thd;
                     argb = (a << 24) | (fst << 16) | (scn << 8) | thd;
                     return;
                 #endregion
@@ -545,6 +555,7 @@ namespace TiledGGD
                 default: throw new Exception("Unknown error: invalid palOrder " + palOrder.ToString());
             }
         }
+        #endregion
 
         #region Toggle Methods
         /// <summary>

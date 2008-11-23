@@ -372,7 +372,7 @@ namespace TiledGGD
             this.bytesPerColourToolStripMenuItem1,
             this.bytesPerColourToolStripMenuItem2});
             this.formatToolStripMenuItem1.Name = "formatToolStripMenuItem1";
-            this.formatToolStripMenuItem1.Size = new System.Drawing.Size(207, 22);
+            this.formatToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
             this.formatToolStripMenuItem1.Text = "Format";
             // 
             // bytesPerColourToolStripMenuItem
@@ -399,7 +399,7 @@ namespace TiledGGD
             this.bigEndianToolStripMenuItem1,
             this.littleEndianToolStripMenuItem1});
             this.endiannessToolStripMenuItem1.Name = "endiannessToolStripMenuItem1";
-            this.endiannessToolStripMenuItem1.Size = new System.Drawing.Size(207, 22);
+            this.endiannessToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
             this.endiannessToolStripMenuItem1.Text = "Endianness";
             // 
             // bigEndianToolStripMenuItem1
@@ -420,19 +420,19 @@ namespace TiledGGD
             this.endToolStripMenuItem,
             this.beginningToolStripMenuItem});
             this.alphaLocationToolStripMenuItem.Name = "alphaLocationToolStripMenuItem";
-            this.alphaLocationToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.alphaLocationToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.alphaLocationToolStripMenuItem.Text = "Alpha location";
             // 
             // endToolStripMenuItem
             // 
             this.endToolStripMenuItem.Name = "endToolStripMenuItem";
-            this.endToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.endToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.endToolStripMenuItem.Text = "End";
             // 
             // beginningToolStripMenuItem
             // 
             this.beginningToolStripMenuItem.Name = "beginningToolStripMenuItem";
-            this.beginningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.beginningToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.beginningToolStripMenuItem.Text = "Beginning";
             // 
             // colourOrderToolStripMenuItem
@@ -445,43 +445,43 @@ namespace TiledGGD
             this.gBRToolStripMenuItem,
             this.bRGToolStripMenuItem});
             this.colourOrderToolStripMenuItem.Name = "colourOrderToolStripMenuItem";
-            this.colourOrderToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.colourOrderToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.colourOrderToolStripMenuItem.Text = "Colour order";
             // 
             // bGRToolStripMenuItem
             // 
             this.bGRToolStripMenuItem.Name = "bGRToolStripMenuItem";
-            this.bGRToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bGRToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.bGRToolStripMenuItem.Text = "BGR";
             // 
             // rGBToolStripMenuItem
             // 
             this.rGBToolStripMenuItem.Name = "rGBToolStripMenuItem";
-            this.rGBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rGBToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.rGBToolStripMenuItem.Text = "RGB";
             // 
             // rBGToolStripMenuItem
             // 
             this.rBGToolStripMenuItem.Name = "rBGToolStripMenuItem";
-            this.rBGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rBGToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.rBGToolStripMenuItem.Text = "RBG";
             // 
             // gRBToolStripMenuItem
             // 
             this.gRBToolStripMenuItem.Name = "gRBToolStripMenuItem";
-            this.gRBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gRBToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.gRBToolStripMenuItem.Text = "GRB";
             // 
             // gBRToolStripMenuItem
             // 
             this.gBRToolStripMenuItem.Name = "gBRToolStripMenuItem";
-            this.gBRToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gBRToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.gBRToolStripMenuItem.Text = "GBR";
             // 
             // bRGToolStripMenuItem
             // 
             this.bRGToolStripMenuItem.Name = "bRGToolStripMenuItem";
-            this.bRGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bRGToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.bRGToolStripMenuItem.Text = "BRG";
             // 
             // skipSizeToolStripMenuItem
@@ -493,44 +493,45 @@ namespace TiledGGD
             this.coloursToolStripMenuItem,
             this.kBytesToolStripMenuItem});
             this.skipSizeToolStripMenuItem.Name = "skipSizeToolStripMenuItem";
-            this.skipSizeToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.skipSizeToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.skipSizeToolStripMenuItem.Text = "Skip size";
             // 
             // byteToolStripMenuItem
             // 
             this.byteToolStripMenuItem.Name = "byteToolStripMenuItem";
-            this.byteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.byteToolStripMenuItem.Text = "1 Byte";
             // 
             // pixelToolStripMenuItem
             // 
             this.pixelToolStripMenuItem.Name = "pixelToolStripMenuItem";
-            this.pixelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pixelToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.pixelToolStripMenuItem.Text = "1 Colour";
             // 
             // pixelsToolStripMenuItem
             // 
             this.pixelsToolStripMenuItem.Name = "pixelsToolStripMenuItem";
-            this.pixelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pixelsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.pixelsToolStripMenuItem.Text = "16 Colours";
             // 
             // coloursToolStripMenuItem
             // 
             this.coloursToolStripMenuItem.Name = "coloursToolStripMenuItem";
-            this.coloursToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.coloursToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.coloursToolStripMenuItem.Text = "256 Colours";
             // 
             // kBytesToolStripMenuItem
             // 
             this.kBytesToolStripMenuItem.Name = "kBytesToolStripMenuItem";
-            this.kBytesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.kBytesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.kBytesToolStripMenuItem.Text = "64k Bytes";
             // 
             // copyPaletteToolStripMenuItem
             // 
             this.copyPaletteToolStripMenuItem.Name = "copyPaletteToolStripMenuItem";
-            this.copyPaletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.copyPaletteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.copyPaletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.copyPaletteToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.copyPaletteToolStripMenuItem.Text = "Copy to clipboard";
             this.copyPaletteToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboard);
             // 
@@ -546,14 +547,14 @@ namespace TiledGGD
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // shortcutsToolStripMenuItem
             // 
             this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
-            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.shortcutsToolStripMenuItem.Text = "Shortcuts...";
             this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
             // 

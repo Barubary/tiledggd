@@ -61,7 +61,8 @@ namespace TiledGGD
             graphicsData.load("D:/Sprites/Sonic/OVL1A.BIN");
             //paletteData.load("H:/PLT/DrScheme.exe");
             //graphicsData.load("H:/PLT/DrScheme.exe");
-            paletteData.SkipSize = 3;
+            PaletteData.SkipSize = 16;
+            PaletteData.SkipMetric = PaletteSkipMetric.METRIC_COLOURS;
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
@@ -130,7 +131,7 @@ namespace TiledGGD
             (this.formatToolStripMenuItem.DropDownItems[(int)GraphicsData.GraphFormat - 1] as ToolStripMenuItem).Checked = true;
 
             // palette format
-            foreach (ToolStripMenuItem tsme in this.toolStripMenuItem1.DropDownItems)
+            foreach (ToolStripMenuItem tsme in this.formatToolStripMenuItem1.DropDownItems)
                 tsme.Checked = false;
             (this.formatToolStripMenuItem1.DropDownItems[(int)PaletteData.PalFormat - 5] as ToolStripMenuItem).Checked = true;
 

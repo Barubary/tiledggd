@@ -127,6 +127,12 @@ namespace TiledGGD
         /// </summary>
         private Point palPixelSize = new Point(16, 16);
 
+        private static string fname = "";
+        /// <summary>
+        /// The name of the loaded file
+        /// </summary>
+        public static string Filename { get { return fname; } }
+
         #endregion
 
         #region Constructors
@@ -153,6 +159,12 @@ namespace TiledGGD
         internal override void load(string filename)
         {
             base.loadGenericData(filename);
+            if (filename.Contains("/"))
+                fname = filename.Substring(filename.LastIndexOf("/")+1);
+            else if (filename.Contains("\\"))
+                fname = filename.Substring(filename.LastIndexOf("\\")+1);
+            else
+                fname = filename;
         }
 
         internal override void paint(object sender, PaintEventArgs e)
@@ -379,21 +391,23 @@ namespace TiledGGD
             long currIdx = Offset;
             int bt;
             byte fst, scn, thd, a;
-            bool atEnd;
+            bool atEnd = false;
             switch (PalFormat)
             {
                 #region case 2BPP
                 case PaletteFormat.FORMAT_2BPP:
-                    for (int i = 0; i < 256; i++)
+                    for (int i = 0; i < 256 && !atEnd; i++)
                     {
                         if (IsBigEndian)
                         {
                             fst = getData(currIdx++, out atEnd);
+                            if (atEnd) break;
                             scn = getData(currIdx++, out atEnd);
                         }
                         else
                         {
                             scn = getData(currIdx++, out atEnd);
+                            if (atEnd) break;
                             fst = getData(currIdx++, out atEnd);
                         }
                         bt = fst | (scn << 8);
@@ -422,18 +436,20 @@ namespace TiledGGD
 
                 #region case 3BPP
                 case PaletteFormat.FORMAT_3BPP:
-                    for (int i = 0; i < 256; i++)
+                    for (int i = 0; i < 256 && !atEnd; i++)
                     {
                         a = 0xFF;
                         if (IsBigEndian)
                         {
                             fst = getData(currIdx++, out atEnd);
+                            if (atEnd) break;
                             scn = getData(currIdx++, out atEnd);
                             thd = getData(currIdx++, out atEnd);
                         }
                         else
                         {
                             thd = getData(currIdx++, out atEnd);
+                            if (atEnd) break;
                             scn = getData(currIdx++, out atEnd);
                             fst = getData(currIdx++, out atEnd);
                         }
@@ -444,9 +460,10 @@ namespace TiledGGD
 
                 #region case 4BPP
                 case PaletteFormat.FORMAT_4BPP:
-                    for (int i = 0; i < 256; i++)
+                    for (int i = 0; i < 256 && !atEnd; i++)
                     {
                         thd = getData(currIdx++, out atEnd);
+                        if (atEnd) break;
                         scn = getData(currIdx++, out atEnd);
                         fst = getData(currIdx++, out atEnd);
                         a = getData(currIdx++, out atEnd);

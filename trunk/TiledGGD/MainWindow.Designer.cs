@@ -60,6 +60,18 @@ namespace TiledGGD
             this.graphSS_1trTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_widthTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_heightTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSSTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_1pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_2pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_4pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSSTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_1pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_2pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_4pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,10 +102,13 @@ namespace TiledGGD
             this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.shortcutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.DataPanel = new System.Windows.Forms.Panel();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
             this.aboutBox = new TiledGGD.AboutBox();
             this.menuStrip1.SuspendLayout();
+            this.DataPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -181,6 +196,8 @@ namespace TiledGGD
             this.graphEndianTSMI,
             this.graphModeTSMI,
             this.graphSSTSMI,
+            this.graphWSSTSMI,
+            this.graphHSSTSMI,
             this.copyGraphicsToolStripMenuItem});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
@@ -357,6 +374,100 @@ namespace TiledGGD
             this.graphSS_heightTSMI.Size = new System.Drawing.Size(149, 22);
             this.graphSS_heightTSMI.Text = "(Height) Rows";
             this.graphSS_heightTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
+            // 
+            // graphWSSTSMI
+            // 
+            this.graphWSSTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphWSS_1pixTSMI,
+            this.graphWSS_2pixTSMI,
+            this.graphWSS_4pixTSMI,
+            this.graphWSS_8pixTSMI,
+            this.graphWSS_16pixTSMI});
+            this.graphWSSTSMI.Name = "graphWSSTSMI";
+            this.graphWSSTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphWSSTSMI.Text = "Width Skip Size";
+            // 
+            // graphWSS_1pixTSMI
+            // 
+            this.graphWSS_1pixTSMI.Name = "graphWSS_1pixTSMI";
+            this.graphWSS_1pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_1pixTSMI.Text = "1 pixel";
+            this.graphWSS_1pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphWSS_2pixTSMI
+            // 
+            this.graphWSS_2pixTSMI.Name = "graphWSS_2pixTSMI";
+            this.graphWSS_2pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_2pixTSMI.Text = "2 pixels";
+            this.graphWSS_2pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphWSS_4pixTSMI
+            // 
+            this.graphWSS_4pixTSMI.Name = "graphWSS_4pixTSMI";
+            this.graphWSS_4pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_4pixTSMI.Text = "4 pixels";
+            this.graphWSS_4pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphWSS_8pixTSMI
+            // 
+            this.graphWSS_8pixTSMI.Name = "graphWSS_8pixTSMI";
+            this.graphWSS_8pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_8pixTSMI.Text = "8 pixels";
+            this.graphWSS_8pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphWSS_16pixTSMI
+            // 
+            this.graphWSS_16pixTSMI.Name = "graphWSS_16pixTSMI";
+            this.graphWSS_16pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_16pixTSMI.Text = "16 pixels";
+            this.graphWSS_16pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphHSSTSMI
+            // 
+            this.graphHSSTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphHSS_1pixTSMI,
+            this.graphHSS_2pixTSMI,
+            this.graphHSS_4pixTSMI,
+            this.graphHSS_8pixTSMI,
+            this.graphHSS_16pixTSMI});
+            this.graphHSSTSMI.Name = "graphHSSTSMI";
+            this.graphHSSTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphHSSTSMI.Text = "Height Skip Size";
+            // 
+            // graphHSS_1pixTSMI
+            // 
+            this.graphHSS_1pixTSMI.Name = "graphHSS_1pixTSMI";
+            this.graphHSS_1pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_1pixTSMI.Text = "1 pixel";
+            this.graphHSS_1pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
+            // graphHSS_2pixTSMI
+            // 
+            this.graphHSS_2pixTSMI.Name = "graphHSS_2pixTSMI";
+            this.graphHSS_2pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_2pixTSMI.Text = "2 pixels";
+            this.graphHSS_2pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
+            // graphHSS_4pixTSMI
+            // 
+            this.graphHSS_4pixTSMI.Name = "graphHSS_4pixTSMI";
+            this.graphHSS_4pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_4pixTSMI.Text = "4 pixels";
+            this.graphHSS_4pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
+            // graphHSS_8pixTSMI
+            // 
+            this.graphHSS_8pixTSMI.Name = "graphHSS_8pixTSMI";
+            this.graphHSS_8pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_8pixTSMI.Text = "8 pixels";
+            this.graphHSS_8pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
+            // graphHSS_16pixTSMI
+            // 
+            this.graphHSS_16pixTSMI.Name = "graphHSS_16pixTSMI";
+            this.graphHSS_16pixTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_16pixTSMI.Text = "16 pixels";
+            this.graphHSS_16pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
             // 
             // copyGraphicsToolStripMenuItem
             // 
@@ -588,10 +699,33 @@ namespace TiledGGD
             // 
             // DataPanel
             // 
+            this.DataPanel.Controls.Add(this.listBox2);
+            this.DataPanel.Controls.Add(this.listBox1);
             this.DataPanel.Location = new System.Drawing.Point(516, 27);
             this.DataPanel.Name = "DataPanel";
-            this.DataPanel.Size = new System.Drawing.Size(256, 263);
+            this.DataPanel.Size = new System.Drawing.Size(256, 291);
             this.DataPanel.TabIndex = 2;
+            // 
+            // listBox2
+            // 
+            this.listBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.listBox2.Enabled = false;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(0, 170);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(256, 121);
+            this.listBox2.TabIndex = 1;
+            // 
+            // listBox1
+            // 
+            this.listBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listBox1.Enabled = false;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(0, 0);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(256, 160);
+            this.listBox1.TabIndex = 0;
             // 
             // GraphicsPanel
             // 
@@ -600,13 +734,13 @@ namespace TiledGGD
             this.GraphicsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GraphicsPanel.Location = new System.Drawing.Point(0, 27);
             this.GraphicsPanel.Name = "GraphicsPanel";
-            this.GraphicsPanel.Size = new System.Drawing.Size(510, 525);
+            this.GraphicsPanel.Size = new System.Drawing.Size(510, 553);
             this.GraphicsPanel.TabIndex = 3;
             // 
             // PalettePanel
             // 
             this.PalettePanel.AllowDrop = true;
-            this.PalettePanel.Location = new System.Drawing.Point(516, 296);
+            this.PalettePanel.Location = new System.Drawing.Point(516, 324);
             this.PalettePanel.Name = "PalettePanel";
             this.PalettePanel.Size = new System.Drawing.Size(256, 256);
             this.PalettePanel.TabIndex = 1;
@@ -630,7 +764,7 @@ namespace TiledGGD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 564);
+            this.ClientSize = new System.Drawing.Size(784, 592);
             this.Controls.Add(this.GraphicsPanel);
             this.Controls.Add(this.DataPanel);
             this.Controls.Add(this.PalettePanel);
@@ -640,6 +774,7 @@ namespace TiledGGD
             this.Text = "TiledGGD";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.DataPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -713,6 +848,20 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem palEndianTSMI;
         private System.Windows.Forms.ToolStripMenuItem palEndian_bigTSMI;
         private System.Windows.Forms.ToolStripMenuItem palEndian_littleTSMI;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ToolStripMenuItem graphWSSTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_1pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_2pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_4pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_8pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_16pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSSTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_1pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_2pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_4pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_8pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_16pixTSMI;
     }
 }
 

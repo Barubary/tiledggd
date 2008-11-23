@@ -42,11 +42,11 @@ namespace TiledGGD
         /// <summary>
         /// How many pixels the width should change with the press of a button
         /// </summary>
-        private static uint widthSkipSize = 4;
+        private static byte widthSkipSize = 4;
         /// <summary>
         /// How many pixels the width should change with the press of a button
         /// </summary>
-        internal static uint WidthSkipSize { get { return widthSkipSize; } set { widthSkipSize = Math.Max(1, value); } }
+        internal static byte WidthSkipSize { get { return widthSkipSize; } set { widthSkipSize = Math.Max((byte)1, value); } }
 
         #endregion
 
@@ -79,11 +79,11 @@ namespace TiledGGD
         /// <summary>
         /// How many pixels the height should change with the press of a button
         /// </summary>
-        private static uint heightSkipSize = 8;
+        private static byte heightSkipSize = 8;
         /// <summary>
         /// How many pixels the height should change with the press of a button
         /// </summary>
-        internal static uint HeightSkipSize { get { return heightSkipSize; } set { heightSkipSize = Math.Max(1, value); } }
+        internal static byte HeightSkipSize { get { return heightSkipSize; } set { heightSkipSize = Math.Max((byte)1, value); } }
         #endregion
 
         #region Field: TileSize
@@ -210,24 +210,18 @@ namespace TiledGGD
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        private static long skipSize = 1;
+        private static GraphicsSkipSize skipSize = GraphicsSkipSize.SKIPSIZE_1BYTE;
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        internal static long SkipSize { get { return skipSize; } set { skipSize = Math.Abs(value); } }
+        internal static GraphicsSkipSize SkipSize { get { return skipSize; } set { skipSize = value; } }
         #endregion
 
-        #region Field: SkipMetric
+        private static string fname = "";
         /// <summary>
-        /// The metric used to skip data.
+        /// The name of the loaded file
         /// </summary>
-        private static GraphicsSkipMetric skipMetric;
-        internal static GraphicsSkipMetric SkipMetric
-        {
-            get { return skipMetric; }
-            set { skipMetric = value; }
-        }
-        #endregion
+        public static string Filename { get { return fname; } }
 
         #endregion
 
@@ -281,6 +275,12 @@ namespace TiledGGD
         internal override void load(String filename)
         {
             base.loadGenericData(filename);
+            if (filename.Contains("/"))
+                fname = filename.Substring(filename.LastIndexOf("/")+1);
+            else if (filename.Contains("\\"))
+                fname = filename.Substring(filename.LastIndexOf("\\")+1);
+            else
+                fname = filename;
         }
 
         #region Methods: paint
@@ -963,38 +963,38 @@ namespace TiledGGD
             int g = (int)GraphFormat + 1;
             GraphFormat = (GraphicsFormat)(g % 8);
         }
+
         internal void toggleTiled()
         {
             Tiled = !Tiled;
         }
+
         internal void toggleEndianness()
         {
             IsBigEndian = !IsBigEndian;
         }
+
         internal void toggleSkipSize()
         {
-            switch (SkipMetric)
-            {
-                case GraphicsSkipMetric.METRIC_BYTES:
-                    switch (SkipSize)
-                    {
-                        case 1: SkipSize = 2; break;
-                        case 2: SkipSize = 4; break;
-                        case 4: SkipMetric = GraphicsSkipMetric.METRIC_YPIX; SkipSize = 1; break;
-                    } break;
-                case GraphicsSkipMetric.METRIC_YPIX:
-                    switch (SkipSize)
-                    {
-                        case 1: SkipSize = -1; break; // indicates skip tile row
-                        case -1: SkipMetric = GraphicsSkipMetric.METRIC_WIDTH; break;
-                    } break;
-                case GraphicsSkipMetric.METRIC_WIDTH:
-                    SkipMetric = GraphicsSkipMetric.METRIC_HEIGHT; break;
-                case GraphicsSkipMetric.METRIC_HEIGHT:
-                    SkipMetric = GraphicsSkipMetric.METRIC_BYTES;
-                    SkipSize = 1;
-                    break;
-            }
+            int ss = (int)SkipSize;
+            ss = (ss + 1) % 7;
+            SkipSize = (GraphicsSkipSize)ss;
+        }
+
+        internal void toggleWidthSkipSize()
+        {
+            if (widthSkipSize < 16)
+                widthSkipSize <<= 1;
+            else
+                widthSkipSize = 1;
+        }
+
+        internal void toggleHeightSkipSize()
+        {
+            if (heightSkipSize < 16)
+                heightSkipSize <<= 1;
+            else
+                heightSkipSize = 1;
         }
         #endregion
 
@@ -1002,55 +1002,27 @@ namespace TiledGGD
         internal override void DoSkip(bool positive)
         {
             long bytesToSkip;
-            switch (SkipMetric)
+            switch (GraphFormat)
             {
-                case GraphicsSkipMetric.METRIC_BYTES:
-                    bytesToSkip = SkipSize;
-                    break;
-                case GraphicsSkipMetric.METRIC_YPIX:
-                    switch (GraphFormat)
-                    {
-                        case GraphicsFormat.FORMAT_1BPP: bytesToSkip = width / 8; break;
-                        case GraphicsFormat.FORMAT_2BPP: bytesToSkip = width / 4; break;
-                        case GraphicsFormat.FORMAT_4BPP: bytesToSkip = width / 2; break;
-                        case GraphicsFormat.FORMAT_8BPP: bytesToSkip = width; break;
-                        case GraphicsFormat.FORMAT_16BPP: bytesToSkip = width * 2; break;
-                        case GraphicsFormat.FORMAT_24BPP: bytesToSkip = width * 3; break;
-                        case GraphicsFormat.FORMAT_32BPP: bytesToSkip = width * 4; break;
-                        default: throw new Exception("Unkown error: invalid Graphics Format");
-                    }
-                    if (SkipSize == -1)
-                        bytesToSkip *= TileSize.Y;
-                    break;
-                case GraphicsSkipMetric.METRIC_WIDTH:
-                    switch (GraphFormat)
-                    {
-                        case GraphicsFormat.FORMAT_1BPP: bytesToSkip = width / 8; break;
-                        case GraphicsFormat.FORMAT_2BPP: bytesToSkip = width / 4; break;
-                        case GraphicsFormat.FORMAT_4BPP: bytesToSkip = width / 2; break;
-                        case GraphicsFormat.FORMAT_8BPP: bytesToSkip = width; break;
-                        case GraphicsFormat.FORMAT_16BPP: bytesToSkip = width * 2; break;
-                        case GraphicsFormat.FORMAT_24BPP: bytesToSkip = width * 3; break;
-                        case GraphicsFormat.FORMAT_32BPP: bytesToSkip = width * 4; break;
-                        default: throw new Exception("Unkown error: invalid Graphics Format");
-                    }
-                    bytesToSkip *= width;
-                    break;
-                case GraphicsSkipMetric.METRIC_HEIGHT:
-                    switch (GraphFormat)
-                    {
-                        case GraphicsFormat.FORMAT_1BPP: bytesToSkip = width / 8; break;
-                        case GraphicsFormat.FORMAT_2BPP: bytesToSkip = width / 4; break;
-                        case GraphicsFormat.FORMAT_4BPP: bytesToSkip = width / 2; break;
-                        case GraphicsFormat.FORMAT_8BPP: bytesToSkip = width; break;
-                        case GraphicsFormat.FORMAT_16BPP: bytesToSkip = width * 2; break;
-                        case GraphicsFormat.FORMAT_24BPP: bytesToSkip = width * 3; break;
-                        case GraphicsFormat.FORMAT_32BPP: bytesToSkip = width * 4; break;
-                        default: throw new Exception("Unkown error: invalid Graphics Format");
-                    }
-                    bytesToSkip *= height;
-                    break;
-                default: throw new Exception("Unkown error: invalid Skip Metric");
+                case GraphicsFormat.FORMAT_1BPP: bytesToSkip = width / 8; break;
+                case GraphicsFormat.FORMAT_2BPP: bytesToSkip = width / 4; break;
+                case GraphicsFormat.FORMAT_4BPP: bytesToSkip = width / 2; break;
+                case GraphicsFormat.FORMAT_8BPP: bytesToSkip = width; break;
+                case GraphicsFormat.FORMAT_16BPP: bytesToSkip = width * 2; break;
+                case GraphicsFormat.FORMAT_24BPP: bytesToSkip = width * 3; break;
+                case GraphicsFormat.FORMAT_32BPP: bytesToSkip = width * 4; break;
+                default: throw new Exception("Unkown error: invalid Graphics Format");
+            }
+            switch (SkipSize)
+            {
+                case GraphicsSkipSize.SKIPSIZE_1BYTE: bytesToSkip = 1; break;
+                case GraphicsSkipSize.SKIPSIZE_2BYTES: bytesToSkip = 2; break;
+                case GraphicsSkipSize.SKIPSIZE_4BYTES: bytesToSkip = 4; break;
+                case GraphicsSkipSize.SKIPSIZE_1PIXROW: break;
+                case GraphicsSkipSize.SKIPSIZE_1TILEROW: bytesToSkip *= TileSize.Y; break;
+                case GraphicsSkipSize.SKIPSIZE_WIDTHROWS: bytesToSkip *= Width; break;
+                case GraphicsSkipSize.SKIPSIZE_HEIGHTROWS: bytesToSkip *= Height; break;
+                default: throw new Exception("Invalid Graphics Skip Size " + skipSize.ToString());
             }
             DoSkip(positive, bytesToSkip);
         }
@@ -1083,12 +1055,15 @@ namespace TiledGGD
         FORMAT_24BPP = 6,
         FORMAT_32BPP = 7
     }
-    public enum GraphicsSkipMetric
+    public enum GraphicsSkipSize
     {
-        METRIC_BYTES,
-        METRIC_YPIX,
-        METRIC_WIDTH,
-        METRIC_HEIGHT
+        SKIPSIZE_1BYTE = 0,
+        SKIPSIZE_2BYTES = 1,
+        SKIPSIZE_4BYTES = 2,
+        SKIPSIZE_1PIXROW = 3,
+        SKIPSIZE_1TILEROW = 4,
+        SKIPSIZE_WIDTHROWS = 5,
+        SKIPSIZE_HEIGHTROWS = 6
     }
     #endregion
 }

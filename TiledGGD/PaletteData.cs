@@ -172,15 +172,25 @@ namespace TiledGGD
 
         internal override void copyToClipboard()
         {
+            Clipboard.SetImage(toBitmap());
+        }
+
+        internal override Bitmap toBitmap()
+        {
+            return toBitmap(8);
+        }
+
+        internal Bitmap toBitmap(int pixw)
+        {
             Color[] pal = this.getFullPaletteAsColor();
 
-            Bitmap bmp = new Bitmap(128, 128);
+            Bitmap bmp = new Bitmap(16 * pixw, 16 * pixw);
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
-                    for (int yp = 0; yp < 8; yp++)
-                        for (int xp = 0; xp < 8; xp++)
-                            bmp.SetPixel(x * 8 + xp, y * 8 + yp, pal[y * 16 + x]);
-            Clipboard.SetImage(bmp);
+                    for (int yp = 0; yp < pixw; yp++)
+                        for (int xp = 0; xp < pixw; xp++)
+                            bmp.SetPixel(x * pixw + xp, y * pixw + yp, pal[y * 16 + x]);
+            return bmp;
         }
 
         #region Method: getPalette(int idx)
@@ -369,6 +379,7 @@ namespace TiledGGD
             long currIdx = Offset;
             int bt;
             byte fst, scn, thd, a;
+            bool atEnd;
             switch (PalFormat)
             {
                 #region case 2BPP
@@ -377,17 +388,13 @@ namespace TiledGGD
                     {
                         if (IsBigEndian)
                         {
-                            try { fst = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { fst = 0; }
-                            try { scn = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { scn = 0; }
+                            fst = getData(currIdx++, out atEnd);
+                            scn = getData(currIdx++, out atEnd);
                         }
                         else
                         {
-                            try { scn = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { scn = 0; }
-                            try { fst = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { fst = 0; }
+                            scn = getData(currIdx++, out atEnd);
+                            fst = getData(currIdx++, out atEnd);
                         }
                         bt = fst | (scn << 8);
 
@@ -420,21 +427,15 @@ namespace TiledGGD
                         a = 0xFF;
                         if (IsBigEndian)
                         {
-                            try { fst = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { fst = 0; }
-                            try { scn = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { scn = 0; }
-                            try { thd = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { thd = 0; }
+                            fst = getData(currIdx++, out atEnd);
+                            scn = getData(currIdx++, out atEnd);
+                            thd = getData(currIdx++, out atEnd);
                         }
                         else
                         {
-                            try { thd = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { thd = 0; }
-                            try { scn = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { scn = 0; }
-                            try { fst = Data[currIdx++]; }
-                            catch (IndexOutOfRangeException) { fst = 0; }
+                            thd = getData(currIdx++, out atEnd);
+                            scn = getData(currIdx++, out atEnd);
+                            fst = getData(currIdx++, out atEnd);
                         }
                         parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
                     }
@@ -445,14 +446,10 @@ namespace TiledGGD
                 case PaletteFormat.FORMAT_4BPP:
                     for (int i = 0; i < 256; i++)
                     {
-                        try { thd = Data[currIdx++]; }
-                        catch (IndexOutOfRangeException) { thd = 0; }
-                        try { scn = Data[currIdx++]; }
-                        catch (IndexOutOfRangeException) { scn = 0; }
-                        try { fst = Data[currIdx++]; }
-                        catch (IndexOutOfRangeException) { fst = 0; }
-                        try { a = Data[currIdx++]; }
-                        catch (IndexOutOfRangeException) { a = 0; }
+                        thd = getData(currIdx++, out atEnd);
+                        scn = getData(currIdx++, out atEnd);
+                        fst = getData(currIdx++, out atEnd);
+                        a = getData(currIdx++, out atEnd);
                         if (IsBigEndian)
                         {
                             switch (alphaLoc)

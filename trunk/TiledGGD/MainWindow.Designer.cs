@@ -30,65 +30,65 @@ namespace TiledGGD
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGraphTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGraphTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.openPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.savePaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openPalTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.savePalTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitPerPixelToolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.endiannessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bigEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.littleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tiledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipSizeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.byteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pixelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.widthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.heightRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_1bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_2bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_4bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_8bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_16bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_24bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphFormat_32bppTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphEndianTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphEndian_bigTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphEndian_littleTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphModeTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphMode_LinearTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphMode_tiledTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSSTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_1byteTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_2bytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_4bytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_1pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_1trTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_widthTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_heightTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.formatToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesPerColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesPerColourToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bytesPerColourToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.endiannessToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bigEndianToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.littleEndianToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.alphaLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.beginningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colourOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bGRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rBGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gRBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gBRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bRGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pixelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pixelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.coloursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.kBytesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.palFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palFormat_2BpcTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palFormat_3BpcTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palFormat_4BpcTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palEndianTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palEndian_bigTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palEndian_littleTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlphaTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlpha_endTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlpha_startTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrderTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_bgrTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_rgbTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_rbgTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_grbTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_gbrTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palOrder_brgTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSSTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSS_1byteTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSS_1colTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSS_16colTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSS_256colTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palSS_64kbytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shortcutsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.shortcutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.DataPanel = new System.Windows.Forms.Panel();
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
@@ -112,237 +112,251 @@ namespace TiledGGD
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveGraphicsToolStripMenuItem,
+            this.openGraphTSMI,
+            this.saveGraphTSMI,
             this.toolStripSeparator2,
-            this.openPaletteToolStripMenuItem,
-            this.savePaletteToolStripMenuItem,
+            this.openPalTSMI,
+            this.savePalTSMI,
             this.toolStripSeparator1,
-            this.quitToolStripMenuItem});
+            this.quitTSMI});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem1.Text = "File";
             // 
-            // openToolStripMenuItem
+            // openGraphTSMI
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.openToolStripMenuItem.Text = "Open...";
+            this.openGraphTSMI.Name = "openGraphTSMI";
+            this.openGraphTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openGraphTSMI.Size = new System.Drawing.Size(226, 22);
+            this.openGraphTSMI.Text = "Open...";
+            this.openGraphTSMI.Click += new System.EventHandler(this.openGraphTSMI_Click);
             // 
-            // saveGraphicsToolStripMenuItem
+            // saveGraphTSMI
             // 
-            this.saveGraphicsToolStripMenuItem.Name = "saveGraphicsToolStripMenuItem";
-            this.saveGraphicsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveGraphicsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.saveGraphicsToolStripMenuItem.Text = "Save Graphics...";
+            this.saveGraphTSMI.Name = "saveGraphTSMI";
+            this.saveGraphTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveGraphTSMI.Size = new System.Drawing.Size(226, 22);
+            this.saveGraphTSMI.Text = "Save Graphics...";
+            this.saveGraphTSMI.Click += new System.EventHandler(this.saveGraphTSMI_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
             // 
-            // openPaletteToolStripMenuItem
+            // openPalTSMI
             // 
-            this.openPaletteToolStripMenuItem.Name = "openPaletteToolStripMenuItem";
-            this.openPaletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.openPalTSMI.Name = "openPalTSMI";
+            this.openPalTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
                         | System.Windows.Forms.Keys.O)));
-            this.openPaletteToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.openPaletteToolStripMenuItem.Text = "Open Palette...";
+            this.openPalTSMI.Size = new System.Drawing.Size(226, 22);
+            this.openPalTSMI.Text = "Open Palette...";
+            this.openPalTSMI.Click += new System.EventHandler(this.openPalTSMI_Click);
             // 
-            // savePaletteToolStripMenuItem
+            // savePalTSMI
             // 
-            this.savePaletteToolStripMenuItem.Name = "savePaletteToolStripMenuItem";
-            this.savePaletteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.savePalTSMI.Name = "savePalTSMI";
+            this.savePalTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
                         | System.Windows.Forms.Keys.S)));
-            this.savePaletteToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.savePaletteToolStripMenuItem.Text = "Save Palette...";
+            this.savePalTSMI.Size = new System.Drawing.Size(226, 22);
+            this.savePalTSMI.Text = "Save Palette...";
+            this.savePalTSMI.Click += new System.EventHandler(this.savePalTSMI_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
             // 
-            // quitToolStripMenuItem
+            // quitTSMI
             // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.quitToolStripMenuItem.Text = "Quit";
+            this.quitTSMI.Name = "quitTSMI";
+            this.quitTSMI.Size = new System.Drawing.Size(226, 22);
+            this.quitTSMI.Text = "Quit";
+            this.quitTSMI.Click += new System.EventHandler(this.Quit);
             // 
             // imageToolStripMenuItem
             // 
             this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.formatToolStripMenuItem,
-            this.endiannessToolStripMenuItem,
-            this.modeToolStripMenuItem,
-            this.skipSizeToolStripMenuItem1,
+            this.graphFormatTSMI,
+            this.graphEndianTSMI,
+            this.graphModeTSMI,
+            this.graphSSTSMI,
             this.copyGraphicsToolStripMenuItem});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.imageToolStripMenuItem.Text = "Image";
             // 
-            // formatToolStripMenuItem
+            // graphFormatTSMI
             // 
-            this.formatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bitPerPixelToolStripMenuItem,
-            this.bitPerPixelToolStripMenuItem1,
-            this.bitPerPixelToolStripMenuItem2,
-            this.bitPerPixelToolStripMenuItem3,
-            this.bitPerPixelToolStripMenuItem4,
-            this.bitPerPixelToolStripMenuItem5,
-            this.bitPerPixelToolStripMenuItem6});
-            this.formatToolStripMenuItem.Name = "formatToolStripMenuItem";
-            this.formatToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.formatToolStripMenuItem.Text = "Format";
+            this.graphFormatTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphFormat_1bppTSMI,
+            this.graphFormat_2bppTSMI,
+            this.graphFormat_4bppTSMI,
+            this.graphFormat_8bppTSMI,
+            this.graphFormat_16bppTSMI,
+            this.graphFormat_24bppTSMI,
+            this.graphFormat_32bppTSMI});
+            this.graphFormatTSMI.Name = "graphFormatTSMI";
+            this.graphFormatTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphFormatTSMI.Text = "Format";
             // 
-            // bitPerPixelToolStripMenuItem
+            // graphFormat_1bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem.Name = "bitPerPixelToolStripMenuItem";
-            this.bitPerPixelToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem.Text = "1 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_1bppTSMI.Name = "graphFormat_1bppTSMI";
+            this.graphFormat_1bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_1bppTSMI.Text = "1 Bit per pixel";
+            this.graphFormat_1bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem1
+            // graphFormat_2bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem1.Name = "bitPerPixelToolStripMenuItem1";
-            this.bitPerPixelToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem1.Text = "2 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem1.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_2bppTSMI.Name = "graphFormat_2bppTSMI";
+            this.graphFormat_2bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_2bppTSMI.Text = "2 Bit per pixel";
+            this.graphFormat_2bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem2
+            // graphFormat_4bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem2.Name = "bitPerPixelToolStripMenuItem2";
-            this.bitPerPixelToolStripMenuItem2.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem2.Text = "4 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem2.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_4bppTSMI.Name = "graphFormat_4bppTSMI";
+            this.graphFormat_4bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_4bppTSMI.Text = "4 Bit per pixel";
+            this.graphFormat_4bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem3
+            // graphFormat_8bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem3.Name = "bitPerPixelToolStripMenuItem3";
-            this.bitPerPixelToolStripMenuItem3.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem3.Text = "8 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem3.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_8bppTSMI.Name = "graphFormat_8bppTSMI";
+            this.graphFormat_8bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_8bppTSMI.Text = "8 Bit per pixel";
+            this.graphFormat_8bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem4
+            // graphFormat_16bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem4.Name = "bitPerPixelToolStripMenuItem4";
-            this.bitPerPixelToolStripMenuItem4.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem4.Text = "16 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem4.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_16bppTSMI.Name = "graphFormat_16bppTSMI";
+            this.graphFormat_16bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_16bppTSMI.Text = "16 Bit per pixel";
+            this.graphFormat_16bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem5
+            // graphFormat_24bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem5.Name = "bitPerPixelToolStripMenuItem5";
-            this.bitPerPixelToolStripMenuItem5.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem5.Text = "24 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem5.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_24bppTSMI.Name = "graphFormat_24bppTSMI";
+            this.graphFormat_24bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_24bppTSMI.Text = "24 Bit per pixel";
+            this.graphFormat_24bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // bitPerPixelToolStripMenuItem6
+            // graphFormat_32bppTSMI
             // 
-            this.bitPerPixelToolStripMenuItem6.Name = "bitPerPixelToolStripMenuItem6";
-            this.bitPerPixelToolStripMenuItem6.Size = new System.Drawing.Size(150, 22);
-            this.bitPerPixelToolStripMenuItem6.Text = "32 Bit per pixel";
-            this.bitPerPixelToolStripMenuItem6.Click += new System.EventHandler(this.imbppToolStripMenuItem_Click);
+            this.graphFormat_32bppTSMI.Name = "graphFormat_32bppTSMI";
+            this.graphFormat_32bppTSMI.Size = new System.Drawing.Size(150, 22);
+            this.graphFormat_32bppTSMI.Text = "32 Bit per pixel";
+            this.graphFormat_32bppTSMI.Click += new System.EventHandler(this.graphicalFormatTSMI_Click);
             // 
-            // endiannessToolStripMenuItem
+            // graphEndianTSMI
             // 
-            this.endiannessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bigEndianToolStripMenuItem,
-            this.littleEndianToolStripMenuItem});
-            this.endiannessToolStripMenuItem.Name = "endiannessToolStripMenuItem";
-            this.endiannessToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.endiannessToolStripMenuItem.Text = "Endianness";
+            this.graphEndianTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphEndian_bigTSMI,
+            this.graphEndian_littleTSMI});
+            this.graphEndianTSMI.Name = "graphEndianTSMI";
+            this.graphEndianTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphEndianTSMI.Text = "Endianness";
             // 
-            // bigEndianToolStripMenuItem
+            // graphEndian_bigTSMI
             // 
-            this.bigEndianToolStripMenuItem.Name = "bigEndianToolStripMenuItem";
-            this.bigEndianToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.bigEndianToolStripMenuItem.Text = "BigEndian";
+            this.graphEndian_bigTSMI.Name = "graphEndian_bigTSMI";
+            this.graphEndian_bigTSMI.Size = new System.Drawing.Size(136, 22);
+            this.graphEndian_bigTSMI.Text = "BigEndian";
+            this.graphEndian_bigTSMI.Click += new System.EventHandler(this.graphEndianTSMI_Click);
             // 
-            // littleEndianToolStripMenuItem
+            // graphEndian_littleTSMI
             // 
-            this.littleEndianToolStripMenuItem.Name = "littleEndianToolStripMenuItem";
-            this.littleEndianToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.littleEndianToolStripMenuItem.Text = "LittleEndian";
+            this.graphEndian_littleTSMI.Name = "graphEndian_littleTSMI";
+            this.graphEndian_littleTSMI.Size = new System.Drawing.Size(136, 22);
+            this.graphEndian_littleTSMI.Text = "LittleEndian";
+            this.graphEndian_littleTSMI.Click += new System.EventHandler(this.graphEndianTSMI_Click);
             // 
-            // modeToolStripMenuItem
+            // graphModeTSMI
             // 
-            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.linearToolStripMenuItem,
-            this.tiledToolStripMenuItem});
-            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.modeToolStripMenuItem.Text = "Mode";
+            this.graphModeTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphMode_LinearTSMI,
+            this.graphMode_tiledTSMI});
+            this.graphModeTSMI.Name = "graphModeTSMI";
+            this.graphModeTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphModeTSMI.Text = "Mode";
             // 
-            // linearToolStripMenuItem
+            // graphMode_LinearTSMI
             // 
-            this.linearToolStripMenuItem.Name = "linearToolStripMenuItem";
-            this.linearToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-            this.linearToolStripMenuItem.Text = "Linear";
-            this.linearToolStripMenuItem.Click += new System.EventHandler(this.linearToolStripMenuItem_Click);
+            this.graphMode_LinearTSMI.Name = "graphMode_LinearTSMI";
+            this.graphMode_LinearTSMI.Size = new System.Drawing.Size(106, 22);
+            this.graphMode_LinearTSMI.Text = "Linear";
+            this.graphMode_LinearTSMI.Click += new System.EventHandler(this.graphicalModeTSMI_Click);
             // 
-            // tiledToolStripMenuItem
+            // graphMode_tiledTSMI
             // 
-            this.tiledToolStripMenuItem.Name = "tiledToolStripMenuItem";
-            this.tiledToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-            this.tiledToolStripMenuItem.Text = "Tiled";
-            this.tiledToolStripMenuItem.Click += new System.EventHandler(this.linearToolStripMenuItem_Click);
+            this.graphMode_tiledTSMI.Name = "graphMode_tiledTSMI";
+            this.graphMode_tiledTSMI.Size = new System.Drawing.Size(106, 22);
+            this.graphMode_tiledTSMI.Text = "Tiled";
+            this.graphMode_tiledTSMI.Click += new System.EventHandler(this.graphicalModeTSMI_Click);
             // 
-            // skipSizeToolStripMenuItem1
+            // graphSSTSMI
             // 
-            this.skipSizeToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byteToolStripMenuItem1,
-            this.bytesToolStripMenuItem,
-            this.bytesToolStripMenuItem1,
-            this.pixelToolStripMenuItem1,
-            this.tileRowToolStripMenuItem,
-            this.widthToolStripMenuItem,
-            this.heightRowsToolStripMenuItem});
-            this.skipSizeToolStripMenuItem1.Name = "skipSizeToolStripMenuItem1";
-            this.skipSizeToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
-            this.skipSizeToolStripMenuItem1.Text = "Skip size";
+            this.graphSSTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphSS_1byteTSMI,
+            this.graphSS_2bytesTSMI,
+            this.graphSS_4bytesTSMI,
+            this.graphSS_1pixTSMI,
+            this.graphSS_1trTSMI,
+            this.graphSS_widthTSMI,
+            this.graphSS_heightTSMI});
+            this.graphSSTSMI.Name = "graphSSTSMI";
+            this.graphSSTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphSSTSMI.Text = "Skip size";
             // 
-            // byteToolStripMenuItem1
+            // graphSS_1byteTSMI
             // 
-            this.byteToolStripMenuItem1.Name = "byteToolStripMenuItem1";
-            this.byteToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.byteToolStripMenuItem1.Text = "1 Byte";
+            this.graphSS_1byteTSMI.Name = "graphSS_1byteTSMI";
+            this.graphSS_1byteTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_1byteTSMI.Text = "1 Byte";
+            this.graphSS_1byteTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // bytesToolStripMenuItem
+            // graphSS_2bytesTSMI
             // 
-            this.bytesToolStripMenuItem.Name = "bytesToolStripMenuItem";
-            this.bytesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.bytesToolStripMenuItem.Text = "2 Bytes";
+            this.graphSS_2bytesTSMI.Name = "graphSS_2bytesTSMI";
+            this.graphSS_2bytesTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_2bytesTSMI.Text = "2 Bytes";
+            this.graphSS_2bytesTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // bytesToolStripMenuItem1
+            // graphSS_4bytesTSMI
             // 
-            this.bytesToolStripMenuItem1.Name = "bytesToolStripMenuItem1";
-            this.bytesToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.bytesToolStripMenuItem1.Text = "4 Bytes";
+            this.graphSS_4bytesTSMI.Name = "graphSS_4bytesTSMI";
+            this.graphSS_4bytesTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_4bytesTSMI.Text = "4 Bytes";
+            this.graphSS_4bytesTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // pixelToolStripMenuItem1
+            // graphSS_1pixTSMI
             // 
-            this.pixelToolStripMenuItem1.Name = "pixelToolStripMenuItem1";
-            this.pixelToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.pixelToolStripMenuItem1.Text = "1 Pixel Row";
+            this.graphSS_1pixTSMI.Name = "graphSS_1pixTSMI";
+            this.graphSS_1pixTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_1pixTSMI.Text = "1 Pixel Row";
+            this.graphSS_1pixTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // tileRowToolStripMenuItem
+            // graphSS_1trTSMI
             // 
-            this.tileRowToolStripMenuItem.Name = "tileRowToolStripMenuItem";
-            this.tileRowToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.tileRowToolStripMenuItem.Text = "1 Tile Row";
+            this.graphSS_1trTSMI.Name = "graphSS_1trTSMI";
+            this.graphSS_1trTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_1trTSMI.Text = "1 Tile Row";
+            this.graphSS_1trTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // widthToolStripMenuItem
+            // graphSS_widthTSMI
             // 
-            this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
-            this.widthToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.widthToolStripMenuItem.Text = "(Width) Rows";
+            this.graphSS_widthTSMI.Name = "graphSS_widthTSMI";
+            this.graphSS_widthTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_widthTSMI.Text = "(Width) Rows";
+            this.graphSS_widthTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // heightRowsToolStripMenuItem
+            // graphSS_heightTSMI
             // 
-            this.heightRowsToolStripMenuItem.Name = "heightRowsToolStripMenuItem";
-            this.heightRowsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.heightRowsToolStripMenuItem.Text = "(Height) Rows";
+            this.graphSS_heightTSMI.Name = "graphSS_heightTSMI";
+            this.graphSS_heightTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_heightTSMI.Text = "(Height) Rows";
+            this.graphSS_heightTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // copyGraphicsToolStripMenuItem
             // 
@@ -355,176 +369,190 @@ namespace TiledGGD
             // paletteToolStripMenuItem
             // 
             this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.formatToolStripMenuItem1,
-            this.endiannessToolStripMenuItem1,
-            this.alphaLocationToolStripMenuItem,
-            this.colourOrderToolStripMenuItem,
-            this.skipSizeToolStripMenuItem,
+            this.palFormatTSMI,
+            this.palEndianTSMI,
+            this.palAlphaTSMI,
+            this.palOrderTSMI,
+            this.palSSTSMI,
             this.copyPaletteToolStripMenuItem});
             this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
             this.paletteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.paletteToolStripMenuItem.Text = "Palette";
             // 
-            // formatToolStripMenuItem1
+            // palFormatTSMI
             // 
-            this.formatToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bytesPerColourToolStripMenuItem,
-            this.bytesPerColourToolStripMenuItem1,
-            this.bytesPerColourToolStripMenuItem2});
-            this.formatToolStripMenuItem1.Name = "formatToolStripMenuItem1";
-            this.formatToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
-            this.formatToolStripMenuItem1.Text = "Format";
+            this.palFormatTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palFormat_2BpcTSMI,
+            this.palFormat_3BpcTSMI,
+            this.palFormat_4BpcTSMI});
+            this.palFormatTSMI.Name = "palFormatTSMI";
+            this.palFormatTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palFormatTSMI.Text = "Format";
             // 
-            // bytesPerColourToolStripMenuItem
+            // palFormat_2BpcTSMI
             // 
-            this.bytesPerColourToolStripMenuItem.Name = "bytesPerColourToolStripMenuItem";
-            this.bytesPerColourToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.bytesPerColourToolStripMenuItem.Text = "2 Bytes per colour";
+            this.palFormat_2BpcTSMI.Name = "palFormat_2BpcTSMI";
+            this.palFormat_2BpcTSMI.Size = new System.Drawing.Size(168, 22);
+            this.palFormat_2BpcTSMI.Text = "2 Bytes per colour";
+            this.palFormat_2BpcTSMI.Click += new System.EventHandler(this.palFormatTSMI_Click);
             // 
-            // bytesPerColourToolStripMenuItem1
+            // palFormat_3BpcTSMI
             // 
-            this.bytesPerColourToolStripMenuItem1.Name = "bytesPerColourToolStripMenuItem1";
-            this.bytesPerColourToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
-            this.bytesPerColourToolStripMenuItem1.Text = "3 Bytes per colour";
+            this.palFormat_3BpcTSMI.Name = "palFormat_3BpcTSMI";
+            this.palFormat_3BpcTSMI.Size = new System.Drawing.Size(168, 22);
+            this.palFormat_3BpcTSMI.Text = "3 Bytes per colour";
+            this.palFormat_3BpcTSMI.Click += new System.EventHandler(this.palFormatTSMI_Click);
             // 
-            // bytesPerColourToolStripMenuItem2
+            // palFormat_4BpcTSMI
             // 
-            this.bytesPerColourToolStripMenuItem2.Name = "bytesPerColourToolStripMenuItem2";
-            this.bytesPerColourToolStripMenuItem2.Size = new System.Drawing.Size(168, 22);
-            this.bytesPerColourToolStripMenuItem2.Text = "4 Bytes per colour";
+            this.palFormat_4BpcTSMI.Name = "palFormat_4BpcTSMI";
+            this.palFormat_4BpcTSMI.Size = new System.Drawing.Size(168, 22);
+            this.palFormat_4BpcTSMI.Text = "4 Bytes per colour";
+            this.palFormat_4BpcTSMI.Click += new System.EventHandler(this.palFormatTSMI_Click);
             // 
-            // endiannessToolStripMenuItem1
+            // palEndianTSMI
             // 
-            this.endiannessToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bigEndianToolStripMenuItem1,
-            this.littleEndianToolStripMenuItem1});
-            this.endiannessToolStripMenuItem1.Name = "endiannessToolStripMenuItem1";
-            this.endiannessToolStripMenuItem1.Size = new System.Drawing.Size(234, 22);
-            this.endiannessToolStripMenuItem1.Text = "Endianness";
+            this.palEndianTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palEndian_bigTSMI,
+            this.palEndian_littleTSMI});
+            this.palEndianTSMI.Name = "palEndianTSMI";
+            this.palEndianTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palEndianTSMI.Text = "Endianness";
             // 
-            // bigEndianToolStripMenuItem1
+            // palEndian_bigTSMI
             // 
-            this.bigEndianToolStripMenuItem1.Name = "bigEndianToolStripMenuItem1";
-            this.bigEndianToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            this.bigEndianToolStripMenuItem1.Text = "BigEndian";
+            this.palEndian_bigTSMI.Name = "palEndian_bigTSMI";
+            this.palEndian_bigTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palEndian_bigTSMI.Text = "BigEndian";
+            this.palEndian_bigTSMI.Click += new System.EventHandler(this.palEndianTSMI_Click);
             // 
-            // littleEndianToolStripMenuItem1
+            // palEndian_littleTSMI
             // 
-            this.littleEndianToolStripMenuItem1.Name = "littleEndianToolStripMenuItem1";
-            this.littleEndianToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            this.littleEndianToolStripMenuItem1.Text = "LittleEndian";
+            this.palEndian_littleTSMI.Name = "palEndian_littleTSMI";
+            this.palEndian_littleTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palEndian_littleTSMI.Text = "LittleEndian";
+            this.palEndian_littleTSMI.Click += new System.EventHandler(this.palEndianTSMI_Click);
             // 
-            // alphaLocationToolStripMenuItem
+            // palAlphaTSMI
             // 
-            this.alphaLocationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.endToolStripMenuItem,
-            this.beginningToolStripMenuItem});
-            this.alphaLocationToolStripMenuItem.Name = "alphaLocationToolStripMenuItem";
-            this.alphaLocationToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.alphaLocationToolStripMenuItem.Text = "Alpha location";
+            this.palAlphaTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palAlpha_endTSMI,
+            this.palAlpha_startTSMI});
+            this.palAlphaTSMI.Name = "palAlphaTSMI";
+            this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palAlphaTSMI.Text = "Alpha location";
             // 
-            // endToolStripMenuItem
+            // palAlpha_endTSMI
             // 
-            this.endToolStripMenuItem.Name = "endToolStripMenuItem";
-            this.endToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.endToolStripMenuItem.Text = "End";
+            this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
+            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_endTSMI.Text = "End";
+            this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
-            // beginningToolStripMenuItem
+            // palAlpha_startTSMI
             // 
-            this.beginningToolStripMenuItem.Name = "beginningToolStripMenuItem";
-            this.beginningToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.beginningToolStripMenuItem.Text = "Beginning";
+            this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
+            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_startTSMI.Text = "Beginning";
+            this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
-            // colourOrderToolStripMenuItem
+            // palOrderTSMI
             // 
-            this.colourOrderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bGRToolStripMenuItem,
-            this.rGBToolStripMenuItem,
-            this.rBGToolStripMenuItem,
-            this.gRBToolStripMenuItem,
-            this.gBRToolStripMenuItem,
-            this.bRGToolStripMenuItem});
-            this.colourOrderToolStripMenuItem.Name = "colourOrderToolStripMenuItem";
-            this.colourOrderToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.colourOrderToolStripMenuItem.Text = "Colour order";
+            this.palOrderTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palOrder_bgrTSMI,
+            this.palOrder_rgbTSMI,
+            this.palOrder_rbgTSMI,
+            this.palOrder_grbTSMI,
+            this.palOrder_gbrTSMI,
+            this.palOrder_brgTSMI});
+            this.palOrderTSMI.Name = "palOrderTSMI";
+            this.palOrderTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palOrderTSMI.Text = "Colour order";
             // 
-            // bGRToolStripMenuItem
+            // palOrder_bgrTSMI
             // 
-            this.bGRToolStripMenuItem.Name = "bGRToolStripMenuItem";
-            this.bGRToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.bGRToolStripMenuItem.Text = "BGR";
+            this.palOrder_bgrTSMI.Name = "palOrder_bgrTSMI";
+            this.palOrder_bgrTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_bgrTSMI.Text = "BGR";
+            this.palOrder_bgrTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // rGBToolStripMenuItem
+            // palOrder_rgbTSMI
             // 
-            this.rGBToolStripMenuItem.Name = "rGBToolStripMenuItem";
-            this.rGBToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.rGBToolStripMenuItem.Text = "RGB";
+            this.palOrder_rgbTSMI.Name = "palOrder_rgbTSMI";
+            this.palOrder_rgbTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_rgbTSMI.Text = "RGB";
+            this.palOrder_rgbTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // rBGToolStripMenuItem
+            // palOrder_rbgTSMI
             // 
-            this.rBGToolStripMenuItem.Name = "rBGToolStripMenuItem";
-            this.rBGToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.rBGToolStripMenuItem.Text = "RBG";
+            this.palOrder_rbgTSMI.Name = "palOrder_rbgTSMI";
+            this.palOrder_rbgTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_rbgTSMI.Text = "RBG";
+            this.palOrder_rbgTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // gRBToolStripMenuItem
+            // palOrder_grbTSMI
             // 
-            this.gRBToolStripMenuItem.Name = "gRBToolStripMenuItem";
-            this.gRBToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.gRBToolStripMenuItem.Text = "GRB";
+            this.palOrder_grbTSMI.Name = "palOrder_grbTSMI";
+            this.palOrder_grbTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_grbTSMI.Text = "GRB";
+            this.palOrder_grbTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // gBRToolStripMenuItem
+            // palOrder_gbrTSMI
             // 
-            this.gBRToolStripMenuItem.Name = "gBRToolStripMenuItem";
-            this.gBRToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.gBRToolStripMenuItem.Text = "GBR";
+            this.palOrder_gbrTSMI.Name = "palOrder_gbrTSMI";
+            this.palOrder_gbrTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_gbrTSMI.Text = "GBR";
+            this.palOrder_gbrTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // bRGToolStripMenuItem
+            // palOrder_brgTSMI
             // 
-            this.bRGToolStripMenuItem.Name = "bRGToolStripMenuItem";
-            this.bRGToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.bRGToolStripMenuItem.Text = "BRG";
+            this.palOrder_brgTSMI.Name = "palOrder_brgTSMI";
+            this.palOrder_brgTSMI.Size = new System.Drawing.Size(96, 22);
+            this.palOrder_brgTSMI.Text = "BRG";
+            this.palOrder_brgTSMI.Click += new System.EventHandler(this.palOrderTSMI_Click);
             // 
-            // skipSizeToolStripMenuItem
+            // palSSTSMI
             // 
-            this.skipSizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byteToolStripMenuItem,
-            this.pixelToolStripMenuItem,
-            this.pixelsToolStripMenuItem,
-            this.coloursToolStripMenuItem,
-            this.kBytesToolStripMenuItem});
-            this.skipSizeToolStripMenuItem.Name = "skipSizeToolStripMenuItem";
-            this.skipSizeToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.skipSizeToolStripMenuItem.Text = "Skip size";
+            this.palSSTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palSS_1byteTSMI,
+            this.palSS_1colTSMI,
+            this.palSS_16colTSMI,
+            this.palSS_256colTSMI,
+            this.palSS_64kbytesTSMI});
+            this.palSSTSMI.Name = "palSSTSMI";
+            this.palSSTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palSSTSMI.Text = "Skip size";
             // 
-            // byteToolStripMenuItem
+            // palSS_1byteTSMI
             // 
-            this.byteToolStripMenuItem.Name = "byteToolStripMenuItem";
-            this.byteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.byteToolStripMenuItem.Text = "1 Byte";
+            this.palSS_1byteTSMI.Name = "palSS_1byteTSMI";
+            this.palSS_1byteTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palSS_1byteTSMI.Text = "1 Byte";
+            this.palSS_1byteTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
-            // pixelToolStripMenuItem
+            // palSS_1colTSMI
             // 
-            this.pixelToolStripMenuItem.Name = "pixelToolStripMenuItem";
-            this.pixelToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.pixelToolStripMenuItem.Text = "1 Colour";
+            this.palSS_1colTSMI.Name = "palSS_1colTSMI";
+            this.palSS_1colTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palSS_1colTSMI.Text = "1 Colour";
             // 
-            // pixelsToolStripMenuItem
+            // palSS_16colTSMI
             // 
-            this.pixelsToolStripMenuItem.Name = "pixelsToolStripMenuItem";
-            this.pixelsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.pixelsToolStripMenuItem.Text = "16 Colours";
+            this.palSS_16colTSMI.Name = "palSS_16colTSMI";
+            this.palSS_16colTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palSS_16colTSMI.Text = "16 Colours";
             // 
-            // coloursToolStripMenuItem
+            // palSS_256colTSMI
             // 
-            this.coloursToolStripMenuItem.Name = "coloursToolStripMenuItem";
-            this.coloursToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.coloursToolStripMenuItem.Text = "256 Colours";
+            this.palSS_256colTSMI.Name = "palSS_256colTSMI";
+            this.palSS_256colTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palSS_256colTSMI.Text = "256 Colours";
             // 
-            // kBytesToolStripMenuItem
+            // palSS_64kbytesTSMI
             // 
-            this.kBytesToolStripMenuItem.Name = "kBytesToolStripMenuItem";
-            this.kBytesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.kBytesToolStripMenuItem.Text = "64k Bytes";
+            this.palSS_64kbytesTSMI.Name = "palSS_64kbytesTSMI";
+            this.palSS_64kbytesTSMI.Size = new System.Drawing.Size(136, 22);
+            this.palSS_64kbytesTSMI.Text = "64k Bytes";
             // 
             // copyPaletteToolStripMenuItem
             // 
@@ -538,25 +566,25 @@ namespace TiledGGD
             // otherToolStripMenuItem
             // 
             this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem,
-            this.shortcutsToolStripMenuItem});
+            this.aboutTSMI,
+            this.shortcutsTSMI});
             this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
             this.otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.otherToolStripMenuItem.Text = "Other";
             // 
-            // aboutToolStripMenuItem
+            // aboutTSMI
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutTSMI.Name = "aboutTSMI";
+            this.aboutTSMI.Size = new System.Drawing.Size(133, 22);
+            this.aboutTSMI.Text = "About...";
+            this.aboutTSMI.Click += new System.EventHandler(this.aboutTSMI_Click);
             // 
-            // shortcutsToolStripMenuItem
+            // shortcutsTSMI
             // 
-            this.shortcutsToolStripMenuItem.Name = "shortcutsToolStripMenuItem";
-            this.shortcutsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.shortcutsToolStripMenuItem.Text = "Shortcuts...";
-            this.shortcutsToolStripMenuItem.Click += new System.EventHandler(this.shortcutsToolStripMenuItem_Click);
+            this.shortcutsTSMI.Name = "shortcutsTSMI";
+            this.shortcutsTSMI.Size = new System.Drawing.Size(133, 22);
+            this.shortcutsTSMI.Text = "Shortcuts...";
+            this.shortcutsTSMI.Click += new System.EventHandler(this.shortcutsTSMI_Click);
             // 
             // DataPanel
             // 
@@ -621,70 +649,70 @@ namespace TiledGGD
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveGraphicsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openGraphTSMI;
+        private System.Windows.Forms.ToolStripMenuItem saveGraphTSMI;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem openPaletteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem savePaletteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openPalTSMI;
+        private System.Windows.Forms.ToolStripMenuItem savePalTSMI;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quitTSMI;
         private DoubleBufferedPanel PalettePanel;
         private System.Windows.Forms.Panel DataPanel;
         private DoubleBufferedPanel GraphicsPanel;
         private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem bitPerPixelToolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem linearToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tiledToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem graphFormatTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_1bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_2bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_4bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_8bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_16bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_24bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphFormat_32bppTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphModeTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphMode_LinearTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphMode_tiledTSMI;
         private System.Windows.Forms.ToolStripMenuItem paletteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bytesPerColourToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bytesPerColourToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bytesPerColourToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem alphaLocationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem beginningToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem colourOrderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bGRToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rGBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rBGToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gRBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gBRToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bRGToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem skipSizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pixelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pixelsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem skipSizeToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem byteToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bytesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bytesToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem pixelToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem tileRowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem coloursToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem kBytesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem widthToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem heightRowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem palFormatTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palFormat_2BpcTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palFormat_3BpcTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palFormat_4BpcTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palAlphaTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palAlpha_endTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palAlpha_startTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrderTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_bgrTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_rgbTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_rbgTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_grbTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_gbrTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palOrder_brgTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSSTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSS_1byteTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSS_1colTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSS_16colTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSSTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_1byteTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_2bytesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_4bytesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_1pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_1trTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSS_256colTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palSS_64kbytesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_widthTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_heightTSMI;
         private System.Windows.Forms.ToolStripMenuItem copyGraphicsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyPaletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutTSMI;
         private AboutBox aboutBox;
         private ControlShorts controlShortBox;
-        private System.Windows.Forms.ToolStripMenuItem shortcutsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem endiannessToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bigEndianToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem littleEndianToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem endiannessToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem bigEndianToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem littleEndianToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem shortcutsTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphEndianTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphEndian_bigTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphEndian_littleTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palEndianTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palEndian_bigTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palEndian_littleTSMI;
     }
 }
 

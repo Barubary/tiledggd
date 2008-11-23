@@ -214,7 +214,7 @@ namespace TiledGGD
         /// <summary>
         /// How far the data will be skipped ahead/back when pushing the appropriate button
         /// </summary>
-        internal static long SkipSize { get { return skipSize; } private set { skipSize = Math.Abs(value); } }
+        internal static long SkipSize { get { return skipSize; } set { skipSize = Math.Abs(value); } }
         #endregion
 
         #region Field: SkipMetric
@@ -225,7 +225,7 @@ namespace TiledGGD
         internal static GraphicsSkipMetric SkipMetric
         {
             get { return skipMetric; }
-            private set { skipMetric = value; }
+            set { skipMetric = value; }
         }
         #endregion
 
@@ -286,19 +286,7 @@ namespace TiledGGD
         #region Methods: paint
         internal override void paint(object sender, PaintEventArgs e)
         {
-            Bitmap img;
-            switch (graphFormat)
-            {
-                case GraphicsFormat.FORMAT_1BPP: img = paint1BPP(); break;
-                case GraphicsFormat.FORMAT_2BPP: img = paint2BPP(); break;
-                case GraphicsFormat.FORMAT_4BPP: img = paint4BPP(); break;
-                case GraphicsFormat.FORMAT_8BPP: img = paint8BPP(); break;
-                case GraphicsFormat.FORMAT_16BPP: img = paint16Bpp(); break;
-                case GraphicsFormat.FORMAT_24BPP: img = paint24Bpp(); break;
-                case GraphicsFormat.FORMAT_32BPP: img = paint32Bpp(); break;
-                default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
-            }
-            e.Graphics.DrawImage(img, 0, 0);
+            e.Graphics.DrawImage(toBitmap(), 0, 0);
         }
 
         #region paint1BPP
@@ -317,6 +305,8 @@ namespace TiledGGD
             Color dark = Color.FromArgb(-0x7F181818), light = Color.FromArgb(-0x7FA8A8A8);
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -325,9 +315,9 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = 0, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 8; b++)
                     {
@@ -365,9 +355,9 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 8; b++)
                     {
@@ -378,8 +368,8 @@ namespace TiledGGD
                         else
                             j = (uint)(bt & (0x80 >> b));
 
-                        y = (int)(Zoom * (pixNum / width));
-                        x = (int)(Zoom * (pixNum % width));
+                        y = (int)(Zoom * ((pixNum - 1) / width));
+                        x = (int)(Zoom * ((pixNum - 1) % width));
 
                         for (int zy = 0; zy < Zoom; zy++)
                             for (int zx = 0; zx < Zoom; zx++)
@@ -410,6 +400,8 @@ namespace TiledGGD
 
             Color[] palette = paletteData.getFullPaletteAsColor();
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -418,9 +410,9 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
@@ -458,22 +450,21 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
-                        pixNum++;
-                        if (pixNum >= nPixels)
+                        if (++pixNum >= nPixels)
                             break;
                         if (IsBigEndian)
                             j = (uint)((bt & (0x03 << (b * 2))) >> (b * 2));
                         else
                             j = (uint)((bt & (0xC0 >> (b * 2))) >> ((3 - b) * 2));
-                            
-                        x = (int)(Zoom * (pixNum % width));
-                        y = (int)(Zoom * (pixNum / width));
+
+                        x = (int)(Zoom * ((pixNum - 1) % width));
+                        y = (int)(Zoom * ((pixNum - 1) / width));
 
                         for (int zy = 0; zy < Zoom; zy++)
                             for (int zx = 0; zx < Zoom; zx++)
@@ -504,6 +495,8 @@ namespace TiledGGD
 
             Color[] palette = paletteData.getFullPaletteAsColor();
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -512,9 +505,9 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
@@ -552,9 +545,9 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
@@ -566,8 +559,8 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xF0 >> (b * 4))) >> ((1 - b) * 4));
 
-                        x = (int)(Zoom * (pixNum % width));
-                        y = (int)(Zoom * (pixNum / width));
+                        x = (int)(Zoom * ((pixNum - 1) % width));
+                        y = (int)(Zoom * ((pixNum - 1) / width));
 
                         for (int zy = 0; zy < Zoom; zy++)
                             for (int zx = 0; zx < Zoom; zx++)
@@ -594,6 +587,8 @@ namespace TiledGGD
             Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
 
             Color[] palette = this.paletteData.getFullPaletteAsColor();
+
+            bool atEnd = false;
             
             if (Tiled)
             {
@@ -604,7 +599,7 @@ namespace TiledGGD
                 int xintl = 0, yintl = 0; // x & y inside tile
                 
 
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     if (++xintl == TileSize.X)
                     {
@@ -617,7 +612,7 @@ namespace TiledGGD
                     }
                     x = (int)(Zoom * (tx * TileSize.X + xintl));
                     y = (int)(Zoom * (ty * TileSize.Y + yintl));
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
                     for (int zy = 0; zy < Zoom; zy++)
                         for (int zx = 0; zx < Zoom; zx++)
                             bitmap.SetPixel(x + zx, y + zy, palette[bt]);
@@ -629,9 +624,9 @@ namespace TiledGGD
             {
                 #region linear
 
-                for (int i = 0; i < nNecessBytes; i++)
+                for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++);
+                    bt = getData(dataOffset++, out atEnd);
 
                     x = (int)(Zoom * (i % width));
                     y = (int)(Zoom * (i / width));
@@ -660,6 +655,8 @@ namespace TiledGGD
             byte[] bytes = new byte[2];
             long dataOffset = Offset;
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -668,10 +665,10 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = 0, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -700,10 +697,10 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     x = (int)(Zoom * (i % width));
@@ -735,6 +732,8 @@ namespace TiledGGD
             byte[] bytes = new byte[3];
             long dataOffset = Offset;
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -743,11 +742,11 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = 0, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
-                    bytes[2] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[2] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -776,12 +775,12 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
-                    bytes[2] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[2] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     x = (int)(Zoom * (i % width));
@@ -813,6 +812,8 @@ namespace TiledGGD
             byte[] bytes = new byte[4];
             long dataOffset = Offset;
 
+            bool atEnd = false;
+
             if (Tiled)
             {
                 #region tiled
@@ -821,12 +822,12 @@ namespace TiledGGD
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = 0, yintl = 0; // x & y inside tile
 
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
-                    bytes[2] = getData(dataOffset++);
-                    bytes[3] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[2] = getData(dataOffset++, out atEnd);
+                    bytes[3] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -851,13 +852,13 @@ namespace TiledGGD
             else
             {
                 #region linear
-                for (int i = 0; i < nPixels; i++)
+                for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
-                    bytes[0] = getData(dataOffset++);
-                    bytes[1] = getData(dataOffset++);
-                    bytes[2] = getData(dataOffset++);
-                    bytes[3] = getData(dataOffset++);
+                    bytes[0] = getData(dataOffset++, out atEnd);
+                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[2] = getData(dataOffset++, out atEnd);
+                    bytes[3] = getData(dataOffset++, out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     x = (int)(Zoom * (i % width));
@@ -880,19 +881,7 @@ namespace TiledGGD
 
         internal override void copyToClipboard()
         {
-            Bitmap img;
-            switch (GraphFormat)
-            {
-                case GraphicsFormat.FORMAT_1BPP: img = paint1BPP(); break;
-                case GraphicsFormat.FORMAT_2BPP: img = paint2BPP(); break;
-                case GraphicsFormat.FORMAT_4BPP: img = paint4BPP(); break;
-                case GraphicsFormat.FORMAT_8BPP: img = paint8BPP(); break;
-                case GraphicsFormat.FORMAT_16BPP: img = paint16Bpp(); break;
-                case GraphicsFormat.FORMAT_24BPP: img = paint24Bpp(); break;
-                case GraphicsFormat.FORMAT_32BPP: img = paint32Bpp(); break;
-                default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
-            }
-            Clipboard.SetImage(img);
+            Clipboard.SetImage(toBitmap());
         }
         
         #region Method: getPixel(idx)
@@ -1066,6 +1055,21 @@ namespace TiledGGD
             DoSkip(positive, bytesToSkip);
         }
         #endregion
+
+        internal override Bitmap toBitmap()
+        {
+            switch (GraphFormat)
+            {
+                case GraphicsFormat.FORMAT_1BPP: return paint1BPP();
+                case GraphicsFormat.FORMAT_2BPP: return paint2BPP();
+                case GraphicsFormat.FORMAT_4BPP: return paint4BPP();
+                case GraphicsFormat.FORMAT_8BPP: return paint8BPP();
+                case GraphicsFormat.FORMAT_16BPP: return paint16Bpp();
+                case GraphicsFormat.FORMAT_24BPP: return paint24Bpp();
+                case GraphicsFormat.FORMAT_32BPP: return paint32Bpp();
+                default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
+            }
+        }
     }
 
     #region Graphics enums (GraphicsFormat, GraphicsSkipMetric)

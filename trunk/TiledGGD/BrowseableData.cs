@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 
 namespace TiledGGD
 {
@@ -48,7 +49,10 @@ namespace TiledGGD
         /// </summary>
         /// <param name="idx">The index of the byte</param>
         /// <returns>The byte at index idx, or 0 if it's out of range</returns>
-        protected byte getData(long idx) { try { return this.data[idx]; } catch (IndexOutOfRangeException) { return 0; } }
+        protected byte getData(long idx, out bool end) {
+            try { end = false; return this.data[idx]; }
+            catch (IndexOutOfRangeException) { end = true; return 0; }
+        }
         #endregion
 
         #region Field: Length
@@ -107,5 +111,10 @@ namespace TiledGGD
         /// Copy the currently shown data onto the clipboard
         /// </summary>
         internal abstract void copyToClipboard();
+
+        /// <summary>
+        /// Save the currently shown data in a Bitmap
+        /// </summary>
+        internal abstract Bitmap toBitmap();
     }
 }

@@ -72,6 +72,7 @@ namespace TiledGGD
             this.graphHSS_4pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.setTileSizeTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,6 +199,7 @@ namespace TiledGGD
             this.graphSSTSMI,
             this.graphWSSTSMI,
             this.graphHSSTSMI,
+            this.setTileSizeTSMI,
             this.copyGraphicsToolStripMenuItem});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
@@ -469,6 +471,14 @@ namespace TiledGGD
             this.graphHSS_16pixTSMI.Text = "16 pixels";
             this.graphHSS_16pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
             // 
+            // setTileSizeTSMI
+            // 
+            this.setTileSizeTSMI.Name = "setTileSizeTSMI";
+            this.setTileSizeTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.setTileSizeTSMI.Size = new System.Drawing.Size(211, 22);
+            this.setTileSizeTSMI.Text = "Set Tile Size...";
+            this.setTileSizeTSMI.Click += new System.EventHandler(this.setTileSizeTSMI_Click);
+            // 
             // copyGraphicsToolStripMenuItem
             // 
             this.copyGraphicsToolStripMenuItem.Name = "copyGraphicsToolStripMenuItem";
@@ -705,6 +715,7 @@ namespace TiledGGD
             this.DataPanel.Name = "DataPanel";
             this.DataPanel.Size = new System.Drawing.Size(256, 291);
             this.DataPanel.TabIndex = 2;
+            this.DataPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DataPanel_Paint);
             // 
             // listBox2
             // 
@@ -736,6 +747,9 @@ namespace TiledGGD
             this.GraphicsPanel.Name = "GraphicsPanel";
             this.GraphicsPanel.Size = new System.Drawing.Size(510, 553);
             this.GraphicsPanel.TabIndex = 3;
+            this.GraphicsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphicsPanel_Paint);
+            this.GraphicsPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicsPanel_DragDrop);
+            this.GraphicsPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.palGraphDragEnter);
             // 
             // PalettePanel
             // 
@@ -744,6 +758,9 @@ namespace TiledGGD
             this.PalettePanel.Name = "PalettePanel";
             this.PalettePanel.Size = new System.Drawing.Size(256, 256);
             this.PalettePanel.TabIndex = 1;
+            this.PalettePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.PalettePanel_Paint);
+            this.PalettePanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.PalettePanel_DragDrop);
+            this.PalettePanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.palGraphDragEnter);
             // 
             // aboutBox
             // 
@@ -772,6 +789,8 @@ namespace TiledGGD
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "TiledGGD";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
+            this.ResizeEnd += new System.EventHandler(this.ReconfigurePanels);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.DataPanel.ResumeLayout(false);
@@ -862,6 +881,7 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem graphHSS_4pixTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphHSS_8pixTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphHSS_16pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem setTileSizeTSMI;
     }
 }
 

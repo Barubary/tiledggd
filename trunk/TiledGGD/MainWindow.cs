@@ -84,6 +84,8 @@ namespace TiledGGD
                 case Keys.F: graphicsData.toggleTiled(); break;
                 case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); else return; break;
                 case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); else return; break;
+                case Keys.W: graphicsData.toggleWidthSkipSize(); break;
+                case Keys.H: graphicsData.toggleHeightSkipSize(); break;
             }
             updateMenu();
             DoRefresh();
@@ -121,7 +123,9 @@ namespace TiledGGD
             (this.graphSSTSMI.DropDownItems[(int)GraphicsData.SkipSize] as ToolStripMenuItem).Checked = true;
 
             // palette alpha location
-            palAlpha_endTSMI.Checked = !(palAlpha_startTSMI.Checked = (PaletteData.alphaLoc != AlphaLocation.END));
+            foreach (ToolStripMenuItem tsmi in this.palAlphaTSMI.DropDownItems)
+                tsmi.Checked = false;
+            (this.palAlphaTSMI.DropDownItems[(int)PaletteData.alphaLoc] as ToolStripMenuItem).Checked = true;
 
             // palette order
             foreach (ToolStripMenuItem tsme in palOrderTSMI.DropDownItems)
@@ -156,12 +160,15 @@ namespace TiledGGD
             // width skip size
             foreach (ToolStripMenuItem tsmi in this.graphWSSTSMI.DropDownItems)
                 tsmi.Checked = false;
-            (this.graphWSSTSMI.DropDownItems[(int)Math.Log(GraphicsData.WidthSkipSize, 2)] as ToolStripMenuItem).Checked = true;
+            (this.graphWSSTSMI.DropDownItems[(int)GraphicsData.WidthSkipSize] as ToolStripMenuItem).Checked = true;
 
             // height skip size
             foreach (ToolStripMenuItem tsmi in this.graphHSSTSMI.DropDownItems)
                 tsmi.Checked = false;
-            (this.graphHSSTSMI.DropDownItems[(int)Math.Log(GraphicsData.HeightSkipSize, 2)] as ToolStripMenuItem).Checked = true;
+            (this.graphHSSTSMI.DropDownItems[(int)GraphicsData.HeightSkipSize] as ToolStripMenuItem).Checked = true;
+
+            // update the data panel, just to be sure
+            DataPanel_Paint(this, null);
         }
         #endregion
 
@@ -261,8 +268,14 @@ namespace TiledGGD
             }
             this.listBox1.Items.Add("Skip Size:\t" + val);
 
-            this.listBox1.Items.Add("Width Skip Size:\t" + GraphicsData.WidthSkipSize + " pixels");
-            this.listBox1.Items.Add("Height Skip Size:\t" + GraphicsData.HeightSkipSize + " pixels");
+            if (GraphicsData.WidthSkipSize != HWSkipSize.SKIPSIZE_1TILE)
+                this.listBox1.Items.Add("Width Skip Size:\t" + GraphicsData.WidthSkipSizeUInt + " pixels");
+            else
+                this.listBox1.Items.Add("Width Skip Size:\t1 Tile");
+            if (GraphicsData.HeightSkipSize != HWSkipSize.SKIPSIZE_1TILE)
+                this.listBox1.Items.Add("Height Skip Size:\t" + GraphicsData.HeightSkipSizeUInt + " pixels");
+            else
+                this.listBox1.Items.Add("Height Skip Size:\t1 Tile");
             #endregion
 
             #region palette data
@@ -299,7 +312,7 @@ namespace TiledGGD
             {
                 case AlphaLocation.START: val = "Start"; break;
                 case AlphaLocation.END: val = "End"; break;
-                case AlphaLocation.NONE: val = "Start"; break;
+                case AlphaLocation.NONE: val = "Start, but ignored"; break;
                 default: val = "ERROR"; break;
             }
             this.listBox2.Items.Add("Alpha Location:\t" + val);
@@ -482,7 +495,9 @@ namespace TiledGGD
                 PaletteData.alphaLoc = AlphaLocation.END;
             else if (sender == palAlpha_startTSMI)
                 PaletteData.alphaLoc = AlphaLocation.START;
-            else 
+            else if (sender == palAlpha_noneTSMI)
+                PaletteData.alphaLoc = AlphaLocation.NONE;
+            else
                 throw new Exception("Invalid Alpha location action");
             DoRefresh();
             updateMenu();
@@ -633,18 +648,20 @@ namespace TiledGGD
         private void graphWSSTSMI_Click(object sender, EventArgs e)
         {
             if (sender == graphWSS_1pixTSMI)
-                GraphicsData.WidthSkipSize = 1;
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_1PIX;
             else if (sender == graphWSS_2pixTSMI)
-                GraphicsData.WidthSkipSize = 2;
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_2PIX;
             else if (sender == graphWSS_4pixTSMI)
-                GraphicsData.WidthSkipSize = 4;
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_4PIX;
             else if (sender == graphWSS_8pixTSMI)
-                GraphicsData.WidthSkipSize = 8;
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_8PIX;
             else if (sender == graphWSS_16pixTSMI)
-                GraphicsData.WidthSkipSize = 16;
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_16PIX;
+            else if (sender == graphWSS_1tileTSMI)
+                GraphicsData.WidthSkipSize = HWSkipSize.SKIPSIZE_1TILE;
             else
                 throw new Exception("Invalid graphics width skip size action");
-            updateMenu();
+            DoRefresh();
         }
         #endregion
 
@@ -652,21 +669,24 @@ namespace TiledGGD
         private void graphHSSTSMI_Click(object sender, EventArgs e)
         {
             if (sender == graphHSS_1pixTSMI)
-                GraphicsData.HeightSkipSize = 1;
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_1PIX;
             else if (sender == graphHSS_2pixTSMI)
-                GraphicsData.HeightSkipSize = 2;
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_2PIX;
             else if (sender == graphHSS_4pixTSMI)
-                GraphicsData.HeightSkipSize = 4;
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_4PIX;
             else if (sender == graphHSS_8pixTSMI)
-                GraphicsData.HeightSkipSize = 8;
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_8PIX;
             else if (sender == graphHSS_16pixTSMI)
-                GraphicsData.HeightSkipSize = 16;
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_16PIX;
+            else if (sender == graphHSS_1tileTSMI)
+                GraphicsData.HeightSkipSize = HWSkipSize.SKIPSIZE_1TILE;
             else
                 throw new Exception("Invalid graphics height skip size action");
             updateMenu();
         }
         #endregion
 
+        #region tile size
         private void setTileSizeTSMI_Click(object sender, EventArgs e)
         {
             TileSizeDialog tsd = new TileSizeDialog(GraphicsData.TileSize);
@@ -674,6 +694,7 @@ namespace TiledGGD
             GraphicsData.TileSize = tsd.NewTileSize;
             this.DataPanel_Paint(this, null);
         }
+        #endregion
 
         #endregion
 

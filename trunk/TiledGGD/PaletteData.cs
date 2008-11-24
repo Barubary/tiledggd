@@ -14,7 +14,7 @@ namespace TiledGGD
         /// <summary>
         /// The format of the palette
         /// </summary>
-        private static PaletteFormat palFormat;
+        private static PaletteFormat palFormat = PaletteFormat.FORMAT_2BPP;
         /// <summary>
         /// The format of the palette
         /// </summary>
@@ -36,7 +36,7 @@ namespace TiledGGD
         /// <summary>
         /// The palette order
         /// </summary>
-        private static PaletteOrder palOrder;
+        private static PaletteOrder palOrder = PaletteOrder.ORDER_BGR;
         /// <summary>
         /// The palette order
         /// </summary>
@@ -58,7 +58,7 @@ namespace TiledGGD
         /// <summary>
         /// The location of the Alpha value
         /// </summary>
-        private static AlphaLocation alphaLocation;
+        private static AlphaLocation alphaLocation = AlphaLocation.NONE;
         /// <summary>
         /// The location of the Alpha value
         /// </summary>
@@ -114,7 +114,7 @@ namespace TiledGGD
         /// <summary>
         /// The metric used to skip data.
         /// </summary>
-        private static PaletteSkipMetric skipMetric;
+        private static PaletteSkipMetric skipMetric = PaletteSkipMetric.METRIC_COLOURS;
         internal static PaletteSkipMetric SkipMetric
         {
             get { return skipMetric; }
@@ -146,12 +146,6 @@ namespace TiledGGD
         {
             palFormat = pFormat;
             palOrder = pOrder;
-            if (palFormat == PaletteFormat.FORMAT_2BPP)
-                alphaLocation = AlphaLocation.START;
-            else if (palFormat == PaletteFormat.FORMAT_4BPP)
-                alphaLocation = AlphaLocation.END;
-            else
-                alphaLocation = AlphaLocation.NONE;
         }
 
         #endregion
@@ -169,6 +163,8 @@ namespace TiledGGD
 
         internal override void paint(object sender, PaintEventArgs e)
         {
+            if (!HasData)
+                return;
             Graphics g = e.Graphics;
 
             Color[] pal = this.getFullPaletteAsColor();
@@ -205,8 +201,7 @@ namespace TiledGGD
             return bmp;
         }
 
-        #region Method: getPalette(int idx)
-
+        #region Method: getPalette
         /// <summary>
         /// Get the ARGB value of the palette or pixel
         /// </summary>
@@ -242,6 +237,11 @@ namespace TiledGGD
                         switch (alphaLocation)
                         {
                             case AlphaLocation.NONE:
+                                a = 0xFF;
+                                fst = (bt & 0x7C00) >> 7;//>> 10) << 3;
+                                scn = (bt & 0x03E0) >> 2;//>> 5) << 3;
+                                thd = (bt & 0x001F) << 3;//>> 0) << 3;
+                                break;
                             case AlphaLocation.START:
                                 a = (bt & 0x8000) >> 15;
                                 fst = (bt & 0x7C00) >> 7;//>> 10) << 3;
@@ -296,10 +296,15 @@ namespace TiledGGD
                             b1 = (UInt32)data[3];
                         }
                         // deafult: (a)bgr(a)
-                        // assume argb if no a
+                        // assume argb with a = 0xFF always if no a
                         switch (alphaLocation)
                         {
                             case AlphaLocation.NONE:
+                                a = 0xFF;
+                                fst = b2;
+                                scn = b3;
+                                thd = b4;
+                                break;
                             case AlphaLocation.START:
                                 a = b1;
                                 fst = b2;
@@ -418,17 +423,22 @@ namespace TiledGGD
                         switch (alphaLoc)
                         {
                             case AlphaLocation.NONE:
+                                a = 0xFF;
+                                fst = (byte)((bt & 0x7C00) >> 7);//>> 10) << 3;
+                                scn = (byte)((bt & 0x03E0) >> 2);//>> 5) << 3;
+                                thd = (byte)((bt & 0x001F) << 3);//>> 0) << 3;
+                                break;
                             case AlphaLocation.START:
-                                a = (byte)((bt >> 15) * 0xFF);
-                                fst = (byte)((bt & 0x7C00) >> 10);
-                                scn = (byte)((bt & 0x03E0) >> 5);
-                                thd = (byte)((bt & 0x001F));
+                                a = (byte)((bt & 0x8000) >> 15);
+                                fst = (byte)((bt & 0x7C00) >> 7);//>> 10) << 3;
+                                scn = (byte)((bt & 0x03E0) >> 2);//>> 5) << 3;
+                                thd = (byte)((bt & 0x001F) << 3);//>> 0) << 3;
                                 break;
                             case AlphaLocation.END:
-                                a = (byte)((bt & 0x001) * 0xFF);
-                                fst = (byte)((bt & 0xF800) >> 11);
-                                scn = (byte)((bt & 0x07C0) >> 6);
-                                thd = (byte)((bt & 0x003E) >> 1);
+                                fst = (byte)((bt & 0xF800) >> 8);//>> 11) << 3;
+                                scn = (byte)((bt & 0x07C0) >> 3);//>> 6) << 3;
+                                thd = (byte)((bt & 0x003E) << 2);//>> 1) << 3;
+                                a = (byte)((bt & 0x0001) >> 0);
                                 break;
                             default: throw new Exception("Unkown exception: invalid AlphaLocation " + alphaLoc.ToString());
                         }
@@ -475,6 +485,9 @@ namespace TiledGGD
                             switch (alphaLoc)
                             {
                                 case AlphaLocation.NONE:
+                                    parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
+                                    a = 0xFF;
+                                    break;
                                 case AlphaLocation.START:
                                     //thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++]; a = Data[currIdx++];
                                     parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
@@ -655,9 +668,9 @@ namespace TiledGGD
     }
     public enum AlphaLocation : int
     {
-        START,
-        END,
-        NONE
+        START = 0,
+        END = 1,
+        NONE = 2
     }
     public enum PaletteSkipMetric
     {

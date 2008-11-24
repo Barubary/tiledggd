@@ -29,8 +29,8 @@ namespace TiledGGD
                 uint newW = value;
                 if (Tiled && newW % TileSize.X != 0)
                     newW += (uint)TileSize.X - newW % (uint)TileSize.X;
-                if (newW < widthSkipSize)
-                    newW = widthSkipSize;
+                if (newW < WidthSkipSizeUInt)
+                    newW = WidthSkipSizeUInt;
                 if (width != newW)
                 {
                     width = newW;
@@ -42,11 +42,12 @@ namespace TiledGGD
         /// <summary>
         /// How many pixels the width should change with the press of a button
         /// </summary>
-        private static byte widthSkipSize = 4;
+        private static HWSkipSize widthSkipSize = HWSkipSize.SKIPSIZE_4PIX;
         /// <summary>
         /// How many pixels the width should change with the press of a button
         /// </summary>
-        internal static byte WidthSkipSize { get { return widthSkipSize; } set { widthSkipSize = Math.Max((byte)1, value); } }
+        internal static HWSkipSize WidthSkipSize { get { return widthSkipSize; } set { widthSkipSize = value; } }
+        internal static uint WidthSkipSizeUInt { get { return WidthSkipSize == HWSkipSize.SKIPSIZE_1TILE ? (uint)TileSize.X : (uint)(Math.Pow(2, (int)WidthSkipSize)); } }
 
         #endregion
 
@@ -54,7 +55,7 @@ namespace TiledGGD
         /// <summary>
         /// The height of the shown data
         /// </summary>
-        private static uint height;
+        private static uint height = 128;
         /// <summary>
         /// The height of the shown data
         /// </summary>
@@ -66,8 +67,8 @@ namespace TiledGGD
                 uint newH = value;
                 if (Tiled && newH % TileSize.Y != 0)
                     newH += (uint)TileSize.Y - newH % (uint)TileSize.Y;
-                if (newH < heightSkipSize)
-                    newH = heightSkipSize;
+                if (newH < HeightSkipSizeUInt)
+                    newH = HeightSkipSizeUInt;
                 if (height != newH)
                 {
                     height = newH;
@@ -79,18 +80,19 @@ namespace TiledGGD
         /// <summary>
         /// How many pixels the height should change with the press of a button
         /// </summary>
-        private static byte heightSkipSize = 8;
+        private static HWSkipSize heightSkipSize = HWSkipSize.SKIPSIZE_8PIX;
         /// <summary>
         /// How many pixels the height should change with the press of a button
         /// </summary>
-        internal static byte HeightSkipSize { get { return heightSkipSize; } set { heightSkipSize = Math.Max((byte)1, value); } }
+        internal static HWSkipSize HeightSkipSize { get { return heightSkipSize; } set { heightSkipSize = value; } }
+        internal static uint HeightSkipSizeUInt { get { return (uint)(HeightSkipSize == HWSkipSize.SKIPSIZE_1TILE ? TileSize.Y : Math.Pow(2, (int)HeightSkipSize)); } }
         #endregion
 
         #region Field: TileSize
         /// <summary>
         /// The size of a tile
         /// </summary>
-        private static Point tileSize;
+        private static Point tileSize = new Point(8, 8);
         /// <summary>
         /// Get or set the size of a tile. Negative values will be made positive.
         /// </summary>
@@ -114,7 +116,7 @@ namespace TiledGGD
         /// <summary>
         /// If the data is tiled or not
         /// </summary>
-        private static bool tiled;
+        private static bool tiled = false;
         /// <summary>
         /// Get or set if the data is tiled or not
         /// </summary>
@@ -131,6 +133,11 @@ namespace TiledGGD
                         // make sure the width & height are correct with the current tilesize
                         Width = Width;
                         Height = Height;
+                        // make sure the w/h skip sizes aren't too small
+                        if (WidthSkipSizeUInt < TileSize.X)
+                            WidthSkipSize = HWSkipSize.SKIPSIZE_1TILE;
+                        if (HeightSkipSizeUInt < TileSize.Y)
+                            HeightSkipSize = HWSkipSize.SKIPSIZE_1TILE;
                     }
                     MainWindow.DoRefresh();
                 }
@@ -142,7 +149,7 @@ namespace TiledGGD
         /// <summary>
         /// The zoom of the graphics data
         /// </summary>
-        private static uint zoom;
+        private static uint zoom = 1;
         /// <summary>
         /// The zoom of the graphics data
         /// </summary>
@@ -161,7 +168,7 @@ namespace TiledGGD
         /// <summary>
         /// The format of the Graphics window
         /// </summary>
-        private static GraphicsFormat graphFormat;
+        private static GraphicsFormat graphFormat = GraphicsFormat.FORMAT_4BPP;
         /// <summary>
         /// Get or Set the format of the Graphics Window. Will automatically redraw when altered.
         /// </summary>
@@ -182,7 +189,7 @@ namespace TiledGGD
         /// <summary>
         /// If the graphics data is BigEndian (or LittleEndian otherwise).
         /// </summary>
-        private static bool isBigEndian;
+        private static bool isBigEndian = true;
         /// <summary>
         /// If the graphics data is BigEndian (or LittleEndian otherwise). Will automatically repaint when changed.
         /// </summary>
@@ -288,7 +295,7 @@ namespace TiledGGD
         #region Methods: paint
         internal override void paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(toBitmap(), 0, 0);
+            e.Graphics.DrawImage(toBitmap(), 4, 4);
         }
 
         #region paint1BPP
@@ -366,7 +373,7 @@ namespace TiledGGD
 
                     for (int b = 0; b < 8; b++)
                     {
-                        if (++pixNum >= nPixels) // disregard pixels outside of the screen
+                        if (++pixNum > nPixels) // disregard pixels outside of the screen
                             break;
                         if (IsBigEndian)
                             j = (uint)(bt & (0x01 << b));
@@ -464,7 +471,7 @@ namespace TiledGGD
 
                     for (int b = 0; b < 4; b++)
                     {
-                        if (++pixNum >= nPixels)
+                        if (++pixNum > nPixels)
                             break;
                         if (IsBigEndian)
                             j = (uint)((bt & (0x03 << (b * 2))) >> (b * 2));
@@ -562,8 +569,7 @@ namespace TiledGGD
 
                     for (int b = 0; b < 4; b++)
                     {
-                        pixNum++;
-                        if (pixNum >= nPixels)
+                        if (++pixNum > nPixels)
                             break;
                         if (IsBigEndian)
                             j = (uint)((bt & (0x0F << (b * 4))) >> (b * 4));
@@ -974,10 +980,10 @@ namespace TiledGGD
         #endregion
 
         #region methods: increase/decrease width/height
-        internal void increaseWidth() { Width += WidthSkipSize; }
-        internal void decreaseWidth() { Width -= WidthSkipSize; }
-        internal void increaseHeight() { Height += HeightSkipSize; }
-        internal void decreaseHeight() { Height -= HeightSkipSize; }
+        internal void increaseWidth() { Width += WidthSkipSizeUInt; }
+        internal void decreaseWidth() { Width -= WidthSkipSizeUInt; }
+        internal void increaseHeight() { Height += HeightSkipSizeUInt; }
+        internal void decreaseHeight() { Height -= HeightSkipSizeUInt; }
         #endregion
 
         #region Toggle methods
@@ -1006,18 +1012,16 @@ namespace TiledGGD
 
         internal void toggleWidthSkipSize()
         {
-            if (widthSkipSize < 16)
-                widthSkipSize <<= 1;
-            else
-                widthSkipSize = 1;
+            int wss = (int)WidthSkipSize;
+            wss = (wss + 1) % 6;
+            WidthSkipSize = (HWSkipSize)wss;
         }
 
         internal void toggleHeightSkipSize()
         {
-            if (heightSkipSize < 16)
-                heightSkipSize <<= 1;
-            else
-                heightSkipSize = 1;
+            int hss = (int)HeightSkipSize;
+            hss = (hss + 1) % 6;
+            HeightSkipSize = (HWSkipSize)hss;
         }
         #endregion
 
@@ -1053,6 +1057,8 @@ namespace TiledGGD
 
         internal override Bitmap toBitmap()
         {
+            if (!HasData)
+                return new Bitmap(1, 1);
             switch (GraphFormat)
             {
                 case GraphicsFormat.FORMAT_1BPP: return paint1BPP();
@@ -1067,7 +1073,7 @@ namespace TiledGGD
         }
     }
 
-    #region Graphics enums (GraphicsFormat, GraphicsSkipMetric)
+    #region Graphics enums (GraphicsFormat, GraphicsSkipMetric, HWSkipSize)
     public enum GraphicsFormat
     {
         FORMAT_1BPP = 1,
@@ -1087,6 +1093,15 @@ namespace TiledGGD
         SKIPSIZE_1TILEROW = 4,
         SKIPSIZE_WIDTHROWS = 5,
         SKIPSIZE_HEIGHTROWS = 6
+    }
+    public enum HWSkipSize
+    {
+        SKIPSIZE_1PIX = 0,
+        SKIPSIZE_2PIX = 1,
+        SKIPSIZE_4PIX = 2,
+        SKIPSIZE_8PIX = 3,
+        SKIPSIZE_16PIX = 4,
+        SKIPSIZE_1TILE = 5
     }
     #endregion
 }

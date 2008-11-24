@@ -24,6 +24,8 @@ namespace TiledGGD
             get { return this.offset; }
             protected set
             {
+                if (!HasData)
+                    return;
                 long newoffset = Math.Max(0, Math.Min(this.data.Length - 1, value));
                 if (newoffset != this.offset)
                 {

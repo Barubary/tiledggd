@@ -105,6 +105,9 @@ namespace TiledGGD
             this.DataPanel = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.graphWSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlpha_noneTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
             this.aboutBox = new TiledGGD.AboutBox();
@@ -384,7 +387,8 @@ namespace TiledGGD
             this.graphWSS_2pixTSMI,
             this.graphWSS_4pixTSMI,
             this.graphWSS_8pixTSMI,
-            this.graphWSS_16pixTSMI});
+            this.graphWSS_16pixTSMI,
+            this.graphWSS_1tileTSMI});
             this.graphWSSTSMI.Name = "graphWSSTSMI";
             this.graphWSSTSMI.Size = new System.Drawing.Size(211, 22);
             this.graphWSSTSMI.Text = "Width Skip Size";
@@ -431,7 +435,8 @@ namespace TiledGGD
             this.graphHSS_2pixTSMI,
             this.graphHSS_4pixTSMI,
             this.graphHSS_8pixTSMI,
-            this.graphHSS_16pixTSMI});
+            this.graphHSS_16pixTSMI,
+            this.graphHSS_1tileTSMI});
             this.graphHSSTSMI.Name = "graphHSSTSMI";
             this.graphHSSTSMI.Size = new System.Drawing.Size(211, 22);
             this.graphHSSTSMI.Text = "Height Skip Size";
@@ -558,7 +563,8 @@ namespace TiledGGD
             // 
             this.palAlphaTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.palAlpha_endTSMI,
-            this.palAlpha_startTSMI});
+            this.palAlpha_startTSMI,
+            this.palAlpha_noneTSMI});
             this.palAlphaTSMI.Name = "palAlphaTSMI";
             this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
             this.palAlphaTSMI.Text = "Alpha location";
@@ -566,14 +572,14 @@ namespace TiledGGD
             // palAlpha_endTSMI
             // 
             this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
-            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_endTSMI.Size = new System.Drawing.Size(152, 22);
             this.palAlpha_endTSMI.Text = "End";
             this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palAlpha_startTSMI
             // 
             this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
-            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_startTSMI.Size = new System.Drawing.Size(152, 22);
             this.palAlpha_startTSMI.Text = "Beginning";
             this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
@@ -696,14 +702,14 @@ namespace TiledGGD
             // aboutTSMI
             // 
             this.aboutTSMI.Name = "aboutTSMI";
-            this.aboutTSMI.Size = new System.Drawing.Size(133, 22);
+            this.aboutTSMI.Size = new System.Drawing.Size(152, 22);
             this.aboutTSMI.Text = "About...";
             this.aboutTSMI.Click += new System.EventHandler(this.aboutTSMI_Click);
             // 
             // shortcutsTSMI
             // 
             this.shortcutsTSMI.Name = "shortcutsTSMI";
-            this.shortcutsTSMI.Size = new System.Drawing.Size(133, 22);
+            this.shortcutsTSMI.Size = new System.Drawing.Size(152, 22);
             this.shortcutsTSMI.Text = "Shortcuts...";
             this.shortcutsTSMI.Click += new System.EventHandler(this.shortcutsTSMI_Click);
             // 
@@ -737,6 +743,27 @@ namespace TiledGGD
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(256, 160);
             this.listBox1.TabIndex = 0;
+            // 
+            // graphWSS_1tileTSMI
+            // 
+            this.graphWSS_1tileTSMI.Name = "graphWSS_1tileTSMI";
+            this.graphWSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_1tileTSMI.Text = "1 Tile";
+            this.graphWSS_1tileTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
+            // graphHSS_1tileTSMI
+            // 
+            this.graphHSS_1tileTSMI.Name = "graphHSS_1tileTSMI";
+            this.graphHSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_1tileTSMI.Text = "1 Tile";
+            this.graphHSS_1tileTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
+            // palAlpha_noneTSMI
+            // 
+            this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
+            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palAlpha_noneTSMI.Text = "None";
+            this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // GraphicsPanel
             // 
@@ -882,6 +909,9 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem graphHSS_8pixTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphHSS_16pixTSMI;
         private System.Windows.Forms.ToolStripMenuItem setTileSizeTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphWSS_1tileTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphHSS_1tileTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palAlpha_noneTSMI;
     }
 }
 

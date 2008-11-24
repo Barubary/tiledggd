@@ -26,6 +26,8 @@ namespace TiledGGD
             this.dataGridView1.Rows.Add("Decrease graphics height", "Up");
             this.dataGridView1.Rows.Add("Increase graphics width", "Right");
             this.dataGridView1.Rows.Add("Decrease graphics width", "Left");
+            this.dataGridView1.Rows.Add("Toggle Width Skip Size", "W");
+            this.dataGridView1.Rows.Add("Toggle Height Skip Size", "H");
             this.dataGridView1.Rows.Add("Zoom graphics out", "-");
             this.dataGridView1.Rows.Add("Zoom graphics out", "+");
             this.dataGridView1.Rows.Add("Skip graphics data forward", "PageDown");

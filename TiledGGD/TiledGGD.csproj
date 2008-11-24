@@ -67,6 +67,12 @@
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GoToOffsetDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GoToOffsetDialog.Designer.cs">
+      <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,10 @@
     <EmbeddedResource Include="ControlShorts.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ControlShorts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoToOffsetDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <SubType>Designer</SubType>

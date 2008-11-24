@@ -22,7 +22,7 @@ namespace TiledGGD
         public long Offset
         {
             get { return this.offset; }
-            protected set
+            internal set
             {
                 if (!HasData)
                     return;

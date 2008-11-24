@@ -696,6 +696,32 @@ namespace TiledGGD
         }
         #endregion
 
+        #region go to
+        private void goToTSMI_Click(object sender, EventArgs e)
+        {
+            GoToOffsetDialog gtod = new GoToOffsetDialog();
+            gtod.ShowDialog();
+            bool rel;
+            long off;
+            BrowseableData bd;
+            if (sender == graphGoToTSMI)
+                bd = graphicsData;
+            else if (sender == palGoToTSMI)
+                bd = paletteData;
+            else
+                throw new Exception("Extremely improbably Exception");
+            if (gtod.getResult(out rel, out off))
+            {
+                if (rel)
+                    bd.Offset += off;
+                else
+                    bd.Offset = off;
+            }
+            this.BringToFront();
+            DoRefresh();
+        }
+        #endregion
+
         #endregion
 
     }

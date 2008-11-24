@@ -66,14 +66,17 @@ namespace TiledGGD
             this.graphWSS_4pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphWSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphWSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphWSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSSTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_1pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_2pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_4pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphHSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.setTileSizeTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormat_2BpcTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +88,7 @@ namespace TiledGGD
             this.palAlphaTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palAlpha_endTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palAlpha_startTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlpha_noneTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrderTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrder_bgrTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrder_rgbTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,15 +103,13 @@ namespace TiledGGD
             this.palSS_256colTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palSS_64kbytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.palGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.shortcutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.DataPanel = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.graphWSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.graphHSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlpha_noneTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
             this.aboutBox = new TiledGGD.AboutBox();
@@ -203,7 +205,8 @@ namespace TiledGGD
             this.graphWSSTSMI,
             this.graphHSSTSMI,
             this.setTileSizeTSMI,
-            this.copyGraphicsToolStripMenuItem});
+            this.copyGraphicsToolStripMenuItem,
+            this.graphGoToTSMI});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.imageToolStripMenuItem.Text = "Image";
@@ -428,6 +431,13 @@ namespace TiledGGD
             this.graphWSS_16pixTSMI.Text = "16 pixels";
             this.graphWSS_16pixTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
             // 
+            // graphWSS_1tileTSMI
+            // 
+            this.graphWSS_1tileTSMI.Name = "graphWSS_1tileTSMI";
+            this.graphWSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphWSS_1tileTSMI.Text = "1 Tile";
+            this.graphWSS_1tileTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
+            // 
             // graphHSSTSMI
             // 
             this.graphHSSTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -476,6 +486,13 @@ namespace TiledGGD
             this.graphHSS_16pixTSMI.Text = "16 pixels";
             this.graphHSS_16pixTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
             // 
+            // graphHSS_1tileTSMI
+            // 
+            this.graphHSS_1tileTSMI.Name = "graphHSS_1tileTSMI";
+            this.graphHSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
+            this.graphHSS_1tileTSMI.Text = "1 Tile";
+            this.graphHSS_1tileTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
+            // 
             // setTileSizeTSMI
             // 
             this.setTileSizeTSMI.Name = "setTileSizeTSMI";
@@ -492,6 +509,14 @@ namespace TiledGGD
             this.copyGraphicsToolStripMenuItem.Text = "Copy to clipboard";
             this.copyGraphicsToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboard);
             // 
+            // graphGoToTSMI
+            // 
+            this.graphGoToTSMI.Name = "graphGoToTSMI";
+            this.graphGoToTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.graphGoToTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphGoToTSMI.Text = "Go to offset...";
+            this.graphGoToTSMI.Click += new System.EventHandler(this.goToTSMI_Click);
+            // 
             // paletteToolStripMenuItem
             // 
             this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -500,7 +525,8 @@ namespace TiledGGD
             this.palAlphaTSMI,
             this.palOrderTSMI,
             this.palSSTSMI,
-            this.copyPaletteToolStripMenuItem});
+            this.copyPaletteToolStripMenuItem,
+            this.palGoToTSMI});
             this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
             this.paletteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.paletteToolStripMenuItem.Text = "Palette";
@@ -572,16 +598,23 @@ namespace TiledGGD
             // palAlpha_endTSMI
             // 
             this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
-            this.palAlpha_endTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
             this.palAlpha_endTSMI.Text = "End";
             this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palAlpha_startTSMI
             // 
             this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
-            this.palAlpha_startTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
             this.palAlpha_startTSMI.Text = "Beginning";
             this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
+            // 
+            // palAlpha_noneTSMI
+            // 
+            this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
+            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_noneTSMI.Text = "None";
+            this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palOrderTSMI
             // 
@@ -690,6 +723,15 @@ namespace TiledGGD
             this.copyPaletteToolStripMenuItem.Text = "Copy to clipboard";
             this.copyPaletteToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboard);
             // 
+            // palGoToTSMI
+            // 
+            this.palGoToTSMI.Name = "palGoToTSMI";
+            this.palGoToTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.G)));
+            this.palGoToTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palGoToTSMI.Text = "Go to offset...";
+            this.palGoToTSMI.Click += new System.EventHandler(this.goToTSMI_Click);
+            // 
             // otherToolStripMenuItem
             // 
             this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -702,14 +744,14 @@ namespace TiledGGD
             // aboutTSMI
             // 
             this.aboutTSMI.Name = "aboutTSMI";
-            this.aboutTSMI.Size = new System.Drawing.Size(152, 22);
+            this.aboutTSMI.Size = new System.Drawing.Size(133, 22);
             this.aboutTSMI.Text = "About...";
             this.aboutTSMI.Click += new System.EventHandler(this.aboutTSMI_Click);
             // 
             // shortcutsTSMI
             // 
             this.shortcutsTSMI.Name = "shortcutsTSMI";
-            this.shortcutsTSMI.Size = new System.Drawing.Size(152, 22);
+            this.shortcutsTSMI.Size = new System.Drawing.Size(133, 22);
             this.shortcutsTSMI.Text = "Shortcuts...";
             this.shortcutsTSMI.Click += new System.EventHandler(this.shortcutsTSMI_Click);
             // 
@@ -743,27 +785,6 @@ namespace TiledGGD
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(256, 160);
             this.listBox1.TabIndex = 0;
-            // 
-            // graphWSS_1tileTSMI
-            // 
-            this.graphWSS_1tileTSMI.Name = "graphWSS_1tileTSMI";
-            this.graphWSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
-            this.graphWSS_1tileTSMI.Text = "1 Tile";
-            this.graphWSS_1tileTSMI.Click += new System.EventHandler(this.graphWSSTSMI_Click);
-            // 
-            // graphHSS_1tileTSMI
-            // 
-            this.graphHSS_1tileTSMI.Name = "graphHSS_1tileTSMI";
-            this.graphHSS_1tileTSMI.Size = new System.Drawing.Size(118, 22);
-            this.graphHSS_1tileTSMI.Text = "1 Tile";
-            this.graphHSS_1tileTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
-            // 
-            // palAlpha_noneTSMI
-            // 
-            this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
-            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(152, 22);
-            this.palAlpha_noneTSMI.Text = "None";
-            this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // GraphicsPanel
             // 
@@ -912,6 +933,8 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem graphWSS_1tileTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphHSS_1tileTSMI;
         private System.Windows.Forms.ToolStripMenuItem palAlpha_noneTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphGoToTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palGoToTSMI;
     }
 }
 

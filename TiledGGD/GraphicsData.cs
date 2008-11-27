@@ -498,7 +498,7 @@ namespace TiledGGD
             //Graphics g = e.Graphics;
 
             uint nNecessBytes = width * height;
-            nNecessBytes = nNecessBytes / 4 + (uint)(nNecessBytes % 4 > 0 ? 1 : 0);
+            nNecessBytes = nNecessBytes / 2 + (uint)(nNecessBytes % 2 > 0 ? 1 : 0);
             nNecessBytes = (uint)Math.Min(nNecessBytes, this.Length);
 
             uint bt, j;
@@ -527,7 +527,7 @@ namespace TiledGGD
                 {
                     bt = getData(dataOffset++, out atEnd);
 
-                    for (int b = 0; b < 4; b++)
+                    for (int b = 0; b < 2; b++)
                     {
                         if (++pixNum > nPixels)
                             break;
@@ -567,7 +567,7 @@ namespace TiledGGD
                 {
                     bt = getData(dataOffset++, out atEnd);
 
-                    for (int b = 0; b < 4; b++)
+                    for (int b = 0; b < 2; b++)
                     {
                         if (++pixNum > nPixels)
                             break;

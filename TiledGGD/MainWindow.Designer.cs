@@ -588,8 +588,8 @@ namespace TiledGGD
             // palAlphaTSMI
             // 
             this.palAlphaTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.palAlpha_endTSMI,
             this.palAlpha_startTSMI,
+            this.palAlpha_endTSMI,
             this.palAlpha_noneTSMI});
             this.palAlphaTSMI.Name = "palAlphaTSMI";
             this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
@@ -598,21 +598,21 @@ namespace TiledGGD
             // palAlpha_endTSMI
             // 
             this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
-            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_endTSMI.Size = new System.Drawing.Size(152, 22);
             this.palAlpha_endTSMI.Text = "End";
             this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palAlpha_startTSMI
             // 
             this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
-            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_startTSMI.Size = new System.Drawing.Size(152, 22);
             this.palAlpha_startTSMI.Text = "Beginning";
             this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palAlpha_noneTSMI
             // 
             this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
-            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(152, 22);
             this.palAlpha_noneTSMI.Text = "None";
             this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 

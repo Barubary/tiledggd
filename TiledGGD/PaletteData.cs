@@ -486,7 +486,7 @@ namespace TiledGGD
                             {
                                 case AlphaLocation.NONE:
                                     parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
-                                    a = 0xFF;
+                                    fullpal[i] |= -0x7F000000;
                                     break;
                                 case AlphaLocation.START:
                                     //thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++]; a = Data[currIdx++];
@@ -504,6 +504,9 @@ namespace TiledGGD
                             switch (alphaLoc)
                             {
                                 case AlphaLocation.NONE:
+                                    parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[i]);
+                                    fullpal[i] |= -0x7F000000;
+                                    break;
                                 case AlphaLocation.START:
                                     //a = Data[currIdx++]; fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++];
                                     parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[i]);
@@ -543,7 +546,7 @@ namespace TiledGGD
                 #region case BGR
                 case PaletteOrder.ORDER_BGR:
                     //bitmap = fst; g = scn; r = thd;
-                    argb = (a << 24) | (thd << 16) | (scn << 8) | thd;
+                    argb = (a << 24) | (thd << 16) | (scn << 8) | fst;
                     return;
                 #endregion
 

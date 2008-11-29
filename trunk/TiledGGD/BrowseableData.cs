@@ -105,6 +105,7 @@ namespace TiledGGD
             for (long l = 0; l < fstr.Length; l++)
                 data[l] = (byte)fstr.ReadByte();
             fstr.Close();
+            Offset = 0;
         }
 
         /// <summary>

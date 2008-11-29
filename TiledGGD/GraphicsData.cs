@@ -325,7 +325,7 @@ namespace TiledGGD
                 int ntx = (int)(width / TileSize.X); // amount of tiles horizontally
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
-                int xintl = 0, yintl = 0; // x & y inside tile
+                int xintl = -1, yintl = 0; // x & y inside tile
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
@@ -616,7 +616,7 @@ namespace TiledGGD
                 int ntx = (int)(width / TileSize.X); // amount of tiles horizontally
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
-                int xintl = 0, yintl = 0; // x & y inside tile
+                int xintl = -1, yintl = 0; // x & y inside tile
                 
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
@@ -686,7 +686,7 @@ namespace TiledGGD
                 int ntx = (int)(width / TileSize.X); // amount of tiles horizontally
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
-                int xintl = 0, yintl = 0; // x & y inside tile
+                int xintl = -1, yintl = 0; // x & y inside tile
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
@@ -766,7 +766,7 @@ namespace TiledGGD
                 int ntx = (int)(width / TileSize.X); // amount of tiles horizontally
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
-                int xintl = 0, yintl = 0; // x & y inside tile
+                int xintl = -1, yintl = 0; // x & y inside tile
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
@@ -849,7 +849,7 @@ namespace TiledGGD
                 int ntx = (int)(width / TileSize.X); // amount of tiles horizontally
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
-                int xintl = 0, yintl = 0; // x & y inside tile
+                int xintl = -1, yintl = 0; // x & y inside tile
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
@@ -989,8 +989,7 @@ namespace TiledGGD
         #region Toggle methods
         internal void toggleGraphicsFormat()
         {
-            int g = (int)GraphFormat + 1;
-            GraphFormat = (GraphicsFormat)(g % 8);
+            GraphFormat = (GraphicsFormat)((int)GraphFormat % 7 + 1);
         }
 
         internal void toggleTiled()

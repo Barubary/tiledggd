@@ -83,7 +83,7 @@ namespace TiledGGD
                 case Keys.B: graphicsData.toggleGraphicsFormat(); break;
                 case Keys.F: graphicsData.toggleTiled(); break;
                 case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); else return; break;
-                case Keys.L: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); else return; break;
+                case Keys.S: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); else return; break;
                 case Keys.W: graphicsData.toggleWidthSkipSize(); break;
                 case Keys.H: graphicsData.toggleHeightSkipSize(); break;
             }

@@ -634,6 +634,10 @@ namespace TiledGGD
         {
             IsBigEndian = !IsBigEndian;
         }
+        internal void toggleFormat()
+        {
+            PalFormat = (PaletteFormat)(((int)PalFormat - 4) % 3 + 5);
+        }
         #endregion
 
         internal override void DoSkip(bool positive)

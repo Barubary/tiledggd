@@ -70,8 +70,9 @@ namespace TiledGGD
             switch (e.KeyCode)
             {
                 case Keys.P: paletteData.TogglePaletteOrder(); break;
-                case Keys.N: paletteData.DoSkip(true); break;
-                case Keys.M: paletteData.DoSkip(false); break;
+                case Keys.O: paletteData.toggleFormat(); break;
+                case Keys.End: paletteData.DoSkip(true); break;
+                case Keys.Home: paletteData.DoSkip(false); break;
                 case Keys.Up: graphicsData.decreaseHeight(); break;
                 case Keys.Down: graphicsData.increaseHeight(); break;
                 case Keys.Left: graphicsData.decreaseWidth(); break;

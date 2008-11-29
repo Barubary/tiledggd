@@ -36,8 +36,8 @@ namespace TiledGGD
             this.dataGridView1.Rows.Add("Toggle Tiled/Linear", "F");
             this.dataGridView1.Rows.Add("Toggle Graphical Endianness", "Ctrl+E");
             this.dataGridView1.Rows.Add("Toggle Palette Endianness", "Shift+E");
-            this.dataGridView1.Rows.Add("Toggle Graphics Skip size", "Ctrl+L");
-            this.dataGridView1.Rows.Add("Toggle Palette Skip size", "Shift+L");
+            this.dataGridView1.Rows.Add("Toggle Graphics Skip size", "Ctrl+S");
+            this.dataGridView1.Rows.Add("Toggle Palette Skip size", "Shift+S");
 
         }
     }

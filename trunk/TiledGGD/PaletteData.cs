@@ -237,7 +237,7 @@ namespace TiledGGD
                         switch (alphaLocation)
                         {
                             case AlphaLocation.NONE:
-                                a = 0xFF;
+                                a = 1;
                                 fst = (bt & 0x7C00) >> 7;//>> 10) << 3;
                                 scn = (bt & 0x03E0) >> 2;//>> 5) << 3;
                                 thd = (bt & 0x001F) << 3;//>> 0) << 3;

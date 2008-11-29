@@ -37,8 +37,8 @@ namespace TiledGGD
             this.dataGridView1.Rows.Add("Zoom graphics out", "+");
             this.dataGridView1.Rows.Add("Toggle Graphical Endianness", "Ctrl+E");
             this.dataGridView1.Rows.Add("Toggle Palette Endianness", "Shift+E");
-            this.dataGridView1.Rows.Add("Toggle Graphics Skip size", "Ctrl+S");
-            this.dataGridView1.Rows.Add("Toggle Palette Skip size", "Shift+S");
+            this.dataGridView1.Rows.Add("Toggle Graphics Skip size", "Ctrl+Z");
+            this.dataGridView1.Rows.Add("Toggle Palette Skip size", "Shift+Z");
 
         }
     }

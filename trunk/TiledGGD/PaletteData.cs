@@ -165,17 +165,9 @@ namespace TiledGGD
         {
             if (!HasData)
                 return;
+
             Graphics g = e.Graphics;
-
-            Color[] pal = this.getFullPaletteAsColor();
-
-            for(int y=0; y<16; y++)
-                for (int x = 0; x < 16; x++)
-                {
-                    Pen p = new Pen(pal[y * 16 + x]);
-                    g.FillRectangle(p.Brush, x * palPixelSize.X, y * palPixelSize.Y, palPixelSize.X, palPixelSize.Y);
-                }
-            
+            g.DrawImage(toBitmap(16), 0, 0);
         }
 
         internal override void copyToClipboard()
@@ -193,11 +185,17 @@ namespace TiledGGD
             Color[] pal = this.getFullPaletteAsColor();
 
             Bitmap bmp = new Bitmap(16 * pixw, 16 * pixw);
+            Bitmap unscaled = new Bitmap(16, 16);
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
-                    for (int yp = 0; yp < pixw; yp++)
-                        for (int xp = 0; xp < pixw; xp++)
-                            bmp.SetPixel(x * pixw + xp, y * pixw + yp, pal[y * 16 + x]);
+                    unscaled.SetPixel(x, y, pal[y * 16 + x]);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+                g.DrawImage(unscaled, new Rectangle(0, 0, 16 * pixw, 16 * pixw), new Rectangle(0, 0, 16, 16), GraphicsUnit.Pixel);
+            }
             return bmp;
         }
 
@@ -392,6 +390,7 @@ namespace TiledGGD
         #region Methods: getFullPalette
         internal int[] getFullPalette()
         {
+            ResetPtr();
             int[] fullpal = new int[256];
             if (!this.HasData)
                 return fullpal;
@@ -408,15 +407,15 @@ namespace TiledGGD
                     {
                         if (IsBigEndian)
                         {
-                            fst = getData(currIdx++, out atEnd);
+                            fst = Next(out atEnd);
                             if (atEnd) break;
-                            scn = getData(currIdx++, out atEnd);
+                            scn = Next(out atEnd);
                         }
                         else
                         {
-                            scn = getData(currIdx++, out atEnd);
+                            scn = Next(out atEnd);
                             if (atEnd) break;
-                            fst = getData(currIdx++, out atEnd);
+                            fst = Next(out atEnd);
                         }
                         bt = fst | (scn << 8);
 
@@ -454,17 +453,17 @@ namespace TiledGGD
                         a = 0xFF;
                         if (IsBigEndian)
                         {
-                            fst = getData(currIdx++, out atEnd);
+                            fst = Next(out atEnd);
                             if (atEnd) break;
-                            scn = getData(currIdx++, out atEnd);
-                            thd = getData(currIdx++, out atEnd);
+                            scn = Next(out atEnd);
+                            thd = Next(out atEnd);
                         }
                         else
                         {
-                            thd = getData(currIdx++, out atEnd);
+                            thd = Next(out atEnd);
                             if (atEnd) break;
-                            scn = getData(currIdx++, out atEnd);
-                            fst = getData(currIdx++, out atEnd);
+                            scn = Next(out atEnd);
+                            fst = Next(out atEnd);
                         }
                         parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
                     }
@@ -475,11 +474,11 @@ namespace TiledGGD
                 case PaletteFormat.FORMAT_4BPP:
                     for (int i = 0; i < 256 && !atEnd; i++)
                     {
-                        thd = getData(currIdx++, out atEnd);
+                        thd = Next(out atEnd);
                         if (atEnd) break;
-                        scn = getData(currIdx++, out atEnd);
-                        fst = getData(currIdx++, out atEnd);
-                        a = getData(currIdx++, out atEnd);
+                        scn = Next(out atEnd);
+                        fst = Next(out atEnd);
+                        a = Next(out atEnd);
                         if (IsBigEndian)
                         {
                             switch (alphaLoc)

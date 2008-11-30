@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace TiledGGD
 {
-    abstract class BrowseableData
+    abstract unsafe class BrowseableData
     {
         #region Fields
 
@@ -30,6 +30,7 @@ namespace TiledGGD
                 if (newoffset != this.offset)
                 {
                     this.offset = newoffset;
+                    ptr = (byte*)data[offset];
                     MainWindow.DoRefresh();
                 }
 
@@ -55,6 +56,39 @@ namespace TiledGGD
             try { end = false; return this.data[idx]; }
             catch (IndexOutOfRangeException) { end = true; return 0; }
         }
+        #endregion
+
+        #region field: Current. Methods: Next, ResetPtr
+        /// <summary>
+        /// The pointer to a byte in Data
+        /// </summary>
+        private byte* ptr;
+        /// <summary>
+        /// the current offset of the pointer
+        /// </summary>
+        private long ptroffset;
+        /// <summary>
+        /// The current byte
+        /// </summary>
+        protected byte Current { get { return *ptr; } }
+        /// <summary>
+        /// The next byte. Also increases the pointer
+        /// </summary>
+        protected byte Next(out bool end)
+        {
+            end = false;
+            if (++ptroffset >= Length)
+            {
+                end = true;
+                return 0;
+            }
+            ptr++;
+            return *ptr;
+        }
+        /// <summary>
+        /// Resets the pointer to the start of visible data
+        /// </summary>
+        protected void ResetPtr() { fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; } }
         #endregion
 
         /// <summary>
@@ -106,6 +140,7 @@ namespace TiledGGD
                 data[l] = (byte)fstr.ReadByte();
             fstr.Close();
             Offset = 0;
+            ResetPtr();
         }
 
         /// <summary>

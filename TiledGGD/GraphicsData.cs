@@ -295,24 +295,32 @@ namespace TiledGGD
         #region Methods: paint
         internal override void paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(toBitmap(), 4, 4);
+            Bitmap b = toBitmap();
+            Bitmap scaled = new Bitmap((int)(Width * Zoom), (int)(Height * Zoom));
+            using (Graphics g = Graphics.FromImage(scaled))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+                g.DrawImage(b, new Rectangle(0, 0, scaled.Width, scaled.Height), new Rectangle(0, 0, b.Width, b.Height), GraphicsUnit.Pixel);
+            }
+            e.Graphics.DrawImage(scaled, 4, 4);
         }
 
         #region paint1BPP
-        internal Bitmap paint1BPP(/*object sender, PaintEventArgs e*/)
+        internal Bitmap paint1BPP()
         {
-            //Graphics g = e.Graphics;
-
+            ResetPtr();
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 8 + (uint)(nNecessBytes % 8 > 0 ? 1 : 0);
             nNecessBytes = (uint)Math.Min(nNecessBytes, this.Length);
 
             uint bt, j;
             uint pixNum = 0, nPixels = (uint)(width * height);
-            long dataOffset = Offset;
+
             int x, y;
             Color dark = Color.FromArgb(-0x7F181818), light = Color.FromArgb(-0x7FA8A8A8);
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
@@ -329,7 +337,7 @@ namespace TiledGGD
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 8; b++)
                     {
@@ -354,12 +362,10 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (int)(Zoom * (tx * TileSize.X + xintl));
-                        y = (int)(Zoom * (ty * TileSize.Y + yintl));
+                        x = (int)(tx * TileSize.X + xintl);
+                        y = (int)(ty * TileSize.Y + yintl);
 
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, j > 0 ? light : dark);
+                        bitmap.SetPixel(x, y, j > 0 ? light : dark);
                     }
                 }
                 #endregion
@@ -369,7 +375,7 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 8; b++)
                     {
@@ -380,25 +386,22 @@ namespace TiledGGD
                         else
                             j = (uint)(bt & (0x80 >> b));
 
-                        y = (int)(Zoom * ((pixNum - 1) / width));
-                        x = (int)(Zoom * ((pixNum - 1) % width));
+                        y = (int)((pixNum - 1) / width);
+                        x = (int)((pixNum - 1) % width);
 
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, j > 0 ? light : dark);
+                        bitmap.SetPixel(x, y, j > 0 ? light : dark);
                     }
                 }
                 #endregion
             }
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
         }
         #endregion
 
         #region paint2BPP
-        internal Bitmap paint2BPP(/*object sender, PaintEventArgs e*/)
+        internal Bitmap paint2BPP()
         {
-            //Graphics g = e.Graphics;
-
+            ResetPtr();
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 4 + (uint)(nNecessBytes % 4 > 0 ? 1 : 0);
             nNecessBytes = (uint)Math.Min(nNecessBytes, this.Length);
@@ -406,9 +409,8 @@ namespace TiledGGD
             uint bt, j;
             int pixNum = 0, nPixels = (int)(width * height);
             int x, y;
-            long dataOffset = Offset;
 
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
@@ -427,7 +429,7 @@ namespace TiledGGD
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
@@ -452,12 +454,10 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (int)(Zoom * (tx * TileSize.X + xintl));
-                        y = (int)(Zoom * (ty * TileSize.Y + yintl));
+                        x = (int)(tx * TileSize.X + xintl);
+                        y = (int)(ty * TileSize.Y + yintl);
 
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, palette[j]);
+                        bitmap.SetPixel(x, y, palette[j]);
                     }
                 }
                 #endregion
@@ -467,7 +467,7 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 4; b++)
                     {
@@ -478,25 +478,22 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xC0 >> (b * 2))) >> ((3 - b) * 2));
 
-                        x = (int)(Zoom * ((pixNum - 1) % width));
-                        y = (int)(Zoom * ((pixNum - 1) / width));
+                        x = (int)((pixNum - 1) % width);
+                        y = (int)((pixNum - 1) / width);
 
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, palette[j]);
+                        bitmap.SetPixel(x, y, palette[j]);
                     }
                 }
                 #endregion
             }
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
         }
         #endregion
 
         #region paint4BPP
-        internal Bitmap paint4BPP(/*object sender, PaintEventArgs e*/)
+        internal Bitmap paint4BPP()
         {
-            //Graphics g = e.Graphics;
-
+            ResetPtr();
             uint nNecessBytes = width * height;
             nNecessBytes = nNecessBytes / 2 + (uint)(nNecessBytes % 2 > 0 ? 1 : 0);
             nNecessBytes = (uint)Math.Min(nNecessBytes, this.Length);
@@ -504,9 +501,8 @@ namespace TiledGGD
             uint bt, j;
             int pixNum = 0, nPixels = (int)(width * height);
             int x, y;
-            long dataOffset = Offset;
 
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
@@ -525,7 +521,7 @@ namespace TiledGGD
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 2; b++)
                     {
@@ -550,12 +546,10 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (int)(Zoom * (tx * TileSize.X + xintl));
-                        y = (int)(Zoom * (ty * TileSize.Y + yintl));
-
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, palette[j]);
+                        x = (int)(tx * TileSize.X + xintl);
+                        y = (int)(ty * TileSize.Y + yintl);
+                        
+                        bitmap.SetPixel(x, y, palette[j]);
                     }
                 }
                 #endregion
@@ -565,7 +559,7 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
                     for (int b = 0; b < 2; b++)
                     {
@@ -576,32 +570,27 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xF0 >> (b * 4))) >> ((1 - b) * 4));
 
-                        x = (int)(Zoom * ((pixNum - 1) % width));
-                        y = (int)(Zoom * ((pixNum - 1) / width));
+                        x = (int)((pixNum - 1) % width);
+                        y = (int)((pixNum - 1) / width);
 
-                        for (int zy = 0; zy < Zoom; zy++)
-                            for (int zx = 0; zx < Zoom; zx++)
-                                bitmap.SetPixel(x + zx, y + zy, palette[j]);
+                        bitmap.SetPixel(x, y, palette[j]);
                     }
                 }
                 #endregion
             }
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
         }
         #endregion
 
         #region paint8BPP
-        internal Bitmap paint8BPP(/*object sender, PaintEventArgs pea*/)
+        internal Bitmap paint8BPP()
         {
-            //Graphics g = pea.Graphics;
-
+            ResetPtr();
             uint nNecessBytes = width * height;
 
             int x, y;
             byte bt;
-            long dataOffset = Offset;
-
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
@@ -630,12 +619,10 @@ namespace TiledGGD
                             if (++tx == ntx) { tx = 0; if (++ty == nty) break; }
                         }
                     }
-                    x = (int)(Zoom * (tx * TileSize.X + xintl));
-                    y = (int)(Zoom * (ty * TileSize.Y + yintl));
-                    bt = getData(dataOffset++, out atEnd);
-                    for (int zy = 0; zy < Zoom; zy++)
-                        for (int zx = 0; zx < Zoom; zx++)
-                            bitmap.SetPixel(x + zx, y + zy, palette[bt]);
+                    x = (int)(tx * TileSize.X + xintl);
+                    y = (int)(ty * TileSize.Y + yintl);
+                    bt = Next(out atEnd);
+                    bitmap.SetPixel(x, y, palette[bt]);
 
                 }
                 #endregion
@@ -646,37 +633,34 @@ namespace TiledGGD
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = getData(dataOffset++, out atEnd);
+                    bt = Next(out atEnd);
 
-                    x = (int)(Zoom * (i % width));
-                    y = (int)(Zoom * (i / width));
+                    x = (int)(i % width);
+                    y = (int)(i / width);
 
-                    for (int zy = 0; zy < Zoom; zy++)
-                        for (int zx = 0; zx < Zoom; zx++)
-                            bitmap.SetPixel(x + zx, y + zy, palette[bt]);
+                    bitmap.SetPixel(x, y, palette[bt]);
                 }
                 
                 #endregion
             }
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
         }
         #endregion
 
         #region paint16BPP
-        internal Bitmap paint16Bpp(/*object sender, PaintEventArgs pea*/)
+        internal Bitmap paint16Bpp()
         {
-            //Graphics g = pea.Graphics;
+            ResetPtr();
 
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length >> 1);
             uint nNecessBytes = nPixels * 2;
-            int x, y, zx, zy;
+            int x, y;
             byte[] bytes = new byte[2];
-            long dataOffset = Offset;
 
             bool atEnd = false;
 
@@ -690,8 +674,8 @@ namespace TiledGGD
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -707,12 +691,10 @@ namespace TiledGGD
                             }
                         }
                     }
-                    x = (int)(Zoom * (tx * TileSize.X + xintl));
-                    y = (int)(Zoom * (ty * TileSize.Y + yintl));
+                    x = (int)(tx * TileSize.X + xintl);
+                    y = (int)(ty * TileSize.Y + yintl);
 
-                    for (zx = 0; zx < Zoom; zx++)
-                        for (zy = 0; zy < Zoom; zy++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
@@ -722,41 +704,38 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(Zoom * (i % width));
-                    y = (int)(Zoom * (i / width));
+                    x = (int)(i % width);
+                    y = (int)(i / width);
 
-                    for (zy = 0; zy < Zoom; zy++)
-                        for (zx = 0; zx < Zoom; zx++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
             }
 
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
             
         }
         #endregion
 
         #region paint24BPP
-        internal Bitmap paint24Bpp(/*object sender, PaintEventArgs pea*/)
+        internal Bitmap paint24Bpp()
         {
-            //Graphics g = pea.Graphics;
+            ResetPtr();
 
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 3);
             uint nNecessBytes = nPixels * 3;
-            int x, y, zx, zy;
+            int x, y;
             byte[] bytes = new byte[3];
-            long dataOffset = Offset;
 
             bool atEnd = false;
 
@@ -770,9 +749,9 @@ namespace TiledGGD
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
-                    bytes[2] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
+                    bytes[2] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -788,12 +767,10 @@ namespace TiledGGD
                             }
                         }
                     }
-                    x = (int)(Zoom * (tx * TileSize.X + xintl));
-                    y = (int)(Zoom * (ty * TileSize.Y + yintl));
+                    x = (int)(tx * TileSize.X + xintl);
+                    y = (int)(ty * TileSize.Y + yintl);
 
-                    for (zx = 0; zx < Zoom; zx++)
-                        for (zy = 0; zy < Zoom; zy++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
@@ -804,42 +781,39 @@ namespace TiledGGD
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
-                    bytes[2] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
+                    bytes[2] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(Zoom * (i % width));
-                    y = (int)(Zoom * (i / width));
+                    x = (int)(i % width);
+                    y = (int)(i / width);
 
-                    for (zy = 0; zy < Zoom; zy++)
-                        for (zx = 0; zx < Zoom; zx++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
             }
 
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
 
         }
         #endregion
 
         #region paint32BPP
-        internal Bitmap paint32Bpp(/*object sender, PaintEventArgs pea*/)
+        internal Bitmap paint32Bpp()
         {
-            //Graphics g = pea.Graphics;
+            ResetPtr();
 
-            Bitmap bitmap = new Bitmap((int)(width * Zoom), (int)(height * Zoom), PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 4);
             uint nNecessBytes = nPixels * 4;
-            int x, y, zx, zy;
+            int x, y;
             byte[] bytes = new byte[4];
-            long dataOffset = Offset;
 
             bool atEnd = false;
 
@@ -853,10 +827,10 @@ namespace TiledGGD
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
-                    bytes[2] = getData(dataOffset++, out atEnd);
-                    bytes[3] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
+                    bytes[2] = Next(out atEnd);
+                    bytes[3] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
@@ -868,12 +842,10 @@ namespace TiledGGD
                             if (++tx == ntx) { tx = 0; if (++ty == nty)break; }
                         }
                     }
-                    x = (int)(Zoom * (tx * TileSize.X + xintl));
-                    y = (int)(Zoom * (ty * TileSize.Y + yintl));
+                    x = (int)(tx * TileSize.X + xintl);
+                    y = (int)(ty * TileSize.Y + yintl);
 
-                    for (zx = 0; zx < Zoom; zx++)
-                        for (zy = 0; zy < Zoom; zy++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
@@ -884,24 +856,22 @@ namespace TiledGGD
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
-                    bytes[0] = getData(dataOffset++, out atEnd);
-                    bytes[1] = getData(dataOffset++, out atEnd);
-                    bytes[2] = getData(dataOffset++, out atEnd);
-                    bytes[3] = getData(dataOffset++, out atEnd);
+                    bytes[0] = Next(out atEnd);
+                    bytes[1] = Next(out atEnd);
+                    bytes[2] = Next(out atEnd);
+                    bytes[3] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(Zoom * (i % width));
-                    y = (int)(Zoom * (i / width));
+                    x = (int)(i % width);
+                    y = (int)(i / width);
 
-                    for (zy = 0; zy < Zoom; zy++)
-                        for (zx = 0; zx < Zoom; zx++)
-                            bitmap.SetPixel(x + zx, y + zy, pal);
+                    bitmap.SetPixel(x, y, pal);
 
                 }
                 #endregion
             }
 
-            return bitmap;// g.DrawImage(bitmap, 0, 0);
+            return bitmap;
 
         }
         #endregion
@@ -912,72 +882,6 @@ namespace TiledGGD
         {
             Clipboard.SetImage(toBitmap());
         }
-        
-        #region Method: getPixel(idx)
-        /*
-        /// <summary>
-        /// Get the colour of a pixel
-        /// </summary>
-        /// <param name="idx">The index of the pixel, relative to the current offset</param>
-        /// <returns>The colour of the pixel with the given index relative to the current offset, or pure black if the index is out of range.</returns>
-        internal uint getPixel(uint idx)
-        {
-            uint necessByte, necessBit, palidx, bitsetidx;
-            switch (graphFormat)
-            {
-                #region case 1BPP
-                case GraphicsFormat.FORMAT_1BPP:
-                    necessByte = (uint)this.Data[Offset + idx / 8];
-                    necessBit = idx % 8;
-                    if(IsBigEndian)
-                        palidx = necessByte & (uint)(0x01 << (int)necessBit);
-                    else
-                        palidx = necessByte & (uint)(0x80 >> (int)necessBit);
-                    if (palidx > 0)
-                        return 0xFFE0E0E0;
-                    else
-                        return 0xFF000000;
-                #endregion
-
-                #region case 2BPP
-                case GraphicsFormat.FORMAT_2BPP:
-                    necessByte = (uint)this.Data[Offset + idx / 4];
-                    bitsetidx = idx % 4;
-                    if(IsBigEndian)
-                        palidx = (uint)(necessByte & (0x03 << (int)(bitsetidx * 2))) >> (int)(bitsetidx * 2);
-                    else
-                        palidx = (uint)(necessByte & (0xC0 >> (int)(bitsetidx * 2))) >> ((int)(3 - bitsetidx) * 2);
-                    return this.paletteData.getPalette(palidx);
-                #endregion
-
-                #region case 4BPP
-                case GraphicsFormat.FORMAT_4BPP:
-                    necessByte = (uint)this.Data[Offset + idx / 2];
-                    bitsetidx = IsBigEndian ? 1 - (idx % 2) : idx % 2;
-                    if (bitsetidx == 0)
-                        palidx = (necessByte & 0xF0) >> 4;
-                    else // if(bitsetidx == 1)
-                        palidx = necessByte & 0x0F;
-                    return this.paletteData.getPalette(palidx);
-                #endregion
-
-                #region case 8BPP
-                case GraphicsFormat.FORMAT_8BPP:
-                    return this.paletteData.getPalette((uint)this.Data[this.Offset + idx]);
-                #endregion
-
-                #region case 16BPP/24BPP/32BPP
-                case GraphicsFormat.FORMAT_16BPP:
-                case GraphicsFormat.FORMAT_24BPP:
-                case GraphicsFormat.FORMAT_32BPP:
-                    //return this.paletteData.getPalette(idx, this.Data, this.Offset, (int)graphFormat, IsBigEndian);
-                #endregion
-
-                default: throw new Exception("Unkown error: invalid GraphicsFormat " + graphFormat.ToString());
-            }
-        }
-        */
-        #endregion
 
         #region methods: increase/decrease width/height
         internal void increaseWidth() { Width += WidthSkipSizeUInt; }

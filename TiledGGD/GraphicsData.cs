@@ -308,7 +308,7 @@ namespace TiledGGD
         }
 
         #region paint1BPP
-        internal Bitmap paint1BPP()
+        internal unsafe Bitmap paint1BPP()
         {
             ResetPtr();
             uint nNecessBytes = width * height;
@@ -320,6 +320,7 @@ namespace TiledGGD
 
             int x, y;
             Color dark = Color.FromArgb(-0x7F181818), light = Color.FromArgb(-0x7FA8A8A8);
+            int darkint = -0x7F181818, lightint = -0x7FA8A8A8;
             Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
@@ -373,10 +374,12 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     bt = Next(out atEnd);
-
+                    
                     for (int b = 0; b < 8; b++)
                     {
                         if (++pixNum > nPixels) // disregard pixels outside of the screen
@@ -386,12 +389,15 @@ namespace TiledGGD
                         else
                             j = (uint)(bt & (0x80 >> b));
 
-                        y = (int)((pixNum - 1) / width);
-                        x = (int)((pixNum - 1) % width);
-
-                        bitmap.SetPixel(x, y, j > 0 ? light : dark);
+                        *(bmptr++) = j > 0 ? lightint : darkint;
                     }
                 }
+
+                //x = (int)((pixNum - 1) % width);
+                //y = (int)((pixNum - 1) / width);
+
+                //bitmap.SetPixel(x, y, palette[j]);
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
             return bitmap;
@@ -399,7 +405,7 @@ namespace TiledGGD
         #endregion
 
         #region paint2BPP
-        internal Bitmap paint2BPP()
+        internal unsafe Bitmap paint2BPP()
         {
             ResetPtr();
             uint nNecessBytes = width * height;
@@ -416,6 +422,7 @@ namespace TiledGGD
                 return bitmap;
 
             Color[] palette = paletteData.getFullPaletteAsColor();
+            int[] paletteint = paletteData.getFullPalette();
 
             bool atEnd = false;
 
@@ -465,6 +472,8 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     bt = Next(out atEnd);
@@ -478,12 +487,14 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xC0 >> (b * 2))) >> ((3 - b) * 2));
 
-                        x = (int)((pixNum - 1) % width);
-                        y = (int)((pixNum - 1) / width);
+                        //x = (int)((pixNum - 1) % width);
+                        //y = (int)((pixNum - 1) / width);
 
-                        bitmap.SetPixel(x, y, palette[j]);
+                        //bitmap.SetPixel(x, y, palette[j]);
+                        *(bmptr++) = paletteint[j];
                     }
                 }
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
             return bitmap;
@@ -491,7 +502,7 @@ namespace TiledGGD
         #endregion
 
         #region paint4BPP
-        internal Bitmap paint4BPP()
+        internal unsafe Bitmap paint4BPP()
         {
             ResetPtr();
             uint nNecessBytes = width * height;
@@ -508,6 +519,7 @@ namespace TiledGGD
                 return bitmap;
 
             Color[] palette = paletteData.getFullPaletteAsColor();
+            int[] paletteint = paletteData.getFullPalette();
 
             bool atEnd = false;
 
@@ -557,6 +569,8 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     bt = Next(out atEnd);
@@ -570,12 +584,14 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xF0 >> (b * 4))) >> ((1 - b) * 4));
 
-                        x = (int)((pixNum - 1) % width);
-                        y = (int)((pixNum - 1) / width);
+                        //x = (int)((pixNum - 1) % width);
+                        //y = (int)((pixNum - 1) / width);
 
-                        bitmap.SetPixel(x, y, palette[j]);
+                        //bitmap.SetPixel(x, y, palette[j]);
+                        *(bmptr++) = paletteint[j];
                     }
                 }
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
             return bitmap;
@@ -583,7 +599,7 @@ namespace TiledGGD
         #endregion
 
         #region paint8BPP
-        internal Bitmap paint8BPP()
+        internal unsafe Bitmap paint8BPP()
         {
             ResetPtr();
             uint nNecessBytes = width * height;
@@ -596,6 +612,7 @@ namespace TiledGGD
                 return bitmap;
 
             Color[] palette = this.paletteData.getFullPaletteAsColor();
+            int[] paletteint = this.paletteData.getFullPalette();
 
             bool atEnd = false;
             
@@ -630,17 +647,19 @@ namespace TiledGGD
             else
             {
                 #region linear
-
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     bt = Next(out atEnd);
 
-                    x = (int)(i % width);
-                    y = (int)(i / width);
+                    //x = (int)(i % width);
+                    //y = (int)(i / width);
 
-                    bitmap.SetPixel(x, y, palette[bt]);
+                    //bitmap.SetPixel(x, y, palette[bt]);
+                    *(bmptr++) = paletteint[bt];
                 }
-                
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
             return bitmap;
@@ -648,7 +667,7 @@ namespace TiledGGD
         #endregion
 
         #region paint16BPP
-        internal Bitmap paint16Bpp()
+        internal unsafe Bitmap paint16Bpp()
         {
             ResetPtr();
 
@@ -702,18 +721,22 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(i % width);
-                    y = (int)(i / width);
+                    //x = (int)(i % width);
+                    //y = (int)(i / width);
 
-                    bitmap.SetPixel(x, y, pal);
+                    //bitmap.SetPixel(x, y, pal);
+                    *(bmptr++) = pal.ToArgb();
 
                 }
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
 
@@ -723,7 +746,7 @@ namespace TiledGGD
         #endregion
 
         #region paint24BPP
-        internal Bitmap paint24Bpp()
+        internal unsafe Bitmap paint24Bpp()
         {
             ResetPtr();
 
@@ -778,6 +801,8 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
@@ -786,12 +811,14 @@ namespace TiledGGD
                     bytes[2] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(i % width);
-                    y = (int)(i / width);
+                    //x = (int)(i % width);
+                    //y = (int)(i / width);
 
-                    bitmap.SetPixel(x, y, pal);
+                    //bitmap.SetPixel(x, y, pal);
+                    *(bmptr++) = pal.ToArgb();
 
                 }
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
 
@@ -801,7 +828,7 @@ namespace TiledGGD
         #endregion
 
         #region paint32BPP
-        internal Bitmap paint32Bpp()
+        internal unsafe Bitmap paint32Bpp()
         {
             ResetPtr();
 
@@ -853,6 +880,8 @@ namespace TiledGGD
             else
             {
                 #region linear
+                BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                int* bmptr = (int*)bmd.Scan0.ToPointer();
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
 
@@ -862,12 +891,13 @@ namespace TiledGGD
                     bytes[3] = Next(out atEnd);
                     Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    x = (int)(i % width);
-                    y = (int)(i / width);
+                    //x = (int)(i % width);
+                    //y = (int)(i / width);
 
-                    bitmap.SetPixel(x, y, pal);
-
+                    //bitmap.SetPixel(x, y, pal);
+                    *(bmptr++) = pal.ToArgb();
                 }
+                bitmap.UnlockBits(bmd);
                 #endregion
             }
 

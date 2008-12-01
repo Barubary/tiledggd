@@ -692,8 +692,16 @@ namespace TiledGGD
         {
             TileSizeDialog tsd = new TileSizeDialog(GraphicsData.TileSize);
             tsd.ShowDialog();
-            GraphicsData.TileSize = tsd.NewTileSize;
-            this.DataPanel_Paint(this, null);
+            Point p = tsd.NewTileSize;
+            if (((p.X | p.Y) & 1) == 0)
+            {
+                GraphicsData.TileSize = tsd.NewTileSize;
+                this.DataPanel_Paint(this, null);
+            }
+            else
+            {
+                MessageBox.Show("The dimensions of a tile can not be odd", "Invalid Tile Size");
+            }
         }
         #endregion
 

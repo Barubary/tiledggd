@@ -190,10 +190,8 @@ namespace TiledGGD
             BitmapData bmd = unscaled.LockBits(new Rectangle(0, 0, 16, 16), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             int* bmptr = (int*)bmd.Scan0.ToPointer();
 
-            for (int y = 0; y < 16; y++)
-                for (int x = 0; x < 16; x++)
-                    //unscaled.SetPixel(x, y, pal[y * 16 + x]);
-                    *(bmptr++) = pal[y * 16 + x];
+            for (int i = 0; i < 16 * 16; i++)
+                *(bmptr++) = pal[i];
 
             unscaled.UnlockBits(bmd);
             using (Graphics g = Graphics.FromImage(bmp))

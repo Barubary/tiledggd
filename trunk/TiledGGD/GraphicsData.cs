@@ -318,9 +318,8 @@ namespace TiledGGD
             uint bt, j;
             uint pixNum = 0, nPixels = (uint)(width * height);
 
-            int x, y;
-            Color dark = Color.FromArgb(-0x7F181818), light = Color.FromArgb(-0x7FA8A8A8);
-            int darkint = -0x7F181818, lightint = -0x7FA8A8A8;
+            int[] palette = {-0x7F181818, -0x7FA8A8A8};
+
             Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
@@ -338,6 +337,7 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
@@ -366,11 +366,10 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (int)(tx * TileSize.X + xintl);
-                        y = (int)(ty * TileSize.Y + yintl);
+                        x = tx * TileSize.X + xintl;
+                        y = ty * TileSize.Y + yintl;
 
-                        //bitmap.SetPixel(x, y, j > 0 ? light : dark);
-                        *(bmptr + y * width + x) = j > 0 ? lightint : darkint;
+                        *(bmptr + y * width + x) = palette[j > 0 ? 1 : 0];
                     }
                 }
                 #endregion
@@ -390,11 +389,8 @@ namespace TiledGGD
                             j = (uint)(bt & (0x01 << b));
                         else
                             j = (uint)(bt & (0x80 >> b));
-                        //x = (int)((pixNum - 1) % width);
-                        //y = (int)((pixNum - 1) / width);
 
-                        //bitmap.SetPixel(x, y, palette[j]);
-                        *(bmptr++) = j > 0 ? lightint : darkint;
+                        *(bmptr++) = palette[j > 0 ? 1 : 0];
                     }
                 }
                 #endregion
@@ -414,14 +410,12 @@ namespace TiledGGD
 
             uint bt, j;
             int pixNum = 0, nPixels = (int)(width * height);
-            int x, y;
 
             Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
-            //Color[] palette = paletteData.getFullPaletteAsColor();
             int[] palette = paletteData.getFullPalette();
 
             BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -436,6 +430,7 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
@@ -464,11 +459,10 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (int)(tx * TileSize.X + xintl);
-                        y = (int)(ty * TileSize.Y + yintl);
+                        x = tx * TileSize.X + xintl;
+                        y = ty * TileSize.Y + yintl;
 
                         *(bmptr + y * width + x) = palette[j];
-                        //bitmap.SetPixel(x, y, palette[j]);
                     }
                 }
                 #endregion
@@ -489,10 +483,6 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xC0 >> (b * 2))) >> ((3 - b) * 2));
 
-                        //x = (int)((pixNum - 1) % width);
-                        //y = (int)((pixNum - 1) / width);
-
-                        //bitmap.SetPixel(x, y, palette[j]);
                         *(bmptr++) = palette[j];
                     }
                 }
@@ -513,14 +503,12 @@ namespace TiledGGD
 
             uint bt, j;
             int pixNum = 0, nPixels = (int)(width * height);
-            int x, y;
 
             Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
-            //Color[] palette = paletteData.getFullPaletteAsColor();
             int[] palette = paletteData.getFullPalette();
 
             bool atEnd = false;
@@ -535,6 +523,7 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
 
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
@@ -563,10 +552,9 @@ namespace TiledGGD
                                 }
                             }
                         }
-                        x = (tx * TileSize.X + xintl);
-                        y = (ty * TileSize.Y + yintl);
+                        x = tx * TileSize.X + xintl;
+                        y = ty * TileSize.Y + yintl;
                         
-                        //bitmap.SetPixel(x, y, palette[j]);
                         *(bmptr + y * width + x) = palette[j];
                     }
                 }
@@ -588,14 +576,9 @@ namespace TiledGGD
                         else
                             j = (uint)((bt & (0xF0 >> (b * 4))) >> ((1 - b) * 4));
 
-                        //x = (int)((pixNum - 1) % width);
-                        //y = (int)((pixNum - 1) / width);
-
-                        //bitmap.SetPixel(x, y, palette[j]);
                         *(bmptr++) = palette[j];
                     }
                 }
-                
                 #endregion
             }
             bitmap.UnlockBits(bmd);
@@ -609,14 +592,11 @@ namespace TiledGGD
             ResetPtr();
             uint nNecessBytes = width * height;
 
-            int x, y;
-            byte bt;
             Bitmap bitmap = new Bitmap((int)width, (int)height, PixelFormat.Format32bppArgb);
 
             if (!this.HasData)
                 return bitmap;
 
-            //Color[] palette = this.paletteData.getFullPaletteAsColor();
             int[] palette = this.paletteData.getFullPalette();
 
             BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -631,8 +611,8 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
                 
-
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
                     if (++xintl == TileSize.X)
@@ -644,11 +624,10 @@ namespace TiledGGD
                             if (++tx == ntx) { tx = 0; if (++ty == nty) break; }
                         }
                     }
-                    x = (int)(tx * TileSize.X + xintl);
-                    y = (int)(ty * TileSize.Y + yintl);
-                    bt = Next(out atEnd);
-                    //bitmap.SetPixel(x, y, palette[bt]);
-                    *(bmptr + y * width + x) = palette[bt];
+                    x = tx * TileSize.X + xintl;
+                    y = ty * TileSize.Y + yintl;
+
+                    *(bmptr + y * width + x) = palette[Next(out atEnd)];
                 }
                 #endregion
             }
@@ -657,13 +636,7 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nNecessBytes && !atEnd; i++)
                 {
-                    bt = Next(out atEnd);
-
-                    //x = (int)(i % width);
-                    //y = (int)(i / width);
-
-                    //bitmap.SetPixel(x, y, palette[bt]);
-                    *(bmptr++) = palette[bt];
+                    *(bmptr++) = palette[Next(out atEnd)];
                 }
                 #endregion
             }
@@ -683,8 +656,6 @@ namespace TiledGGD
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length >> 1);
-            uint nNecessBytes = nPixels * 2;
-            int x, y;
             byte[] bytes = new byte[2];
 
             BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -699,12 +670,12 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
                     {
@@ -719,11 +690,10 @@ namespace TiledGGD
                             }
                         }
                     }
-                    x = (int)(tx * TileSize.X + xintl);
-                    y = (int)(ty * TileSize.Y + yintl);
+                    x = tx * TileSize.X + xintl;
+                    y = ty * TileSize.Y + yintl;
 
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr + y * width + x) = pal.ToArgb();
+                    *(bmptr + y * width + x) = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
                 }
                 #endregion
             }
@@ -734,14 +704,9 @@ namespace TiledGGD
                 {
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
+                    int col = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
 
-                    //x = (int)(i % width);
-                    //y = (int)(i / width);
-
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr++) = pal.ToArgb();
-
+                    *(bmptr++) = col;
                 }
                 #endregion
             }
@@ -762,8 +727,6 @@ namespace TiledGGD
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 3);
-            uint nNecessBytes = nPixels * 3;
-            int x, y;
             byte[] bytes = new byte[3];
 
             BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -778,13 +741,13 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y; // x/y in image
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
                     bytes[2] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
                     {
@@ -799,11 +762,10 @@ namespace TiledGGD
                             }
                         }
                     }
-                    x = (int)(tx * TileSize.X + xintl);
-                    y = (int)(ty * TileSize.Y + yintl);
+                    x = tx * TileSize.X + xintl;
+                    y = ty * TileSize.Y + yintl;
 
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr + y * width + x) = pal.ToArgb();
+                    *(bmptr + y * width + x) = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
                 }
                 #endregion
             }
@@ -812,20 +774,12 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
                     bytes[2] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    //x = (int)(i % width);
-                    //y = (int)(i / width);
-
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr++) = pal.ToArgb();
-
+                    *(bmptr++) = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
                 }
-                
                 #endregion
             }
             bitmap.UnlockBits(bmd);
@@ -845,8 +799,6 @@ namespace TiledGGD
                 return bitmap;
 
             uint nPixels = (uint)Math.Min(width * height, this.Length / 4);
-            uint nNecessBytes = nPixels * 4;
-            int x, y;
             byte[] bytes = new byte[4];
 
             BitmapData bmd = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -861,6 +813,7 @@ namespace TiledGGD
                 int nty = (int)(height / TileSize.Y); // amount of tile in vertically
                 int tx = 0, ty = 0; // x and y of tile
                 int xintl = -1, yintl = 0; // x & y inside tile
+                int x, y;
 
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
@@ -868,7 +821,6 @@ namespace TiledGGD
                     bytes[1] = Next(out atEnd);
                     bytes[2] = Next(out atEnd);
                     bytes[3] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
                     if (++xintl == TileSize.X)
                     {
@@ -879,11 +831,10 @@ namespace TiledGGD
                             if (++tx == ntx) { tx = 0; if (++ty == nty)break; }
                         }
                     }
-                    x = (int)(tx * TileSize.X + xintl);
-                    y = (int)(ty * TileSize.Y + yintl);
+                    x = tx * TileSize.X + xintl;
+                    y = ty * TileSize.Y + yintl;
 
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr + y * width + x) = pal.ToArgb();
+                    *(bmptr + y * width + x) = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
                 }
                 #endregion
             }
@@ -892,20 +843,13 @@ namespace TiledGGD
                 #region linear
                 for (int i = 0; i < nPixels && !atEnd; i++)
                 {
-
                     bytes[0] = Next(out atEnd);
                     bytes[1] = Next(out atEnd);
                     bytes[2] = Next(out atEnd);
                     bytes[3] = Next(out atEnd);
-                    Color pal = Color.FromArgb((int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian));
 
-                    //x = (int)(i % width);
-                    //y = (int)(i / width);
-
-                    //bitmap.SetPixel(x, y, pal);
-                    *(bmptr++) = pal.ToArgb();
+                    *(bmptr++) = (int)paletteData.getPalette(bytes, (int)GraphFormat, IsBigEndian);
                 }
-                
                 #endregion
             }
             bitmap.UnlockBits(bmd);

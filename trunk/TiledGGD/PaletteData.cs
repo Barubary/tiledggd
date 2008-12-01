@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace TiledGGD
 {
@@ -180,15 +181,21 @@ namespace TiledGGD
             return toBitmap(8);
         }
 
-        internal Bitmap toBitmap(int pixw)
+        internal unsafe Bitmap toBitmap(int pixw)
         {
-            Color[] pal = this.getFullPaletteAsColor();
+            int[] pal = this.getFullPalette();
 
             Bitmap bmp = new Bitmap(16 * pixw, 16 * pixw);
             Bitmap unscaled = new Bitmap(16, 16);
+            BitmapData bmd = unscaled.LockBits(new Rectangle(0, 0, 16, 16), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            int* bmptr = (int*)bmd.Scan0.ToPointer();
+
             for (int y = 0; y < 16; y++)
                 for (int x = 0; x < 16; x++)
-                    unscaled.SetPixel(x, y, pal[y * 16 + x]);
+                    //unscaled.SetPixel(x, y, pal[y * 16 + x]);
+                    *(bmptr++) = pal[y * 16 + x];
+
+            unscaled.UnlockBits(bmd);
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;

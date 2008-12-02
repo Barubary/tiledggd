@@ -74,6 +74,11 @@ namespace TiledGGD
             this.graphHSS_8pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_16pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphHSS_1tileTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoom_100pctTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoom_200pctTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoom_400pctTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoom_800pctTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.setTileSizeTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,8 +91,8 @@ namespace TiledGGD
             this.palEndian_bigTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palEndian_littleTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palAlphaTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlpha_endTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palAlpha_startTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlpha_endTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palAlpha_noneTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrderTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrder_bgrTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -204,6 +209,7 @@ namespace TiledGGD
             this.graphSSTSMI,
             this.graphWSSTSMI,
             this.graphHSSTSMI,
+            this.zoomTSMI,
             this.setTileSizeTSMI,
             this.copyGraphicsToolStripMenuItem,
             this.graphGoToTSMI});
@@ -493,6 +499,45 @@ namespace TiledGGD
             this.graphHSS_1tileTSMI.Text = "1 Tile";
             this.graphHSS_1tileTSMI.Click += new System.EventHandler(this.graphHSSTSMI_Click);
             // 
+            // zoomTSMI
+            // 
+            this.zoomTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zoom_100pctTSMI,
+            this.zoom_200pctTSMI,
+            this.zoom_400pctTSMI,
+            this.zoom_800pctTSMI});
+            this.zoomTSMI.Name = "zoomTSMI";
+            this.zoomTSMI.Size = new System.Drawing.Size(211, 22);
+            this.zoomTSMI.Text = "Zoom";
+            // 
+            // zoom_100pctTSMI
+            // 
+            this.zoom_100pctTSMI.Name = "zoom_100pctTSMI";
+            this.zoom_100pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_100pctTSMI.Text = "100%";
+            this.zoom_100pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
+            // 
+            // zoom_200pctTSMI
+            // 
+            this.zoom_200pctTSMI.Name = "zoom_200pctTSMI";
+            this.zoom_200pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_200pctTSMI.Text = "200%";
+            this.zoom_200pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
+            // 
+            // zoom_400pctTSMI
+            // 
+            this.zoom_400pctTSMI.Name = "zoom_400pctTSMI";
+            this.zoom_400pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_400pctTSMI.Text = "400%";
+            this.zoom_400pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
+            // 
+            // zoom_800pctTSMI
+            // 
+            this.zoom_800pctTSMI.Name = "zoom_800pctTSMI";
+            this.zoom_800pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_800pctTSMI.Text = "800%";
+            this.zoom_800pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
+            // 
             // setTileSizeTSMI
             // 
             this.setTileSizeTSMI.Name = "setTileSizeTSMI";
@@ -595,24 +640,24 @@ namespace TiledGGD
             this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
             this.palAlphaTSMI.Text = "Alpha location";
             // 
-            // palAlpha_endTSMI
-            // 
-            this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
-            this.palAlpha_endTSMI.Size = new System.Drawing.Size(152, 22);
-            this.palAlpha_endTSMI.Text = "End";
-            this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
-            // 
             // palAlpha_startTSMI
             // 
             this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
-            this.palAlpha_startTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
             this.palAlpha_startTSMI.Text = "Beginning";
             this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
+            // 
+            // palAlpha_endTSMI
+            // 
+            this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
+            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
+            this.palAlpha_endTSMI.Text = "End";
+            this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
             // palAlpha_noneTSMI
             // 
             this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
-            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(128, 22);
             this.palAlpha_noneTSMI.Text = "None";
             this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
             // 
@@ -935,6 +980,11 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem palAlpha_noneTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphGoToTSMI;
         private System.Windows.Forms.ToolStripMenuItem palGoToTSMI;
+        private System.Windows.Forms.ToolStripMenuItem zoomTSMI;
+        private System.Windows.Forms.ToolStripMenuItem zoom_100pctTSMI;
+        private System.Windows.Forms.ToolStripMenuItem zoom_200pctTSMI;
+        private System.Windows.Forms.ToolStripMenuItem zoom_400pctTSMI;
+        private System.Windows.Forms.ToolStripMenuItem zoom_800pctTSMI;
     }
 }
 

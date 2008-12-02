@@ -168,6 +168,11 @@ namespace TiledGGD
                 tsmi.Checked = false;
             (this.graphHSSTSMI.DropDownItems[(int)GraphicsData.HeightSkipSize] as ToolStripMenuItem).Checked = true;
 
+            // zoom
+            foreach (ToolStripMenuItem tsmi in this.zoomTSMI.DropDownItems)
+                tsmi.Checked = false;
+            (this.zoomTSMI.DropDownItems[(int)Math.Floor(Math.Log(GraphicsData.Zoom, 2))] as ToolStripMenuItem).Checked = true;
+
             // update the data panel, just to be sure
             DataPanel_Paint(this, null);
         }
@@ -730,6 +735,17 @@ namespace TiledGGD
             DoRefresh();
         }
         #endregion
+
+        #region zoom
+        private void zoomTSMI_Click(object sender, EventArgs e)
+        {
+            if (!zoomTSMI.DropDownItems.Contains(sender as ToolStripMenuItem))
+                throw new Exception("Only drop-down items from Zoom can call zoomTSMI_Click");
+            GraphicsData.Zoom = (int)Math.Pow(2, zoomTSMI.DropDownItems.IndexOf(sender as ToolStripMenuItem));
+            DoRefresh();
+        }
+        #endregion
+
 
         #endregion
 

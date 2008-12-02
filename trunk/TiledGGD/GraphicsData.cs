@@ -149,11 +149,11 @@ namespace TiledGGD
         /// <summary>
         /// The zoom of the graphics data
         /// </summary>
-        private static uint zoom = 1;
+        private static int zoom = 1;
         /// <summary>
         /// The zoom of the graphics data
         /// </summary>
-        internal static uint Zoom
+        internal static int Zoom
         {
             get { return zoom; }
             set

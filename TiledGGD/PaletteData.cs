@@ -400,7 +400,6 @@ namespace TiledGGD
             if (!this.HasData)
                 return fullpal;
 
-            long currIdx = Offset;
             int bt;
             byte fst, scn, thd, a;
             bool atEnd = false;

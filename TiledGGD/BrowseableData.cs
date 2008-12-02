@@ -68,9 +68,17 @@ namespace TiledGGD
         /// </summary>
         private long ptroffset;
         /// <summary>
-        /// The current byte
+        /// Peek the next byte. (look at next byte, don't move pointer)
         /// </summary>
-        protected byte Current { get { return *ptr; } }
+        protected byte PeekNext
+        {
+            get
+            {
+                if (ptroffset >= Length)
+                    return 0;
+                return *ptr;
+            }
+        }
         /// <summary>
         /// The next byte. Also increases the pointer
         /// </summary>
@@ -82,8 +90,7 @@ namespace TiledGGD
                 end = true;
                 return 0;
             }
-            ptr++;
-            return *ptr;
+            return *ptr++;
         }
         /// <summary>
         /// Resets the pointer to the start of visible data

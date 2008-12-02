@@ -132,12 +132,16 @@ namespace TiledGGD
         /// Loads the data of a file blindly; all bytes are copied.
         /// </summary>
         /// <param name="filename">The name of the file to load</param>
-        protected void loadGenericData(String filename)
+        protected unsafe void loadGenericData(String filename)
         {
             FileStream fstr = new FileStream(filename, FileMode.Open);
+            if(fstr.Length > int.MaxValue){
+                MessageBox.Show("Unable to load files >= 2 GB");
+                fstr.Close();
+                return;
+            }
             this.data = new byte[fstr.Length];
-            for (long l = 0; l < fstr.Length; l++)
-                data[l] = (byte)fstr.ReadByte();
+            fstr.Read(this.data, 0, data.Length);
             fstr.Close();
             Offset = 0;
             ResetPtr();

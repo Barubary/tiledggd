@@ -101,6 +101,7 @@ namespace TiledGGD
             this.radioBtn_hex.TabStop = true;
             this.radioBtn_hex.Text = "Hexadecimal";
             this.radioBtn_hex.UseVisualStyleBackColor = true;
+            this.radioBtn_hex.Click += new System.EventHandler(this.refocusTextbox);
             // 
             // radioBtn_dec
             // 
@@ -111,6 +112,7 @@ namespace TiledGGD
             this.radioBtn_dec.TabIndex = 0;
             this.radioBtn_dec.Text = "Decimal";
             this.radioBtn_dec.UseVisualStyleBackColor = true;
+            this.radioBtn_dec.Click += new System.EventHandler(this.refocusTextbox);
             // 
             // groupBox_mode
             // 
@@ -126,24 +128,26 @@ namespace TiledGGD
             // radioBtn_abs
             // 
             this.radioBtn_abs.AutoSize = true;
+            this.radioBtn_abs.Checked = true;
             this.radioBtn_abs.Location = new System.Drawing.Point(7, 42);
             this.radioBtn_abs.Name = "radioBtn_abs";
             this.radioBtn_abs.Size = new System.Drawing.Size(66, 17);
             this.radioBtn_abs.TabIndex = 1;
+            this.radioBtn_abs.TabStop = true;
             this.radioBtn_abs.Text = "Absolute";
             this.radioBtn_abs.UseVisualStyleBackColor = true;
+            this.radioBtn_abs.Click += new System.EventHandler(this.refocusTextbox);
             // 
             // radioBtn_rel
             // 
             this.radioBtn_rel.AutoSize = true;
-            this.radioBtn_rel.Checked = true;
             this.radioBtn_rel.Location = new System.Drawing.Point(7, 20);
             this.radioBtn_rel.Name = "radioBtn_rel";
             this.radioBtn_rel.Size = new System.Drawing.Size(64, 17);
             this.radioBtn_rel.TabIndex = 0;
-            this.radioBtn_rel.TabStop = true;
             this.radioBtn_rel.Text = "Relative";
             this.radioBtn_rel.UseVisualStyleBackColor = true;
+            this.radioBtn_rel.Click += new System.EventHandler(this.refocusTextbox);
             // 
             // GoToOffsetDialog
             // 

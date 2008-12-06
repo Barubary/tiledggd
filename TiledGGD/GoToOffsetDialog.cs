@@ -33,8 +33,12 @@ namespace TiledGGD
                 throw new Exception("Highly improbable Exception");
 
             if (this.radioBtn_dec.Checked)
+            {
                 if (long.TryParse(this.textBox1.Text, out offset))
                     return true;
+                else
+                    return false; // user entered an invalid decimal number
+            }
             try
             {
                 offset = long.Parse(this.textBox1.Text, System.Globalization.NumberStyles.HexNumber);
@@ -42,7 +46,7 @@ namespace TiledGGD
             }
             catch (Exception)
             {
-                return false;
+                return false; // user entered an invalid hexadecimal number
             }
         }
 
@@ -55,6 +59,11 @@ namespace TiledGGD
         {
             this.textBox1.Text = ""; // make sure to ignore the input
             this.Hide();
+        }
+
+        private void refocusTextbox(object sender, EventArgs e)
+        {
+            this.textBox1.Focus();
         }
 
         private void textBoxKeyDown(object sender, KeyEventArgs e)

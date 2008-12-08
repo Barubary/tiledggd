@@ -44,10 +44,11 @@ namespace TiledGGD
         void ReconfigurePanels(object sender, EventArgs e)
         {
             int dw = this.Size.Width - this.previousSize.Width;
+            int dh = this.Size.Height - this.previousSize.Height;
 
             this.PalettePanel.Location = new Point(this.PalettePanel.Location.X + dw, this.PalettePanel.Location.Y);
             this.DataPanel.Location = new Point(this.DataPanel.Location.X + dw, this.DataPanel.Location.Y);
-            this.GraphicsPanel.Size = new Size(this.GraphicsPanel.Size.Width + dw, this.GraphicsPanel.Size.Height);
+            this.GraphicsPanel.Size = new Size(this.GraphicsPanel.Size.Width + dw, this.GraphicsPanel.Size.Height + dh);
 
             this.previousSize = this.Size;
         }

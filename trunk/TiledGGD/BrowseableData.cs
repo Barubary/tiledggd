@@ -26,11 +26,17 @@ namespace TiledGGD
             {
                 if (!HasData)
                     return;
-                long newoffset = Math.Max(0, Math.Min(this.data.Length - 1, value));
+                long newoffset = Math.Max(0, Math.Min(this.data.Length, value));
                 if (newoffset != this.offset)
                 {
                     this.offset = newoffset;
-                    ptr = (byte*)data[offset];
+                    if (offset == 0)
+                        ptr = (byte*)data[offset];
+                    else
+                    {
+                        ptr = (byte*)data[offset - 1];
+                        ptr++;
+                    }
                     MainWindow.DoRefresh();
                 }
 
@@ -95,7 +101,12 @@ namespace TiledGGD
         /// <summary>
         /// Resets the pointer to the start of visible data
         /// </summary>
-        protected void ResetPtr() { fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; } }
+        protected void ResetPtr() {
+            if (offset == 0)
+                fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; }
+            else
+                fixed (byte* ptr1 = &data[ptroffset = offset - 1]) { ptr = ptr1; ptr++; }
+        }
         #endregion
 
         /// <summary>

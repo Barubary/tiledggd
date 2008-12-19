@@ -4,6 +4,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace TiledGGD
 {
@@ -151,16 +152,99 @@ namespace TiledGGD
 
         #endregion
 
+        #region Load methods
         internal override void load(string filename)
         {
-            base.loadGenericData(filename);
+            base.loadData(filename);
+
             if (filename.Contains("/"))
                 fname = filename.Substring(filename.LastIndexOf("/")+1);
             else if (filename.Contains("\\"))
                 fname = filename.Substring(filename.LastIndexOf("\\")+1);
             else
                 fname = filename;
+            filepath = filename;
+
+            MainWindow.DoRefresh();
         }
+
+        internal void reload(bool asSpecific)
+        {
+            if (asSpecific)
+                load(filepath);
+            else
+            {
+                loadGenericData(filepath);
+                MainWindow.DoRefresh();
+            }
+        }
+
+        #region NCLR
+        public void loadFileAsNCLR(string filename)
+        {
+            #region typedef
+            /*
+		     * typedef struct {
+		     *  char* magHeader; // 4 bytes: RLCN
+		     *  DWORD magConst; // FF FE 00 01
+		     *  DWORD fileSize;
+		     *  WORD headerSize; // = 0x10
+		     *  WORD nSections; // = 1
+		     *  PLTTSection plttSection;
+		     * } NCLRFile
+		     * 
+		     * typedef struct {
+		     *  char* magHeader; // 4 bytes: TTLP
+		     *  DWORD sectionSize;
+		     *  DWORD paletteType; // could also be a WORD, but next 2 bytes seem to be always 0
+		     *  DWORD palStart; // start offset of data after header? seems to be 0 always
+		     *  DWORD palEnd; // end offset of data after header? seems to be sectionSize - 0x18 always
+		     *  DWORD unkn1; // seems to be 0x10 always
+		     *  WORD* palData; 
+		     * } PLTTSection
+		     * 
+		     */
+            #endregion
+            BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
+            br.ReadInt32(); // skip magic header; it should be LRCN
+
+            if (br.ReadInt32() != 0x0100FEFF)
+            {
+                MainWindow.showError("Given file " + filename + " is not a valid NCLR file.\n It does not have the magic constant 0x0100FEFF at 0x04");
+                return;
+            }
+            int fileSize = br.ReadInt32();
+
+            int headerSize = br.ReadInt16();
+            int nSections = br.ReadInt16();
+
+            // should now be at PLTT section
+            if (br.ReadChar() != 'T' || br.ReadChar() != 'T' || br.ReadChar() != 'L' || br.ReadChar() != 'P')
+            {
+                MainWindow.showError("Given file " + filename + " is not a valid NCLR file or of an unsupported type.\n The PLTT section does not follow the NCLR header");
+                return;
+            }
+
+            int plttSize = br.ReadInt32();
+            int pltype = br.ReadInt32();
+            int palStart = br.ReadInt32();
+            int palEnd = br.ReadInt32();
+            int unkn = br.ReadInt32();
+            this.Data = br.ReadBytes(palEnd - palStart);
+
+            switch (pltype)
+            {
+                case 3:
+                case 4: PalFormat = PaletteFormat.FORMAT_2BPP; break;
+                default: MainWindow.showError("Unknown palette format " + pltype); break;
+            }
+
+            br.Close();
+
+        }
+        #endregion
+
+        #endregion
 
         internal override void paint(object sender, PaintEventArgs e)
         {

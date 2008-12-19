@@ -281,16 +281,119 @@ namespace TiledGGD
 
         #endregion
 
+        #region Load methods
         internal override void load(String filename)
         {
-            base.loadGenericData(filename);
+            base.loadData(filename);
+
             if (filename.Contains("/"))
                 fname = filename.Substring(filename.LastIndexOf("/")+1);
             else if (filename.Contains("\\"))
                 fname = filename.Substring(filename.LastIndexOf("\\")+1);
             else
                 fname = filename;
+            filepath = filename;
+
+            MainWindow.DoRefresh();
         }
+
+        internal void reload(bool asSpecific)
+        {
+            if (asSpecific)
+                load(filepath);
+            else
+            {
+                loadGenericData(filepath);
+                MainWindow.DoRefresh();
+            }
+        }
+
+        #region NCGR
+        public void loadFileAsNCGR(String filename)
+        {
+            #region typedef
+            /*
+		     * typedef struct {
+		     * 	char* magHeader; // 4 bytes: RGCN
+		     *  DWORD magConst; // FF FE 01 01
+		     *  DWORD fileSize;
+		     *  WORD headerSize; // should be 10 (i.e. 10 00)
+		     *  WORD nSections; // should be 1 or 2 (i.e. 01 00 or 02 00)
+		     * 	CHARSection charSection;
+		     * } NCGRFile
+		     * 
+		     * typedef struct {
+		     *  char* magHeader; // 4 bytes: RAHC
+		     *  DWORD sectSize; // section size; should be fileSize - NCGRHeader.headerSize = fileSize - 0x10
+		     *  WORD height; // FF FF if tiled image. otherwise is height / 8
+		     *  WORD width; // FF FF if tiled image. otherwise is width / 8
+		     *  DWORD palType; // 04 00 -> 8bpp, 03 00 -> 4bpp
+		     *  WORD linearFlag; // 1 => linear, 0 => tiled
+		     *  WORD unkn2; // ???? part of linearFlag?
+		     *  WORD unkn3; // ????
+		     *  WORD unkn4; // ????
+		     *  DWORD imageDataSize; // length of imageData (in bytes)
+		     *  DWORD unkn5; // ???? seems to be constant 18 00 00 00
+		     *  byte* imageData;
+		     * } CHARSection
+		     * 
+		     */
+            #endregion
+            BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
+            // skip 4 bytes; they are the already checked magic header RGCN (or NCGR)
+            br.ReadInt32();
+
+            if (br.ReadInt32() != 0x0101FEFF)
+            {
+                MainWindow.showError("Given file " + filename + " is not a valid NCGR file.\n It does not have the magic constant 0x0101FEFF at 0x04");
+                return;
+            }
+            int fileSize = br.ReadInt32();
+            int headerSize = br.ReadInt16();
+            int nSections = br.ReadInt16();
+            if (nSections > 2 || nSections == 0)
+            {
+                MainWindow.showError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The amount of sections is invalid (" + nSections + ")");
+                return;
+            }
+            // should now be at CHAR section
+            if (br.ReadChar() != 'R' || br.ReadChar() != 'A' || br.ReadChar() != 'H' || br.ReadChar() != 'C')
+            {
+                MainWindow.showError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The CHAR section does not follow the NCGR header");
+                return;
+            }
+
+            int charSize = br.ReadInt32();
+            int h = br.ReadInt16(), w = br.ReadInt16();
+            if (!(h == -1 || w == -1)) { Height = (uint)h; Width = (uint)w; }
+
+            int ptype = br.ReadInt32();
+            switch (ptype)
+            {
+                case 6: GraphFormat = GraphicsFormat.FORMAT_32BPP; break;
+                case 5: GraphFormat = GraphicsFormat.FORMAT_16BPP; break;
+                case 4: GraphFormat = GraphicsFormat.FORMAT_8BPP; break;
+                case 3: GraphFormat = GraphicsFormat.FORMAT_4BPP; break;
+                case 2: GraphFormat = GraphicsFormat.FORMAT_2BPP; break;
+                case 1: GraphFormat = GraphicsFormat.FORMAT_1BPP; break;
+                default: MainWindow.showError("Unknown GraphicsFormat in NCGR file: " + ptype); break;
+            }
+            Tiled = br.ReadInt32() == 0;
+            // 2*WORD = 8 bytes unknown => skip int32
+            int t = br.ReadInt32();
+            if (t > 1)
+                MainWindow.showError("Padding in NCGR>CHAR is not padding");
+            int imLength = br.ReadInt32();
+            if (br.ReadInt32() != 0x18)
+                MainWindow.showError("Value at end of CHAR header isn't 0x18");
+
+            this.Data = br.ReadBytes(imLength);
+
+            br.Close();
+        }
+        #endregion
+
+        #endregion
 
         #region Methods: paint
         internal override void paint(object sender, PaintEventArgs e)

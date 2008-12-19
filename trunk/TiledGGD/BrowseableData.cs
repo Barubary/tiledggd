@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
+using System.Reflection;
 
 namespace TiledGGD
 {
@@ -52,7 +53,7 @@ namespace TiledGGD
         /// <summary>
         /// The actual data. Should only be set within the load() method.
         /// </summary>
-        protected byte[] Data { get { return this.data; } set { this.data = value; } }
+        protected byte[] Data { get { return this.data; } set { this.data = value; offset = 0; ResetPtr(); } }
         /// <summary>
         /// Get a byte of data
         /// </summary>
@@ -91,7 +92,7 @@ namespace TiledGGD
         protected byte Next(out bool end)
         {
             end = false;
-            if (++ptroffset >= Length)
+            if (++ptroffset > Length)
             {
                 end = true;
                 return 0;
@@ -102,6 +103,8 @@ namespace TiledGGD
         /// Resets the pointer to the start of visible data
         /// </summary>
         protected void ResetPtr() {
+            if (data == null)
+                return;
             if (offset == 0)
                 fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; }
             else
@@ -123,6 +126,8 @@ namespace TiledGGD
             get { try { return this.data.LongLength; } catch (Exception) { return 0; } }
         }
         #endregion
+
+        protected string filepath = "";
 
         #endregion
 
@@ -150,7 +155,7 @@ namespace TiledGGD
         /// Loads the data of a file blindly; all bytes are copied.
         /// </summary>
         /// <param name="filename">The name of the file to load</param>
-        protected unsafe void loadGenericData(String filename)
+        protected void loadGenericData(String filename)
         {
             FileStream fstr = new FileStream(filename, FileMode.Open);
             if(fstr.Length > int.MaxValue){
@@ -164,6 +169,81 @@ namespace TiledGGD
             Offset = 0;
             ResetPtr();
         }
+
+        protected void loadData(String filename)
+        {
+            // read the first 4 bytes, check if the Data has the method to parse it
+            FileStream fstr = new FileStream(filename, FileMode.Open);
+            string magHdr = "";
+            for (int i = 0; i < 4; i++)
+            {
+                char ch = (char)fstr.ReadByte();
+                if (char.IsLetterOrDigit(ch))
+                    magHdr += ch;
+                else
+                    break;
+            }
+            fstr.Flush();
+            fstr.Close();
+            fstr.Dispose();
+            if (magHdr.Length == 0)
+                loadGenericData(filename);
+            else
+            {
+                /*Type t = this is PaletteData ? (this as PaletteData).GetType() : (this is GraphicsData ? (this as GraphicsData).GetType() : this.GetType());
+                MethodInfo[] methods = t.GetMethods();
+                magHdr = magHdr.ToUpper();
+                foreach (MethodInfo meth in methods)
+                {
+                    if (!meth.Name.StartsWith("loadFileAs"))
+                        continue;
+                    string tmp = meth.Name.Substring(10);
+                    if (magHdr.Length < tmp.Length)
+                        continue;
+                    if (magHdr.Length > tmp.Length)
+                        magHdr = magHdr.Substring(0, tmp.Length);
+                    if (magHdr.Equals(tmp) || magHdr.Equals(reverseString(tmp)))
+                    {
+                        try
+                        {
+                            meth.Invoke(this, new object[] { filename });
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        return;
+                    }
+                }*/
+                switch (magHdr)
+                {
+                    case "NCGR":
+                    case "RGCN":
+                        if (this is GraphicsData)
+                            (this as GraphicsData).loadFileAsNCGR(filename);
+                        else
+                            this.loadGenericData(filename);
+                        return;
+                    case "NCLR":
+                    case "RLCN":
+                        if (this is GraphicsData)
+                            this.loadGenericData(filename);
+                        else
+                            (this as PaletteData).loadFileAsNCLR(filename);
+                        return;
+                    default: loadGenericData(filename); break;
+                }
+            }
+        }
+
+        private string reverseString(string instr)
+        {
+            string outstr = "";
+            foreach(char c in instr)
+                outstr = c + outstr;
+            return outstr;
+        }
+
 
         /// <summary>
         /// Paint the data in some way

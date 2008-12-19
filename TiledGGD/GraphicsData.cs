@@ -330,7 +330,7 @@ namespace TiledGGD
 		     *  DWORD palType; // 04 00 -> 8bpp, 03 00 -> 4bpp
 		     *  WORD linearFlag; // 1 => linear, 0 => tiled
 		     *  WORD unkn2; // ???? part of linearFlag?
-		     *  WORD unkn3; // ????
+		     *  WORD unkn3; // ???? Seen 01 01 here with elebits NPCs
 		     *  WORD unkn4; // ????
 		     *  DWORD imageDataSize; // length of imageData (in bytes)
 		     *  DWORD unkn5; // ???? seems to be constant 18 00 00 00
@@ -381,11 +381,18 @@ namespace TiledGGD
             Tiled = br.ReadInt32() == 0;
             // 2*WORD = 8 bytes unknown => skip int32
             int t = br.ReadInt32();
+#if DEBUG
             if (t > 1)
                 MainWindow.showError("Padding in NCGR>CHAR is not padding");
+#endif
             int imLength = br.ReadInt32();
+            
+#if DEBUG
             if (br.ReadInt32() != 0x18)
                 MainWindow.showError("Value at end of CHAR header isn't 0x18");
+#else
+            br.ReadInt32();
+#endif
 
             this.Data = br.ReadBytes(imLength);
 

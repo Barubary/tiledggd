@@ -74,6 +74,12 @@
     <Compile Include="GoToOffsetDialog.Designer.cs">
       <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="LuaTools\Expressions\LuaExpression.cs" />
+    <Compile Include="LuaTools\Expressions\LuaExpressionSequence.cs" />
+    <Compile Include="LuaTools\Expressions\LuaNumberExp.cs" />
+    <Compile Include="LuaTools\LuaParser.cs" />
+    <Compile Include="LuaTools\Values\LuaNumberVal.cs" />
+    <Compile Include="LuaTools\Values\LuaValue.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

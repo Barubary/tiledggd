@@ -82,6 +82,9 @@ namespace TiledGGD
             this.setTileSizeTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyGraphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphReloadTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphReload_genTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphReload_specTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palFormat_2BpcTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,6 +112,9 @@ namespace TiledGGD
             this.palSS_64kbytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palReloadTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palReload_genTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palReload_specTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.shortcutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -212,7 +218,8 @@ namespace TiledGGD
             this.zoomTSMI,
             this.setTileSizeTSMI,
             this.copyGraphicsToolStripMenuItem,
-            this.graphGoToTSMI});
+            this.graphGoToTSMI,
+            this.graphReloadTSMI});
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
             this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.imageToolStripMenuItem.Text = "Image";
@@ -513,28 +520,28 @@ namespace TiledGGD
             // zoom_100pctTSMI
             // 
             this.zoom_100pctTSMI.Name = "zoom_100pctTSMI";
-            this.zoom_100pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_100pctTSMI.Size = new System.Drawing.Size(102, 22);
             this.zoom_100pctTSMI.Text = "100%";
             this.zoom_100pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
             // 
             // zoom_200pctTSMI
             // 
             this.zoom_200pctTSMI.Name = "zoom_200pctTSMI";
-            this.zoom_200pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_200pctTSMI.Size = new System.Drawing.Size(102, 22);
             this.zoom_200pctTSMI.Text = "200%";
             this.zoom_200pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
             // 
             // zoom_400pctTSMI
             // 
             this.zoom_400pctTSMI.Name = "zoom_400pctTSMI";
-            this.zoom_400pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_400pctTSMI.Size = new System.Drawing.Size(102, 22);
             this.zoom_400pctTSMI.Text = "400%";
             this.zoom_400pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
             // 
             // zoom_800pctTSMI
             // 
             this.zoom_800pctTSMI.Name = "zoom_800pctTSMI";
-            this.zoom_800pctTSMI.Size = new System.Drawing.Size(152, 22);
+            this.zoom_800pctTSMI.Size = new System.Drawing.Size(102, 22);
             this.zoom_800pctTSMI.Text = "800%";
             this.zoom_800pctTSMI.Click += new System.EventHandler(this.zoomTSMI_Click);
             // 
@@ -562,6 +569,29 @@ namespace TiledGGD
             this.graphGoToTSMI.Text = "Go to offset...";
             this.graphGoToTSMI.Click += new System.EventHandler(this.goToTSMI_Click);
             // 
+            // graphReloadTSMI
+            // 
+            this.graphReloadTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphReload_genTSMI,
+            this.graphReload_specTSMI});
+            this.graphReloadTSMI.Name = "graphReloadTSMI";
+            this.graphReloadTSMI.Size = new System.Drawing.Size(211, 22);
+            this.graphReloadTSMI.Text = "Reload as";
+            // 
+            // graphReload_genTSMI
+            // 
+            this.graphReload_genTSMI.Name = "graphReload_genTSMI";
+            this.graphReload_genTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphReload_genTSMI.Text = "Generic data";
+            this.graphReload_genTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
+            // 
+            // graphReload_specTSMI
+            // 
+            this.graphReload_specTSMI.Name = "graphReload_specTSMI";
+            this.graphReload_specTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphReload_specTSMI.Text = "Specific data";
+            this.graphReload_specTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
+            // 
             // paletteToolStripMenuItem
             // 
             this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -571,7 +601,8 @@ namespace TiledGGD
             this.palOrderTSMI,
             this.palSSTSMI,
             this.copyPaletteToolStripMenuItem,
-            this.palGoToTSMI});
+            this.palGoToTSMI,
+            this.palReloadTSMI});
             this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
             this.paletteToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.paletteToolStripMenuItem.Text = "Palette";
@@ -776,6 +807,29 @@ namespace TiledGGD
             this.palGoToTSMI.Size = new System.Drawing.Size(243, 22);
             this.palGoToTSMI.Text = "Go to offset...";
             this.palGoToTSMI.Click += new System.EventHandler(this.goToTSMI_Click);
+            // 
+            // palReloadTSMI
+            // 
+            this.palReloadTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palReload_genTSMI,
+            this.palReload_specTSMI});
+            this.palReloadTSMI.Name = "palReloadTSMI";
+            this.palReloadTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palReloadTSMI.Text = "Reload as";
+            // 
+            // palReload_genTSMI
+            // 
+            this.palReload_genTSMI.Name = "palReload_genTSMI";
+            this.palReload_genTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palReload_genTSMI.Text = "Generic data";
+            this.palReload_genTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
+            // 
+            // palReload_specTSMI
+            // 
+            this.palReload_specTSMI.Name = "palReload_specTSMI";
+            this.palReload_specTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palReload_specTSMI.Text = "Specific data";
+            this.palReload_specTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
             // 
             // otherToolStripMenuItem
             // 
@@ -985,6 +1039,12 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem zoom_200pctTSMI;
         private System.Windows.Forms.ToolStripMenuItem zoom_400pctTSMI;
         private System.Windows.Forms.ToolStripMenuItem zoom_800pctTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphReloadTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphReload_genTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphReload_specTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palReloadTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palReload_genTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palReload_specTSMI;
     }
 }
 

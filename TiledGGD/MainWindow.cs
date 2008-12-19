@@ -365,6 +365,15 @@ namespace TiledGGD
         }
         #endregion
 
+        /// <summary>
+        /// Shows an error message
+        /// </summary>
+        /// <param name="p">The string to show as an error</param>
+        internal static void showError(string p)
+        {
+            MessageBox.Show(p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+        }
+
         #region toolstrip response methods
 
         #region about box
@@ -744,6 +753,21 @@ namespace TiledGGD
                 throw new Exception("Only drop-down items from Zoom can call zoomTSMI_Click");
             GraphicsData.Zoom = (int)Math.Pow(2, zoomTSMI.DropDownItems.IndexOf(sender as ToolStripMenuItem));
             DoRefresh();
+        }
+        #endregion
+
+        #region reload
+        private void dataReloadTSMI_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            if (tsmi == null)
+                throw new Exception("Stupid error exception");
+            bool specific = (tsmi.OwnerItem as ToolStripMenuItem).DropDownItems.IndexOf(tsmi) == 1;
+            if (tsmi.OwnerItem == this.graphReloadTSMI)
+                graphicsData.reload(specific);
+            else if (tsmi.OwnerItem == this.palReloadTSMI)
+                paletteData.reload(specific);
+            else throw new Exception("Stupid error exception");
         }
         #endregion
 

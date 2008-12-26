@@ -365,7 +365,6 @@ namespace TiledGGD
 
             int charSize = br.ReadInt32();
             int h = br.ReadInt16(), w = br.ReadInt16();
-            if (!(h == -1 || w == -1)) { Height = (uint)h; Width = (uint)w; }
 
             int ptype = br.ReadInt32();
             switch (ptype)
@@ -379,6 +378,16 @@ namespace TiledGGD
                 default: MainWindow.showError("Unknown GraphicsFormat in NCGR file: " + ptype); break;
             }
             Tiled = br.ReadInt32() == 0;
+            if (Tiled)
+            {
+                h *= 8; w *= 8; TileSize = new Point(8, 8);
+            }
+
+            if (h > 0 && w > 0)
+            {
+                Height = (uint)h; Width = (uint)w;
+            }
+
             // 2*WORD = 8 bytes unknown => skip int32
             int t = br.ReadInt32();
 #if DEBUG

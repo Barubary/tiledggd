@@ -155,7 +155,7 @@ namespace TiledGGD
         /// Loads the data of a file blindly; all bytes are copied.
         /// </summary>
         /// <param name="filename">The name of the file to load</param>
-        protected void loadGenericData(String filename)
+        public void loadGenericData(String filename)
         {
             FileStream fstr = new FileStream(filename, FileMode.Open);
             if(fstr.Length > int.MaxValue){

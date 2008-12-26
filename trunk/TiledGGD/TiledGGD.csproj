@@ -20,7 +20,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationVersion>1.2.0.2</ApplicationVersion>
+    <ApplicationVersion>1.2.3.0</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -58,6 +58,10 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="BindingTools\Binding.cs" />
+    <Compile Include="BindingTools\BindingSet.cs" />
+    <Compile Include="BindingTools\Filter.cs" />
+    <Compile Include="BindingTools\IFilter.cs" />
     <Compile Include="BrowseableData.cs" />
     <Compile Include="ControlShorts.cs">
       <SubType>Form</SubType>
@@ -68,6 +72,7 @@
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BindingTools\FilterSet.cs" />
     <Compile Include="GoToOffsetDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +146,11 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Plugins\Bindings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

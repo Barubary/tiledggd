@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Reflection;
+using TiledGGD.BindingTools;
 
 namespace TiledGGD
 {
@@ -53,7 +54,9 @@ namespace TiledGGD
         /// <summary>
         /// The actual data. Should only be set within the load() method.
         /// </summary>
-        protected byte[] Data { get { return this.data; } set { this.data = value; offset = 0; ResetPtr(); } }
+        protected byte[] Data { get { return this.data; } set { this.data = value; 
+            offset = 0; 
+            ResetPtr(); } }
         /// <summary>
         /// Get a byte of data
         /// </summary>
@@ -105,7 +108,7 @@ namespace TiledGGD
         protected void ResetPtr() {
             if (data == null)
                 return;
-            if (offset == 0)
+            if (offset != Length)
                 fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; }
             else
                 fixed (byte* ptr1 = &data[ptroffset = offset - 1]) { ptr = ptr1; ptr++; }
@@ -170,7 +173,21 @@ namespace TiledGGD
             ResetPtr();
         }
 
-        protected void loadData(String filename)
+        protected void loadData(string filename)
+        {
+            BindingType btype;
+            if (this is PaletteData)
+                btype = BindingType.PALETTE;
+            else if (this is GraphicsData)
+                btype = BindingType.GRAPHICS;
+            else
+                throw new Exception("Unknown BrowseableData type in BrowseableData.loadData(string)");
+
+            if (!MainWindow.BindingSet.TryToBind(filename, btype))
+                loadGenericData(filename);
+        }
+
+        protected void loadDataOld(String filename)
         {
             // read the first 4 bytes, check if the Data has the method to parse it
             FileStream fstr = new FileStream(filename, FileMode.Open);
@@ -190,8 +207,30 @@ namespace TiledGGD
                 loadGenericData(filename);
             else
             {
-                /*Type t = this is PaletteData ? (this as PaletteData).GetType() : (this is GraphicsData ? (this as GraphicsData).GetType() : this.GetType());
-                MethodInfo[] methods = t.GetMethods();
+                Type t = this.GetType();// is PaletteData ? (this as PaletteData).GetType() : (this is GraphicsData ? (this as GraphicsData).GetType() : this.GetType());
+                MethodInfo mi;
+                switch (magHdr)
+                {
+                    case "RGCN":
+                    case "NCGR":
+                        try { mi = t.GetMethod("loadFileAsNCGR"); }
+                        catch { mi = null; } break;
+                    case "RLCN":
+                    case "NCLR":
+                        try { mi = t.GetMethod("loadFileAsNCLR"); }
+                        catch { mi = null; } break;
+                    case "GFNT":
+                        try { mi = t.GetMethod("loadFileAsGFNT"); }
+                        catch { mi = null; } break;
+                    default: loadGenericData(filename); return;
+                }
+                if (mi == null)
+                {
+                    loadGenericData(filename); 
+                    return;
+                }
+                (FileProcessor.CreateDelegate(typeof(FileProcessor), this, mi, true) as FileProcessor).Invoke(filename);
+                /*MethodInfo[] methods = t.GetMethods();
                 magHdr = magHdr.ToUpper();
                 foreach (MethodInfo meth in methods)
                 {
@@ -215,7 +254,7 @@ namespace TiledGGD
                         return;
                     }
                 }*/
-                switch (magHdr)
+                /*switch (magHdr)
                 {
                     case "NCGR":
                     case "RGCN":
@@ -232,7 +271,7 @@ namespace TiledGGD
                             (this as PaletteData).loadFileAsNCLR(filename);
                         return;
                     default: loadGenericData(filename); break;
-                }
+                }*/
             }
         }
 

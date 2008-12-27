@@ -27,22 +27,31 @@ namespace TiledGGD.BindingTools
         private List<IFilter> filters;
         #endregion
 
+        #region IsValid
+        /// <summary>
+        /// If this FilterSet is valid (ie: had been initialzed with a valid XmlNode)
+        /// </summary>
+        private bool isValid = false;
+        /// <summary>
+        /// If this FilterSet is valid (ie: had been initialzed with a valid XmlNode)
+        /// </summary>
+        public bool IsValid { get { return this.isValid; } private set { this.isValid = value; } }
         #endregion
 
-        #region Constructor
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Create a new FilterSet from an XmlNode
         /// </summary>
         /// <param name="filtersetnode">The XmlNode to create a FilterSet from</param>
         public FilterSet(XmlNode filtersetnode)
         {
-            if (filtersetnode == null)
+            if (filtersetnode == null|| filtersetnode.Name != "FilterSet")
             {
-                MainWindow.showError("Unable to make a Filterset out of an empty XmlNode");
+                MainWindow.showError("Unable to make a Filterset out of an empty or non-FilterSet XmlNode");
                 return;
             }
-            if (filtersetnode.Name != "FilterSet")
-                throw new Exception("Can only make a FilterSet out of a FilterSet XmlNode");
 
             this.filters = new List<IFilter>();
 
@@ -63,6 +72,19 @@ namespace TiledGGD.BindingTools
 
             if (filters.Count == 0)
                 MainWindow.showError("Invalid FilterSet: a FilterSet should have at least one sub-Filter or sub-filterSet. The FilterSet will now pass anything.");
+
+            this.IsValid = true;
+        }
+        /// <summary>
+        /// Create a new Filterset
+        /// </summary>
+        /// <param name="filters">The filters this FilterSet has</param>
+        /// <param name="method">The method this FilterSet filters with</param>
+        public FilterSet(IFilter[] filters, FilterMethod method)
+        {
+            this.FilterMethod = method;
+            this.filters = new List<IFilter>(filters);
+            this.IsValid = true;
         }
         #endregion
 
@@ -81,6 +103,13 @@ namespace TiledGGD.BindingTools
         }
         #endregion
 
+        #region Filter-Count
+        /// <summary>
+        /// The amount of direct sub-IFilters in this FilterSet
+        /// </summary>
+        public int Count { get { return this.filters.Count; } }
+        #endregion
+
         #region method: Passes(string)
         /// <summary>
         /// Checks if a file passes this set of filters
@@ -89,6 +118,9 @@ namespace TiledGGD.BindingTools
         /// <returns><code>true</code> iff the file passes this set of filters</returns>
         public bool Passes(string filename)
         {
+            if (!IsValid)
+                return false;
+
             if (filters.Count == 0)
                 return true;
             if (filters.Count == 1)

@@ -8,23 +8,38 @@
 	<!ELEMENT Target (#PCDATA)>
 	<!ATTLIST Binding type (PALETTE|GRAPHICS) #REQUIRED>
 	<!ATTLIST FilterSet method (AND|NAND|OR|NOR|XOR) #REQUIRED>
-	<!ATTLIST Filter type (MAGIC|FILEEXT) #REQUIRED format (DEC|HEX|STR) #REQUIRED>
+	<!ATTLIST Filter type (MAGIC|FILENAME) #REQUIRED>
 	<!ATTLIST Target type (LUA|METHOD) #REQUIRED>
 ]
 >
+<!-- NOTE: Filter-values for Filename filters are parsed as a Regex-object. -->
 <Bindings>
 	<Binding type="GRAPHICS">
 		<Name>NCGR and NCBR Files</Name>
 		<FilterSet method="AND">
-			<Filter format="STR" type="MAGIC">RGCN</Filter>
+			<Filter type="MAGIC">RGCN</Filter>
 		</FilterSet>
 		<Target type="METHOD">loadFileAsNCGR</Target>
 	</Binding>
 	<Binding type="PALETTE">
 		<Name>NCLR files</Name>
 		<FilterSet method="AND">
-			<Filter format="STR" type="MAGIC">RLCN</Filter>
+			<Filter type="MAGIC">RLCN</Filter>
 		</FilterSet>
 		<Target type="METHOD">loadFileAsNCLR</Target>
+	</Binding>
+	<Binding type="GRAPHICS">
+		<Name>Space PuzBob GFNT files</Name>
+		<FilterSet method="AND">
+			<Filter type="MAGIC">GFNT</Filter>
+		</FilterSet>
+		<Target type="METHOD">loadFileAsGFNT</Target>
+	</Binding>
+	<Binding type="PALETTE">
+		<Name>Space PuzBob GFNT files</Name>
+		<FilterSet method="AND">
+			<Filter type="MAGIC">GFNT</Filter>
+		</FilterSet>
+		<Target type="METHOD">loadFileAsGFNT</Target>
 	</Binding>
 </Bindings>

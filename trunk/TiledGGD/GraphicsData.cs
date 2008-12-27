@@ -433,15 +433,18 @@ namespace TiledGGD
 
             if (br.ReadInt32() != br.BaseStream.Length)
             {
-                MainWindow.showError(String.Format("Invalid GFNT file {0:s}; value at 0x04 is not filesize", filename));
+                MainWindow.showError(String.Format("Invalid GFNT file {0:s}; value at 0x04 is not filesizeLoading as generic file instead.", filename));
                 br.Close();
+                base.loadGenericData(filename);
                 return;
             }
 
-            if ((char)br.ReadByte() != '1' || (char)br.ReadByte() != '.' || (char)br.ReadByte() != '0' || (char)br.ReadByte() != '2')
+            char c4;
+            if ((char)br.ReadByte() != '1' || (char)br.ReadByte() != '.' || (char)br.ReadByte() != '0' || ((c4 = (char)br.ReadByte()) != '2' && c4 != '1'))
             {
-                MainWindow.showError(String.Format("Unsupported GFNT file {0:s}; does not have version 1.02", filename));
+                MainWindow.showError(String.Format("Unsupported GFNT file {0:s}; does not have version 1.02Loading as generic file instead.", filename));
                 br.Close();
+                base.loadGenericData(filename);
                 return;
             }
 

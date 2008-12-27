@@ -13,7 +13,7 @@ namespace TiledGGD.BindingTools
         /// <summary>
         /// Create a new BindingSet using the default xml-location (Plugins/Bindings.xml)
         /// </summary>
-        public BindingSet() : this("Plugins/Bindings.xml") { }
+        public BindingSet() : this(MainWindow.getPath() + "Plugins/Bindings.xml") { }
 
         /// <summary>
         /// Create a new BindingSet

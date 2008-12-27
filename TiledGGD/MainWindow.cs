@@ -395,6 +395,16 @@ namespace TiledGGD
             MessageBox.Show(p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
 
+        /// <summary>
+        /// Gets the current path
+        /// </summary>
+        /// <returns></returns>
+        internal static string getPath()
+        {
+            string fl = typeof(MainWindow).Assembly.Location;
+            return fl.Substring(0, fl.LastIndexOfAny(new char[] { '/', '\\' })) + "/";
+        }
+
         #region toolstrip response methods
 
         #region about box

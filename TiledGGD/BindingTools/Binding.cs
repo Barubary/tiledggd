@@ -65,9 +65,20 @@ namespace TiledGGD.BindingTools
         public FilterSet FilterSet { get { return this.filterSet; } private set { this.filterSet = value; } }
         #endregion
 
+        #region IsValid
+        /// <summary>
+        /// If this Binding is valid (ie: had been initialzed with a valid XmlNode)
+        /// </summary>
+        private bool isValid = false;
+        /// <summary>
+        /// If this Binding is valid (ie: had been initialzed with a valid XmlNode)
+        /// </summary>
+        public bool IsValid { get { return this.isValid; } private set { this.isValid = value; } }
         #endregion
 
-        #region Constructor
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Creates a new Binding
         /// </summary>
@@ -101,11 +112,34 @@ namespace TiledGGD.BindingTools
                 return;
             }
             this.filterSet = new FilterSet(fsetnode);
+
+            this.IsValid = true;
+        }
+        /// <summary>
+        /// Create a new Binding
+        /// </summary>
+        /// <param name="nm">The name of this Binding</param>
+        /// <param name="ttype">The type of target this Binding has</param>
+        /// <param name="btype">To what this Binding binds</param>
+        /// <param name="fset">The Filterset defining this Binding</param>
+        /// <param name="target">To where this Binding binds</param>
+        public Binding(string nm, TargetType ttype, BindingType btype, FilterSet fset, string target)
+        {
+            this.Name = nm;
+            this.Target = target;
+            this.TargetType = ttype;
+            this.BindingType = btype;
+            this.filterSet = fset;
+            this.IsValid = true;
         }
         #endregion
 
         #region Method: GetTarget
-        public unsafe FileProcessor GetTarget()
+        /// <summary>
+        /// Get the target of this Binding
+        /// </summary>
+        /// <returns>The handle to a method that can process a file. This will be a zero-method (one that loads nothing) if something went wrong.</returns>
+        public FileProcessor GetTarget()
         {
             switch (this.TargetType)
             {
@@ -119,10 +153,18 @@ namespace TiledGGD.BindingTools
                             bd = MainWindow.PalData; break;
                         default: MainWindow.showError("Invalid binding: "+this.Name+" has an invalid BindingType value: "+this.bindingType.ToString()); return this.loadNothing;
                     }
-                    MethodInfo mi = bd.GetType().GetMethod(this.Target, new Type[] { typeof(String) });
-                    return FileProcessor.CreateDelegate(bd.GetType(), mi) as FileProcessor;
-
-                    //break;
+                    MethodInfo mi;
+                    try { mi = bd.GetType().GetMethod(this.Target, new Type[] { typeof(String) }); }
+                    catch { MainWindow.showError("Invalid Binding: no such method " + this.Target); return this.loadNothing; }
+                    try
+                    {
+                        return FileProcessor.CreateDelegate(typeof(FileProcessor), bd, mi, true) as FileProcessor;
+                    }
+                    catch(Exception e)
+                    {
+                        MainWindow.showError("Something went wrong in Binding.GetTarget; " + e.Message);
+                        return this.loadNothing;
+                    }
                 case TargetType.LUA:
                     MainWindow.showError("Binding.GetTarget has not yet been implemented for Lua plugins");
                     return this.loadNothing;
@@ -130,6 +172,19 @@ namespace TiledGGD.BindingTools
                     MainWindow.showError("Invalid binding: "+this.Name+" has as invalid TargetType: "+this.TargetType.ToString());
                     return this.loadNothing;
             }
+        }
+        #endregion
+
+        #region Method: Binds
+        /// <summary>
+        /// If this Binding binds a file
+        /// </summary>
+        /// <param name="filename">The file to check</param>
+        /// <param name="type">Where the file is to be loaded</param>
+        /// <returns><code>true</code> iff this binds to the correct place the FilterSet defining this Binding passes the file</returns>
+        public bool Binds(string filename, BindingType type)
+        {
+            return type == this.BindingType && this.filterSet.Passes(filename);
         }
         #endregion
 

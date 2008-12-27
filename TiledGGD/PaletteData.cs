@@ -211,6 +211,7 @@ namespace TiledGGD
             if (br.ReadInt32() != 0x0100FEFF)
             {
                 MainWindow.showError("Given file " + filename + " is not a valid NCLR file.\n It does not have the magic constant 0x0100FEFF at 0x04");
+                br.Close();
                 return;
             }
             int fileSize = br.ReadInt32();
@@ -222,6 +223,7 @@ namespace TiledGGD
             if (br.ReadChar() != 'T' || br.ReadChar() != 'T' || br.ReadChar() != 'L' || br.ReadChar() != 'P')
             {
                 MainWindow.showError("Given file " + filename + " is not a valid NCLR file or of an unsupported type.\n The PLTT section does not follow the NCLR header");
+                br.Close();
                 return;
             }
 
@@ -241,6 +243,73 @@ namespace TiledGGD
 
             br.Close();
 
+        }
+        #endregion
+
+        #region GFNT
+        public void loadFileAsGFNT(string filename)
+        {
+            #region typedef
+            /*
+             * typedef struct {
+             *   char* magHeader; // GFNT
+             *   DWORD fileSize;
+             *   char* version; // '1.02'
+             *   DWORD Imagebpp;
+             *   DWORD imageWidthSc; // for real width; 8 << val
+             *   DWORD imageHeightSc; // for real height; 8 << val
+             *   DWORD nPals;
+             *   byte* image;
+             *   byte* palette; // seems to be 2Bppal always.
+             * } GFNTFile
+             */
+            #endregion
+
+            BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
+            br.ReadInt32(); // we should already know the magic header is GFNT
+
+            if (br.ReadInt32() != br.BaseStream.Length)
+            {
+                MainWindow.showError(String.Format("Invalid GFNT file {0:s}; value at 0x04 is not filesize", filename));
+                br.Close();
+                return;
+            }
+
+            if ((char)br.ReadByte() != '1' || (char)br.ReadByte() != '.' || (char)br.ReadByte() != '0' || (char)br.ReadByte() != '2')
+            {
+                MainWindow.showError(String.Format("Unsupported GFNT file {0:s}; does not have version 1.02", filename));
+                br.Close();
+                return;
+            }
+
+            int imbpp = br.ReadInt32();
+            int imwidth = 8 << br.ReadInt32();
+            int imheight = 8 << br.ReadInt32();
+            int nPals = br.ReadInt32();
+
+            int nBytesForIm = imwidth * imheight;
+            int nBytesForPal = 2;
+
+            switch (imbpp)
+            {
+                case 1: nBytesForIm /= 8; nBytesForPal *= 2; break;
+                case 2: nBytesForIm /= 4; nBytesForPal *= 4; break;
+                case 3: nBytesForIm /= 2; nBytesForPal *= 16; break;
+                case 4: nBytesForIm *= 1; nBytesForPal *= 256; break;
+                case 5: nBytesForIm *= 2; nBytesForPal = 0; break;
+                case 6: nBytesForIm *= 3; nBytesForPal = 0; break;
+                case 7: nBytesForIm *= 4; nBytesForPal = 0; break;
+                default: MainWindow.showError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
+            }
+
+            br.BaseStream.Seek(nBytesForIm, SeekOrigin.Current);
+            byte[] dt = br.ReadBytes(nBytesForPal);
+            this.Data = dt;
+            PalFormat = PaletteFormat.FORMAT_2BPP;
+            alphaLoc = AlphaLocation.NONE;
+            PalOrder = PaletteOrder.ORDER_BGR;
+
+            br.Close();
         }
         #endregion
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using TiledGGD.BindingTools;
 
 namespace TiledGGD
 {
@@ -17,6 +18,9 @@ namespace TiledGGD
         internal static PaletteData PalData { get { return paletteData; } }
 
         private static MainWindow mainWindow;
+
+        private static BindingSet bindingSet;
+        internal static BindingSet BindingSet { get { return bindingSet; } }
 
         private Size previousSize;
 
@@ -34,6 +38,11 @@ namespace TiledGGD
             this.previousSize = this.Size;
 
             updateMenu();
+        }
+
+        static MainWindow()
+        {
+            bindingSet = new BindingSet(); // load the default binding set
         }
         #endregion
 
@@ -190,7 +199,7 @@ namespace TiledGGD
                     graphicsData.load(fname);
                 DoRefresh();
             }
-            catch (Exception) { }
+            catch { }
         }
 
         void GraphicsPanel_DragDrop(object sender, DragEventArgs e)
@@ -203,7 +212,7 @@ namespace TiledGGD
                     paletteData.load(fname);
                 DoRefresh();
             }
-            catch (Exception) { }
+            catch { }
         }
 
         void palGraphDragEnter(object sender, DragEventArgs e)
@@ -212,6 +221,18 @@ namespace TiledGGD
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.None;
+        }
+
+        private void DataPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                string fname = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                graphicsData.load(fname);
+                paletteData.load(fname);
+                DoRefresh();
+            }
+            catch { }
         }
         #endregion
 
@@ -770,7 +791,6 @@ namespace TiledGGD
             else throw new Exception("Stupid error exception");
         }
         #endregion
-
 
         #endregion
 

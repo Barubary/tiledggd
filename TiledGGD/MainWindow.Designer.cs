@@ -581,14 +581,14 @@ namespace TiledGGD
             // graphReload_genTSMI
             // 
             this.graphReload_genTSMI.Name = "graphReload_genTSMI";
-            this.graphReload_genTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphReload_genTSMI.Size = new System.Drawing.Size(141, 22);
             this.graphReload_genTSMI.Text = "Generic data";
             this.graphReload_genTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
             // 
             // graphReload_specTSMI
             // 
             this.graphReload_specTSMI.Name = "graphReload_specTSMI";
-            this.graphReload_specTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphReload_specTSMI.Size = new System.Drawing.Size(141, 22);
             this.graphReload_specTSMI.Text = "Specific data";
             this.graphReload_specTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
             // 
@@ -820,14 +820,14 @@ namespace TiledGGD
             // palReload_genTSMI
             // 
             this.palReload_genTSMI.Name = "palReload_genTSMI";
-            this.palReload_genTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palReload_genTSMI.Size = new System.Drawing.Size(141, 22);
             this.palReload_genTSMI.Text = "Generic data";
             this.palReload_genTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
             // 
             // palReload_specTSMI
             // 
             this.palReload_specTSMI.Name = "palReload_specTSMI";
-            this.palReload_specTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palReload_specTSMI.Size = new System.Drawing.Size(141, 22);
             this.palReload_specTSMI.Text = "Specific data";
             this.palReload_specTSMI.Click += new System.EventHandler(this.dataReloadTSMI_Click);
             // 
@@ -856,6 +856,7 @@ namespace TiledGGD
             // 
             // DataPanel
             // 
+            this.DataPanel.AllowDrop = true;
             this.DataPanel.Controls.Add(this.listBox2);
             this.DataPanel.Controls.Add(this.listBox1);
             this.DataPanel.Location = new System.Drawing.Point(516, 27);
@@ -863,6 +864,8 @@ namespace TiledGGD
             this.DataPanel.Size = new System.Drawing.Size(256, 291);
             this.DataPanel.TabIndex = 2;
             this.DataPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DataPanel_Paint);
+            this.DataPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DataPanel_DragDrop);
+            this.DataPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.palGraphDragEnter);
             // 
             // listBox2
             // 

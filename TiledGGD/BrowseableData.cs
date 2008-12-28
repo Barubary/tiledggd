@@ -106,9 +106,9 @@ namespace TiledGGD
         /// Resets the pointer to the start of visible data
         /// </summary>
         protected void ResetPtr() {
-            if (data == null)
+            if (data == null || Length == 0)
                 return;
-            if (offset != Length)
+            if (offset != Length || offset == 0)
                 fixed (byte* ptr1 = &data[ptroffset = offset]) { ptr = ptr1; }
             else
                 fixed (byte* ptr1 = &data[ptroffset = offset - 1]) { ptr = ptr1; ptr++; }

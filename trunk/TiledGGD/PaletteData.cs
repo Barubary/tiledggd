@@ -253,8 +253,8 @@ namespace TiledGGD
             /*
              * typedef struct {
              *   char* magHeader; // GFNT
-             *   DWORD fileSize;
-             *   char* version; // '1.02'
+             *   DWORD fileSize; // best to ignore; is sometimes size up to first palette
+             *   char* version; // '1.02', '1.01' or '1.00' best to ignore
              *   DWORD Imagebpp;
              *   DWORD imageWidthSc; // for real width; 8 << val
              *   DWORD imageHeightSc; // for real height; 8 << val
@@ -267,22 +267,9 @@ namespace TiledGGD
 
             BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
             br.ReadInt32(); // we should already know the magic header is GFNT
+            br.ReadInt32(); // we don't need to know the filesize, and it's not even correct for multipalettes
 
-            if (br.ReadInt32() != br.BaseStream.Length)
-            {
-                MainWindow.showError(String.Format("Invalid GFNT file {0:s}; value at 0x04 is not filesize\nLoading as generic file instead.", filename));
-                br.Close();
-                base.loadGenericData(filename);
-                return;
-            }
-            char c4;
-            if ((char)br.ReadByte() != '1' || (char)br.ReadByte() != '.' || (char)br.ReadByte() != '0' || ((c4 = (char)br.ReadByte()) != '2' && c4 != '1'))
-            {
-                MainWindow.showError(String.Format("Possibly unsupported GFNT file {0:s}; does not have version 1.01 or 1.02Loading as generic file instead.", filename));
-                br.Close();
-                base.loadGenericData(filename);
-                return;
-            }
+            br.ReadInt32(); // ignore version-string
 
             int imbpp = br.ReadInt32();
             int imwidth = 8 << br.ReadInt32();
@@ -299,7 +286,7 @@ namespace TiledGGD
                 case 3: nBytesForIm /= 2; nBytesForPal *= 16; break;
                 case 4: nBytesForIm *= 1; nBytesForPal *= 256; break;
                 case 5: nBytesForIm *= 2; nBytesForPal = 0; break;
-                case 6: nBytesForIm *= 3; nBytesForPal = 0; break;
+                case 6: nBytesForIm *= 1; imbpp = 4; nBytesForPal *= 256; break;
                 case 7: nBytesForIm *= 4; nBytesForPal = 0; break;
                 default: MainWindow.showError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
             }

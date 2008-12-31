@@ -1,5 +1,6 @@
 #summary Tutorial for TiledGGD
 #labels Featured
+
 <wiki:toc />
 
 = Tutorial =
@@ -59,7 +60,7 @@ Browsing the Graphics is practically the same as browsing the Palette, only you 
 
 <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/9_grss.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/9s_grss.png</a>
 
-If you've browsed through the whole file; you've probably found nothing worth looking at. A closer inspection at the contents of the file, using among other things a HEX editor, reveals that the file contains only sound data, so it's no wonder there was nothing.<br>
+If you've browsed through the whole file; you've probably found nothing worth looking at. A closer inspection at the contents of the file, using among other things a HEX editor, reveals that the file contains only sound data, so it's no wonder there was nothing.<br />
 Since the next couple of files also contain no graphics, we'll skip ahead to the first file that does; 5.iear.
 
 == 2. Ripping raw data ==
@@ -70,11 +71,11 @@ When you load the file 5.iear, it's hard to say there is no sprite data inside (
 
 === Determining the Graphics Format ===
 
-However, the sprites really don't look like anything yet. Mainly because the is no correct palette, but also because there are vertical lines through them.<br>
-The latter generally indicates the graphics format is incorrect. You can set it using Image->Format or by using the B key to toggle it;<br>
+However, the sprites really don't look like anything yet. Mainly because the is no correct palette, but also because there are vertical lines through them.<br />
+The latter generally indicates the graphics format is incorrect. You can set it using Image->Format or by using the B key to toggle it;<br />
 (I've already browsed to the correct palette, as you can see)
 
-<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/11_grform.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/11_grform.png</a>
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/11_grform.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/11s_grform.png</a>
 
 Vertical lines every other column usually means pressing B once should be enough;
 
@@ -82,6 +83,43 @@ Vertical lines every other column usually means pressing B once should be enough
 
 The Graphics width is too wide, so the sprites are spread out over the columns. Just resize the panel (and scroll a few bytes) to see the sprites correctly;
 
-<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png</a>
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/13s_corr.png</a>
 
 === Getting the sprites out of the data ===
+
+There are several ways to get the sprites out of the data. By far the easiest is to simply copy the Graphics Panel contents to the clipboard using Ctrl+C. You can also use the menu version; Image->Copy to clipboard.<br />
+The same goes for the palette; you can copy it (as an image) to the clipboard using Ctrl+Shift+C, or the menu version Palette->Copy to clipboard.
+
+You can also save the graphics and/or palette to an image using Ctrl+S or Ctrl+Shift+S respectively. Of course there are also the menu versions File->Save Graphics... and File->Save Palette.... Currently the only possible output is a PNG file. Also, this is the only way to properly copy transparency, as the data sent to the clipboard doesn't handle it properly, if at all.
+
+=== Handling tiled graphics ===
+
+If you look below the plainly visible sprites, you'll see some data that could also be sprites. It could pay off to investigate;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/14_tiled1.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/14s_tiled1.png</a> <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/15_tiled2.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/15s_tiled2.png</a>
+
+At a width of 8 pixels, we can barely see that the data is indeed more sprites. This is where the Graphics Mode comes in. Increase the width again and press the F key to toggle the Graphics Mode (or use the menu: Image->Mode);
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/16_tiled3.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/16s_tiled3.png</a>
+
+It looks a bit garbled again, but it's nothing some scrolling won't fix;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/17_tiled4.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/17s_tiled4.png</a>
+
+Unfortunately, it seems this game has two copies of almost every sprite saved; one 'Linear' and one 'Tiled' version, and these sprites are just a copy of the ones we saw before.
+
+== Ripping NCGR/NCBR's and NCLR's ==
+
+One of the future features of TiledGGD is the support of plugins, so that you can extract only specific data from the files instead of all the data. The built-in support for NCGR/NCBR and NCLR files is basically an internal plug-in, since it will ignore the header data of the files and only view the data that can possible contain sprite data.
+An example: (left is without the use of the support, right with it)
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/18_ninfiles1.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/18s_ninfiles1.png</a> <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/19_ninfiles2.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/19s_ninfiles2.png</a>
+
+(You may have noticed that this looks like data in 05.iear. This is because it _is_. The iear files are archives, which I unpacked. I will not explain how here, since it is not what this tutorial (nor program) is about. There are lots of other DS games that use the same default Nintendo image format, which produce similar results)
+
+A word of warning, though. Not every NCGR/NCBR file has the proper width and height stored in its file. Therefore it is usually wise to check if there is still more in the file than  currently shown by increasing the panel height a few pixels.
+
+Also, if you want to see the graphics loaded without the built-in plugin, use the menus Image/Palette ->Reload as;
+ * 'Reload as->Generic data' reloads the data without the plugin
+ * 'Reload as->Specific data' reloads the data with the plugin
+

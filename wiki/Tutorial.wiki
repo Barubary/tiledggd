@@ -1,0 +1,87 @@
+#summary Tutorial for TiledGGD
+#labels Featured
+<wiki:toc />
+
+= Tutorial =
+
+This page will explain how to use the program, and explain some of the features in a bit more detail.
+
+
+== 1. Program Basiscs ==
+
+If you've ripped sprites with GGD before, you can probably skip this part if you take a look at the shortcuts-list (About->Shortcuts...).
+
+=== 1.1 The window layout ===
+I will explain the layout of the window first;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/2_empty_marked.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/2s_empty_marked.png</a>
+
+If you know what GGD looks like, this will probably look a bit familiar;
+ * The red area is where you will look most of the time; it's the Graphics Panel. This is where you'll have to look for sprites.
+ * The green area is the Palette Panel; this will determine what colours are used in the Graphics Panel most of the time.
+ * The blue area is the Data Panel, displaying data about the Graphics and Palette Panels.
+
+=== 1.2 Loading data ===
+
+Now we're ready to rip some sprites. Obviously, we'll need some data to get the sprites from first. In this part of the tutorial, I will use examples from the DS game Luminous Arc.
+There are two ways to load a file;
+ * One is by using the File->Open or File->Open Palette menus,
+ * The other by simply dragging the file on either the Graphics or Palette panel, loading it as the respective type of data.
+Note that loading the first file will automatically load is as the other type as well. This is so that you have at least something to look at in the Graphics Panel.
+
+We have no idea what's in what file, so let's just open the first one; 1.iear.
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/3_1iear.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/3s_1iear.png</a>
+
+=== 1.3 Browse the Palette ===
+
+When we look in the Data Panel, we see that the image format is 4 bits/pixel. This means only the top row of the palette is used to colour the Graphics Panel. Because it's mostly black, we'll scroll down a bit, using the Home and End keys.<br>When you do, you'll notice the palette only scrolling one colour at a time. This is where the Skip Size comes in. You can set it using the Palette->Skip Size menu, or toggle it with Shift+Z. Each time you press Home or End, the Palette Panel will go forward or backward in the data with the amount specified by the Skip Size.
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/4_palss.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/4s_palss.png</a>
+
+You should scroll down until you either reach a palette, or until the currently used palette (in this case the top 16 colours) aren't that similar any more.
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/5_palscr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/5s_palscr.png</a>
+
+=== 1.4 Resizing the Graphics Panel ===
+
+We've seen that the file is quite large (18 MB), and the current window is quite small, so let's enlarge it, using the arrow keys;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/6_largegr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/6s_largegr.png</a>
+
+If you find the enlarging/shrinking goes too fast or too slow, or you need your panel to have a width it cannot get to now (you can see the current size in the Data Panel), you can use the Width Skip Size and Height Skip Size menu's in the Graphics-menu;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/7_grwss.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/7s_grwss.png</a> <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/8_grhss.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/8s_grhss.png</a>
+
+=== 1.5 Browsing the Graphics ===
+
+Browsing the Graphics is practically the same as browsing the Palette, only you use !PageUp and !PageDown instead. There is also a Skip Size menu in the Image menu, from which the alternative is Ctrl+Z;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/9_grss.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/9s_grss.png</a>
+
+If you've browsed through the whole file; you've probably found nothing worth looking at. A closer inspection at the contents of the file, using among other things a HEX editor, reveals that the file contains only sound data, so it's no wonder there was nothing.<br>
+Since the next couple of files also contain no graphics, we'll skip ahead to the first file that does; 5.iear.
+
+== 2. Ripping raw data ==
+
+When you load the file 5.iear, it's hard to say there is no sprite data inside (after you've changed the width a bit, if necessary);
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/10_5iear.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/10s_5iear.png</a>
+
+=== Determining the Graphics Format ===
+
+However, the sprites really don't look like anything yet. Mainly because the is no correct palette, but also because there are vertical lines through them.<br>
+The latter generally indicates the graphics format is incorrect. You can set it using Image->Format or by using the B key to toggle it;<br>
+(I've already browsed to the correct palette, as you can see)
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/11_grform.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/11_grform.png</a>
+
+Vertical lines every other column usually means pressing B once should be enough;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/12_8bpp.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/12s_8bpp.png</a>
+
+The Graphics width is too wide, so the sprites are spread out over the columns. Just resize the panel (and scroll a few bytes) to see the sprites correctly;
+
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png</a>
+
+=== Getting the sprites out of the data ===

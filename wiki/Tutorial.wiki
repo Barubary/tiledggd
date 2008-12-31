@@ -69,7 +69,7 @@ When you load the file 5.iear, it's hard to say there is no sprite data inside (
 
 <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/10_5iear.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/10s_5iear.png</a>
 
-=== Determining the Graphics Format ===
+=== 2.1 Determining the Graphics Format ===
 
 However, the sprites really don't look like anything yet. Mainly because the is no correct palette, but also because there are vertical lines through them.<br />
 The latter generally indicates the graphics format is incorrect. You can set it using Image->Format or by using the B key to toggle it;<br />
@@ -85,14 +85,14 @@ The Graphics width is too wide, so the sprites are spread out over the columns. 
 
 <a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/13_corr.png"> http://img.photobucket.com/albums/v175/barubary/tggdtut/13s_corr.png</a>
 
-=== Getting the sprites out of the data ===
+=== 2.2 Getting the sprites out of the data ===
 
 There are several ways to get the sprites out of the data. By far the easiest is to simply copy the Graphics Panel contents to the clipboard using Ctrl+C. You can also use the menu version; Image->Copy to clipboard.<br />
 The same goes for the palette; you can copy it (as an image) to the clipboard using Ctrl+Shift+C, or the menu version Palette->Copy to clipboard.
 
 You can also save the graphics and/or palette to an image using Ctrl+S or Ctrl+Shift+S respectively. Of course there are also the menu versions File->Save Graphics... and File->Save Palette.... Currently the only possible output is a PNG file. Also, this is the only way to properly copy transparency, as the data sent to the clipboard doesn't handle it properly, if at all.
 
-=== Handling tiled graphics ===
+=== 2.3 Handling tiled graphics ===
 
 If you look below the plainly visible sprites, you'll see some data that could also be sprites. It could pay off to investigate;
 
@@ -108,7 +108,7 @@ It looks a bit garbled again, but it's nothing some scrolling won't fix;
 
 Unfortunately, it seems this game has two copies of almost every sprite saved; one 'Linear' and one 'Tiled' version, and these sprites are just a copy of the ones we saw before.
 
-== Ripping NCGR/NCBR's and NCLR's ==
+== 3. Ripping NCGR/NCBR's and NCLR's ==
 
 One of the future features of TiledGGD is the support of plugins, so that you can extract only specific data from the files instead of all the data. The built-in support for NCGR/NCBR and NCLR files is basically an internal plug-in, since it will ignore the header data of the files and only view the data that can possible contain sprite data.
 An example: (left is without the use of the support, right with it)
@@ -123,3 +123,17 @@ Also, if you want to see the graphics loaded without the built-in plugin, use th
  * 'Reload as->Generic data' reloads the data without the plugin
  * 'Reload as->Specific data' reloads the data with the plugin
 
+
+== 4. Miscellaneous features ==
+
+=== 4.1 Palette Format ===
+
+Most games save their palette in a 2 Bytes per colour format. However, some use 3 or 4 bytes per colour. In those cases, use the O key to toggle between the different palette formats, or use the menu Palette->Format.
+
+=== 4.2 Palette Order ===
+
+As with the palette format, the palette order of a palette is generally B->G->R. Should this happen to be different, use the P key or the menu Palette->Colour order to change the order.
+
+=== 4.3 Alpha location ===
+
+With some games, the palette also contains data about the transparency. Usually, this data is stored before the colour data, but not always. Use the menu Palette->Alpha location to change the setting. (None means that it's actually in front of the colour data, but it is simply ignored)

@@ -137,3 +137,20 @@ As with the palette format, the palette order of a palette is generally B->G->R.
 === 4.3 Alpha location ===
 
 With some games, the palette also contains data about the transparency. Usually, this data is stored before the colour data, but not always. Use the menu Palette->Alpha location to change the setting. (None means that it's actually in front of the colour data, but it is simply ignored)
+
+=== 4.4 Go to Offset ===
+
+Both the Graphics Panel as the Palette Panel have the option to go to a specific offset. This can either be useful if you know some image data starts at that offset for a set of files (until the plug-ins are working), or when you've written down some offsets for later use/got them from someone else. You can use the menus Image/Palette->Go to offset... or Ctrl+(Shift+)G.<br>
+You can enter the offset as either a decimal or hexadecimal number, and you can also choose to treat your current offset as zero (making the number you enter how much you skip forward).
+
+=== 4.5 Custom tile size ===
+
+Generally, when an image is tiled, the tile size is 8x8. However, as always, there are some exceptions. I've seen tiles of 16x16 and 32x32, but also of 16x8 and 32x8, but almost any dimension is possible. Use Ctrl+T or the menu Image->Set Tile Size... to use this functionality.
+
+=== 4.6 Zooming ===
+
+You can zoom up to 800%, using either the !NumPad + and -, or the menu Image->Zoom.
+
+=== 4.7 Endianness ===
+
+99 out of 100 (if not more) of the games have their data stored !BigEndian; which means that the bytes that provide the most information are stored at the end of a set of bytes. If a game happens to use a !LittleEndian approach, you can use Ctrl+(Shift+)E to toggle the Endianness of the graphics and/or the palette. Of course, you can also use the menus Image/Palette->Endianness

@@ -60,6 +60,7 @@ namespace TiledGGD
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(36, 20);
             this.textBox2.TabIndex = 2;
+            this.textBox2.TextChanged += new System.EventHandler(this.checkText);
             this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnter);
             // 
             // label2

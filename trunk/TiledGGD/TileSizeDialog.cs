@@ -56,6 +56,8 @@ namespace TiledGGD
             foreach (char c in str)
                 if (char.IsDigit(c))
                     newstr += c;
+            if (newstr.Length == 0)
+                newstr = "0";
             while (newstr[0] == '0' && newstr.Length > 1)
                 newstr = newstr.Substring(1);
             if (newstr.Length == 0)

@@ -56,7 +56,7 @@ namespace TiledGGD
             this.graphSS_1byteTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_2bytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_4bytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.graphSS_1pixTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphSS_1pixrTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_1trTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_widthTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.graphSS_heightTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,6 +124,7 @@ namespace TiledGGD
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
             this.aboutBox = new TiledGGD.AboutBox();
+            this.graphSS_1tlTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.DataPanel.SuspendLayout();
             this.SuspendLayout();
@@ -339,7 +340,8 @@ namespace TiledGGD
             this.graphSS_1byteTSMI,
             this.graphSS_2bytesTSMI,
             this.graphSS_4bytesTSMI,
-            this.graphSS_1pixTSMI,
+            this.graphSS_1tlTSMI,
+            this.graphSS_1pixrTSMI,
             this.graphSS_1trTSMI,
             this.graphSS_widthTSMI,
             this.graphSS_heightTSMI});
@@ -350,49 +352,49 @@ namespace TiledGGD
             // graphSS_1byteTSMI
             // 
             this.graphSS_1byteTSMI.Name = "graphSS_1byteTSMI";
-            this.graphSS_1byteTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_1byteTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_1byteTSMI.Text = "1 Byte";
             this.graphSS_1byteTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // graphSS_2bytesTSMI
             // 
             this.graphSS_2bytesTSMI.Name = "graphSS_2bytesTSMI";
-            this.graphSS_2bytesTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_2bytesTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_2bytesTSMI.Text = "2 Bytes";
             this.graphSS_2bytesTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // graphSS_4bytesTSMI
             // 
             this.graphSS_4bytesTSMI.Name = "graphSS_4bytesTSMI";
-            this.graphSS_4bytesTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_4bytesTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_4bytesTSMI.Text = "4 Bytes";
             this.graphSS_4bytesTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
-            // graphSS_1pixTSMI
+            // graphSS_1pixrTSMI
             // 
-            this.graphSS_1pixTSMI.Name = "graphSS_1pixTSMI";
-            this.graphSS_1pixTSMI.Size = new System.Drawing.Size(149, 22);
-            this.graphSS_1pixTSMI.Text = "1 Pixel Row";
-            this.graphSS_1pixTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
+            this.graphSS_1pixrTSMI.Name = "graphSS_1pixrTSMI";
+            this.graphSS_1pixrTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphSS_1pixrTSMI.Text = "1 Pixel Row";
+            this.graphSS_1pixrTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // graphSS_1trTSMI
             // 
             this.graphSS_1trTSMI.Name = "graphSS_1trTSMI";
-            this.graphSS_1trTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_1trTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_1trTSMI.Text = "1 Tile Row";
             this.graphSS_1trTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // graphSS_widthTSMI
             // 
             this.graphSS_widthTSMI.Name = "graphSS_widthTSMI";
-            this.graphSS_widthTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_widthTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_widthTSMI.Text = "(Width) Rows";
             this.graphSS_widthTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
             // graphSS_heightTSMI
             // 
             this.graphSS_heightTSMI.Name = "graphSS_heightTSMI";
-            this.graphSS_heightTSMI.Size = new System.Drawing.Size(149, 22);
+            this.graphSS_heightTSMI.Size = new System.Drawing.Size(152, 22);
             this.graphSS_heightTSMI.Text = "(Height) Rows";
             this.graphSS_heightTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
             // 
@@ -927,6 +929,13 @@ namespace TiledGGD
             this.aboutBox.Text = "About TiledGGD";
             this.aboutBox.Visible = false;
             // 
+            // graphSS_1tlTSMI
+            // 
+            this.graphSS_1tlTSMI.Name = "graphSS_1tlTSMI";
+            this.graphSS_1tlTSMI.Size = new System.Drawing.Size(152, 22);
+            this.graphSS_1tlTSMI.Text = "1 Tile";
+            this.graphSS_1tlTSMI.Click += new System.EventHandler(this.graphSSTSMI_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -998,7 +1007,7 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem graphSS_1byteTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphSS_2bytesTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphSS_4bytesTSMI;
-        private System.Windows.Forms.ToolStripMenuItem graphSS_1pixTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_1pixrTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphSS_1trTSMI;
         private System.Windows.Forms.ToolStripMenuItem palSS_256colTSMI;
         private System.Windows.Forms.ToolStripMenuItem palSS_64kbytesTSMI;
@@ -1048,6 +1057,7 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem palReloadTSMI;
         private System.Windows.Forms.ToolStripMenuItem palReload_genTSMI;
         private System.Windows.Forms.ToolStripMenuItem palReload_specTSMI;
+        private System.Windows.Forms.ToolStripMenuItem graphSS_1tlTSMI;
     }
 }
 

@@ -1066,7 +1066,7 @@ namespace TiledGGD
         internal void toggleSkipSize()
         {
             int ss = (int)SkipSize;
-            ss = (ss + 1) % 7;
+            ss = (ss + 1) % 8;
             SkipSize = (GraphicsSkipSize)ss;
         }
 
@@ -1105,6 +1105,7 @@ namespace TiledGGD
                 case GraphicsSkipSize.SKIPSIZE_1BYTE: bytesToSkip = 1; break;
                 case GraphicsSkipSize.SKIPSIZE_2BYTES: bytesToSkip = 2; break;
                 case GraphicsSkipSize.SKIPSIZE_4BYTES: bytesToSkip = 4; break;
+                case GraphicsSkipSize.SKIPSIZE_1TILE: bytesToSkip /= (width / TileSize.X); bytesToSkip *= TileSize.Y; break;
                 case GraphicsSkipSize.SKIPSIZE_1PIXROW: break;
                 case GraphicsSkipSize.SKIPSIZE_1TILEROW: bytesToSkip *= TileSize.Y; break;
                 case GraphicsSkipSize.SKIPSIZE_WIDTHROWS: bytesToSkip *= Width; break;
@@ -1149,10 +1150,11 @@ namespace TiledGGD
         SKIPSIZE_1BYTE = 0,
         SKIPSIZE_2BYTES = 1,
         SKIPSIZE_4BYTES = 2,
-        SKIPSIZE_1PIXROW = 3,
-        SKIPSIZE_1TILEROW = 4,
-        SKIPSIZE_WIDTHROWS = 5,
-        SKIPSIZE_HEIGHTROWS = 6
+        SKIPSIZE_1TILE = 3,
+        SKIPSIZE_1PIXROW = 4,
+        SKIPSIZE_1TILEROW = 5,
+        SKIPSIZE_WIDTHROWS = 6,
+        SKIPSIZE_HEIGHTROWS = 7
     }
     public enum HWSkipSize
     {

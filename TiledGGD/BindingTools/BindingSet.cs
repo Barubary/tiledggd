@@ -81,8 +81,9 @@ namespace TiledGGD.BindingTools
         /// <returns><code>true</code> iff a Binding in this set has bound the file</returns>
         public bool TryToBind(string filename, BindingType type)
         {
-            foreach(Binding b in this)
-                if (b.Binds(filename, type)){
+            foreach (Binding b in this)
+                if (b.Binds(filename, type))
+                {
                     b.GetTarget().Invoke(filename);
                     return true;
                 }

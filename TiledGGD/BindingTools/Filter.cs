@@ -110,7 +110,7 @@ namespace TiledGGD.BindingTools
                 case FilterType.MAGIC:
                     BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
                     foreach (char c in this.Value)
-                        if (br.ReadChar() != c)
+                        if ((char)br.ReadByte() != c)
                         {
                             br.Close();
                             return false;

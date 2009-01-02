@@ -288,6 +288,7 @@ namespace TiledGGD
                 case GraphicsSkipSize.SKIPSIZE_1BYTE: val = "1 Bytes"; break;
                 case GraphicsSkipSize.SKIPSIZE_2BYTES: val = "2 Bytes"; break;
                 case GraphicsSkipSize.SKIPSIZE_4BYTES: val = "4 Bytes"; break;
+                case GraphicsSkipSize.SKIPSIZE_1TILE: val = "1 Tile"; break;
                 case GraphicsSkipSize.SKIPSIZE_1PIXROW: val = "1 row of pixels"; break;
                 case GraphicsSkipSize.SKIPSIZE_1TILEROW: val = "1 row of tiles"; break;
                 case GraphicsSkipSize.SKIPSIZE_HEIGHTROWS: val = "(Height) rows of pixels"; break;

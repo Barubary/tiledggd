@@ -1132,6 +1132,42 @@ namespace TiledGGD
                 default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
             }
         }
+
+        /// <summary>
+        /// Converts the entire data inside this GraphicsData to a bitmap
+        /// </summary>
+        /// <returns>A Bitmap containing the enitre content of this GraphicsData</returns>
+        internal unsafe Bitmap toFullBitmap()
+        {
+            long nBytes = this.Length;
+            long nPixels = 0;
+            switch (GraphFormat)
+            {
+                case GraphicsFormat.FORMAT_1BPP: nPixels = nBytes * 8; break;
+                case GraphicsFormat.FORMAT_2BPP: nPixels = nBytes * 4; break;
+                case GraphicsFormat.FORMAT_4BPP: nPixels = nBytes * 2; break;
+                case GraphicsFormat.FORMAT_8BPP: nPixels = nBytes; break;
+                case GraphicsFormat.FORMAT_16BPP: nPixels = nBytes / 2; break;
+                case GraphicsFormat.FORMAT_24BPP: nPixels = nBytes / 3; break;
+                case GraphicsFormat.FORMAT_32BPP: nPixels = nBytes / 4; break;
+                default: throw new Exception("Unknown error; invalid Graphics Format " + graphFormat.ToString());
+            }
+
+            uint origHeight = Height;
+
+            Height = (uint)(nPixels / Width);
+            if (Height * Width < nPixels)
+                Height++;
+
+            long origOffset = Offset;
+            Offset = 0;
+
+            Bitmap bitout = this.toBitmap();
+
+            Offset = origOffset;
+            Height = origHeight;
+            return bitout;
+        }
     }
 
     #region Graphics enums (GraphicsFormat, GraphicsSkipMetric, HWSkipSize)

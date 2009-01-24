@@ -803,6 +803,30 @@ namespace TiledGGD
         }
         #endregion
 
+        #region Save all Graphics
+        private void saveallGraphTSMI_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PNG file (*.png)|*.png";
+            sfd.DefaultExt = "png";
+            sfd.Title = "Save Graphics as PNG";
+            sfd.SupportMultiDottedExtensions = true;
+            sfd.ShowHelp = false;
+            sfd.OverwritePrompt = true;
+            sfd.AddExtension = true;
+            sfd.RestoreDirectory = true;
+            DialogResult res = sfd.ShowDialog();
+
+            if (res == DialogResult.OK || res == DialogResult.Yes)
+            {
+                string flnm = sfd.FileName;
+
+                graphicsData.toFullBitmap().Save(flnm);
+            }
+        }
+        #endregion
+
+
         #endregion
 
     }

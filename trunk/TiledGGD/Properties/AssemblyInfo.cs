@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TiledGGD")]
-[assembly: AssemblyCopyright("Released under the GNU GPL v3")]
+[assembly: AssemblyCopyright("Released under the MIT License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

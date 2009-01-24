@@ -65,7 +65,7 @@ namespace TiledGGD.BindingTools
             {
                 case "MAGIC":
                     this.FilterType = FilterType.MAGIC; break;
-                case "FILEEXT":
+                case "FILENAME":
                     this.FilterType = FilterType.FILENAME; break;
                 default:
                     MainWindow.showError("Invalid Filter: invalid FilterType " + typeStr); return;

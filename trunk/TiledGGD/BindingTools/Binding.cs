@@ -76,6 +76,21 @@ namespace TiledGGD.BindingTools
         public bool IsValid { get { return this.isValid; } private set { this.isValid = value; } }
         #endregion
 
+        #region Enabled
+        /// <summary>
+        /// If this Binding is enabled. If not, this Binding binds nothing
+        /// </summary>
+        private bool enabled = true;
+        /// <summary>
+        /// If this Binding is enabled. If not, this Binding binds nothing
+        /// </summary>
+        public bool Enabled
+        {
+            get { return this.enabled; }
+            private set { this.enabled = value; }
+        }
+        #endregion
+
         #endregion
 
         #region Constructors
@@ -90,6 +105,8 @@ namespace TiledGGD.BindingTools
             XmlNode tnode = xmlnode.SelectSingleNode("Target");
             string ttype = tnode.Attributes["type"].Value;
             string tval = tnode.InnerText;
+
+            this.Enabled = xmlnode.Attributes["enabled"].Value == "1";
             
             this.Name = nm;
             switch (btype.ToUpper())
@@ -166,8 +183,10 @@ namespace TiledGGD.BindingTools
                         return this.loadNothing;
                     }
                 case TargetType.LUA:
-                    MainWindow.showError("Binding.GetTarget has not yet been implemented for Lua plugins");
-                    return this.loadNothing;
+
+                    LuaTool tool = new LuaTool(this, this.Target);
+                    return new FileProcessor(tool.loadFile);
+
                 default:
                     MainWindow.showError("Invalid binding: "+this.Name+" has as invalid TargetType: "+this.TargetType.ToString());
                     return this.loadNothing;
@@ -184,7 +203,9 @@ namespace TiledGGD.BindingTools
         /// <returns><code>true</code> iff this binds to the correct place the FilterSet defining this Binding passes the file</returns>
         public bool Binds(string filename, BindingType type)
         {
-            return type == this.BindingType && this.filterSet.Passes(filename);
+            return this.Enabled 
+                    && type == this.BindingType 
+                    && this.filterSet.Passes(filename);
         }
         #endregion
 

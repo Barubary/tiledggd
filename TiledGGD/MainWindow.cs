@@ -37,6 +37,8 @@ namespace TiledGGD
 
             this.previousSize = this.Size;
 
+            this.Icon = new Icon(this.GetType().Assembly.GetManifestResourceStream("TiledGGD.program_icon.ico"));
+
             updateMenu();
         }
 

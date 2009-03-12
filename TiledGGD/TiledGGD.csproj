@@ -22,6 +22,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationVersion>1.2.3.0</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <StartupObject>TiledGGD.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +47,14 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\LuaInterface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -62,6 +73,7 @@
     <Compile Include="BindingTools\BindingSet.cs" />
     <Compile Include="BindingTools\Filter.cs" />
     <Compile Include="BindingTools\IFilter.cs" />
+    <Compile Include="BindingTools\LuaTool.cs" />
     <Compile Include="BrowseableData.cs" />
     <Compile Include="ControlShorts.cs">
       <SubType>Form</SubType>
@@ -79,12 +91,6 @@
     <Compile Include="GoToOffsetDialog.Designer.cs">
       <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="LuaTools\Expressions\LuaExpression.cs" />
-    <Compile Include="LuaTools\Expressions\LuaExpressionSequence.cs" />
-    <Compile Include="LuaTools\Expressions\LuaNumberExp.cs" />
-    <Compile Include="LuaTools\LuaParser.cs" />
-    <Compile Include="LuaTools\Values\LuaNumberVal.cs" />
-    <Compile Include="LuaTools\Values\LuaValue.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -149,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Plugins\Bindings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugins\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

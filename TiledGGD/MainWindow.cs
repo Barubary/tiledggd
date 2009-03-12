@@ -66,9 +66,9 @@ namespace TiledGGD
         #region Methods: Quit
         void Quit(object sender, EventArgs e)
         {
-            this.Quit();
+            MainWindow.Quit();
         }
-        void Quit()
+        internal static void Quit()
         {
             Application.Exit();
         }
@@ -212,7 +212,10 @@ namespace TiledGGD
                     paletteData.load(fname);
                 DoRefresh();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
         }
 
         void palGraphDragEnter(object sender, DragEventArgs e)

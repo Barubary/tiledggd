@@ -6,7 +6,7 @@
 	<!ELEMENT FilterSet (Filter*, FilterSet*)*>
 	<!ELEMENT Filter (#PCDATA)>
 	<!ELEMENT Target (#PCDATA)>
-	<!ATTLIST Binding type (PALETTE|GRAPHICS) #REQUIRED>
+	<!ATTLIST Binding type (PALETTE|GRAPHICS) #REQUIRED enabled (1|0) "1">
 	<!ATTLIST FilterSet method (AND|NAND|OR|NOR|XOR) #REQUIRED>
 	<!ATTLIST Filter type (MAGIC|FILENAME) #REQUIRED>
 	<!ATTLIST Target type (LUA|METHOD) #REQUIRED>

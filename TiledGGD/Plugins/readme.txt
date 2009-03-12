@@ -1,0 +1,92 @@
+
+1. Bindings
+
+Bindings can either point to a user-defined plugin, or to a built-in method. 
+The following built-in methods are available:
+Graphics:
+- LoadFileAsNCGR
+- LoadFileAsGFNT
+Palette:
+- LoadFileAsNCLR
+- LoadFileAsGFNT
+
+Bindings also have a FilterSet, which determines which files are bound by the Binding.
+The 'method' of a FilterSet determines how the sub-Filter(Set)s are handled. A FilterSet 
+passes a file under these conditions:
+- AND: all sub-Filter(Set)s must pass
+- NAND: at least one sub-Filter(Set) must not pass
+- OR: at least one sub-Filter(Set) must pass
+- NOR: no sub-Filter(Set) can pass
+- XOR: exactly one sub-Filter(Set) must pass, the rest must not
+A Filter can work in two ways: it can look at the first few bytes (usually a magic header) of 
+a file, and it can look at the filename. For the first option, you need to provide the ASCII
+characters the magic header should start with. For the second option, the Filter will pass if
+the provided regular expression matches somewhere in the filename (including the folders it is in)
+
+A Binding can be enabled or disabled. If it is disabled (set enabled to "0"), it will bind to
+no file.
+
+If a file can be bound by more than one Binding, the first enabled one is used (they are read from 
+top to bottom).
+
+
+
+2. Plugins
+
+Plugins of TiledGGD are written in Lua. For a reference manual, see http://www.lua.org/manual/5.1/
+Warning: do not use overly large tables. It can crash the Lua parser/interpreter.
+
+For the plugin to be able to do anything, I predefined some functions and variables.
+Functions
+- read(offset) : function that returns the byte-value at the specified offset. If the offset is
+				 out of bounds, it returns nil. Offset is 0-based.
+- read(offset, maxlength) : function that returns a 1-dimensional table with in it the byte-values 
+						    from offset, with the specified maximum length. The only reason for the
+							table to be shorter than maxlength, is that offset+length is out of 
+							bounds. Offset is 0-based.
+- readWORD(offset) : function that reads a WORD (2 bytes, big-endian style) from offset. Offset is 
+					 0-based. Note that a WORD is an unsigned value; 0xFFFF == 65535.
+- readDWORD(offset) : function that reads a DWORD (4 bytes, big-endian style) from offset. Offset
+					  is 0-based. Note that DWORD is a signed value; 0xFFFFFFFF == -0x7FFFFFFF.
+- readString(offset) : function that reads a string from offset. It will only stop reading until the 
+					   end of the file has been reached, or a \0 has been read. Offset is 0-based.
+- readString(offset, maxlength) : same as readString(offset), only the resulting string will not be 
+								  longer than maxlength.
+- tableToInts(table) : converts a table of byte-values into integer values. Each integer is composed
+					   by reading 4 byte-values, big-endian style.
+- setData(offset) : sets from where the actual data starts. The data ends at the end of the file.
+- setData(offset, length) : sets from where the actual data starts, and how long the actual data is. 
+							If this function and setData(offset) is not used, setData(0) is assumed.
+					   
+Variables
+- length : the length of the data in bytes.
+- filepath : the path of the file, including the name. All path-separators are '/'s.
+- filename : the name of the file, without the path.
+
+The following variables can be set for any type of plugin:
+- error : string that will be displayed at the end as an error message. The file will not use the
+		  plugin if this variable is set.
+- format : integer indicating the format of the graphics or palette. It can only be one of these 
+		   values: (graphics format | palette format)
+			- 1 ( 1 bpp | N/A)
+			- 2 ( 2 bpp | N/A)
+			- 3 ( 4 bpp | N/A)
+			- 4 ( 8 bpp | N/A)
+			- 5 (16 bpp | 2 Bppal)
+			- 6 (24 bpp | 3 Bppal)
+			- 7 (32 bpp | 4 Bppal)
+			Invalid values are made known to the user, and are ignored afterward. If the value is 
+			not set (or invalid), the format will not change.
+- order : The order of the palette. This will be ignored for the graphics if the format < 5.
+		  It is a 3-letter string containing the letters R, G and B in an arbitrary order.
+
+The following variables can be set for each Graphics-plugin:
+- width : integer indicating what the width of the canvas should be. The width will not be altered 
+			if this is not set. Invalid values are made known to the user, and ignored afterward.
+- height : similar as width, only for the height of the canvas.
+- tilesize : a table with two entries (0 and 1, or x and y), indicating the desired tile-size. The 
+			 tile size will not be altered if this is not set. Invalid values will be made known to
+			 the user, and ignored afterwards.
+- tiled : variable indicating if the grpahics is tiled or not. A value of nil or 0 will result in a
+		  non-tiled (linear) representation of the graphics. Any other value will result in a tiled
+		  representation.

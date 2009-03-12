@@ -160,17 +160,26 @@ namespace TiledGGD
         /// <param name="filename">The name of the file to load</param>
         public void loadGenericData(String filename)
         {
-            FileStream fstr = new FileStream(filename, FileMode.Open);
-            if(fstr.Length > int.MaxValue){
-                MessageBox.Show("Unable to load files >= 2 GB");
+            try
+            {
+                FileStream fstr = new FileStream(filename, FileMode.Open);
+
+                if (fstr.Length > int.MaxValue)
+                {
+                    MessageBox.Show("Unable to load files >= 2 GB");
+                    fstr.Close();
+                    return;
+                }
+                this.data = new byte[fstr.Length];
+                fstr.Read(this.data, 0, data.Length);
                 fstr.Close();
-                return;
+                Offset = 0;
+                ResetPtr();
             }
-            this.data = new byte[fstr.Length];
-            fstr.Read(this.data, 0, data.Length);
-            fstr.Close();
-            Offset = 0;
-            ResetPtr();
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
         }
 
         protected void loadData(string filename)
@@ -185,94 +194,6 @@ namespace TiledGGD
 
             if (!MainWindow.BindingSet.TryToBind(filename, btype))
                 loadGenericData(filename);
-        }
-
-        protected void loadDataOld(String filename)
-        {
-            // read the first 4 bytes, check if the Data has the method to parse it
-            FileStream fstr = new FileStream(filename, FileMode.Open);
-            string magHdr = "";
-            for (int i = 0; i < 4; i++)
-            {
-                char ch = (char)fstr.ReadByte();
-                if (char.IsLetterOrDigit(ch))
-                    magHdr += ch;
-                else
-                    break;
-            }
-            fstr.Flush();
-            fstr.Close();
-            fstr.Dispose();
-            if (magHdr.Length == 0)
-                loadGenericData(filename);
-            else
-            {
-                Type t = this.GetType();// is PaletteData ? (this as PaletteData).GetType() : (this is GraphicsData ? (this as GraphicsData).GetType() : this.GetType());
-                MethodInfo mi;
-                switch (magHdr)
-                {
-                    case "RGCN":
-                    case "NCGR":
-                        try { mi = t.GetMethod("loadFileAsNCGR"); }
-                        catch { mi = null; } break;
-                    case "RLCN":
-                    case "NCLR":
-                        try { mi = t.GetMethod("loadFileAsNCLR"); }
-                        catch { mi = null; } break;
-                    case "GFNT":
-                        try { mi = t.GetMethod("loadFileAsGFNT"); }
-                        catch { mi = null; } break;
-                    default: loadGenericData(filename); return;
-                }
-                if (mi == null)
-                {
-                    loadGenericData(filename); 
-                    return;
-                }
-                (FileProcessor.CreateDelegate(typeof(FileProcessor), this, mi, true) as FileProcessor).Invoke(filename);
-                /*MethodInfo[] methods = t.GetMethods();
-                magHdr = magHdr.ToUpper();
-                foreach (MethodInfo meth in methods)
-                {
-                    if (!meth.Name.StartsWith("loadFileAs"))
-                        continue;
-                    string tmp = meth.Name.Substring(10);
-                    if (magHdr.Length < tmp.Length)
-                        continue;
-                    if (magHdr.Length > tmp.Length)
-                        magHdr = magHdr.Substring(0, tmp.Length);
-                    if (magHdr.Equals(tmp) || magHdr.Equals(reverseString(tmp)))
-                    {
-                        try
-                        {
-                            meth.Invoke(this, new object[] { filename });
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                        }
-                        return;
-                    }
-                }*/
-                /*switch (magHdr)
-                {
-                    case "NCGR":
-                    case "RGCN":
-                        if (this is GraphicsData)
-                            (this as GraphicsData).loadFileAsNCGR(filename);
-                        else
-                            this.loadGenericData(filename);
-                        return;
-                    case "NCLR":
-                    case "RLCN":
-                        if (this is GraphicsData)
-                            this.loadGenericData(filename);
-                        else
-                            (this as PaletteData).loadFileAsNCLR(filename);
-                        return;
-                    default: loadGenericData(filename); break;
-                }*/
-            }
         }
 
         private string reverseString(string instr)

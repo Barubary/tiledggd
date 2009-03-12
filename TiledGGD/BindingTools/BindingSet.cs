@@ -29,9 +29,21 @@ namespace TiledGGD.BindingTools
         /// <returns>An XmlDocument loaded with the data in <code>filename</code></returns>
         private static XmlDocument toXmlDoc(string filename)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filename);
-            return doc;
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(filename);
+                return doc;
+            }
+            catch (XmlException e)
+            {
+                MainWindow.showError("Could not load the XML file " + filename + ", possibly because it is invalid.\n"
+                + "Message & Stack trace:\n"
+                + e.Message + "\n"
+                + e.StackTrace);
+                MainWindow.Quit();
+                return null;
+            }
         }
 
         /// <summary>

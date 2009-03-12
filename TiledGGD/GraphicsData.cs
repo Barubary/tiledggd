@@ -343,10 +343,11 @@ namespace TiledGGD
             // skip 4 bytes; they are the already checked magic header RGCN (or NCGR)
             br.ReadInt32();
 
-            if (br.ReadInt32() != 0x0101FEFF)
+            int val = br.ReadInt32();
+            if (val != 0x0101FEFF && val != 0x0100FEFF)
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCGR file.\n It does not have the magic constant 0x0101FEFF at 0x04");
-                return;
+                MainWindow.showError("Given file " + filename + " is not a valid NCGR file.\n It does not have the magic constant 0x0101FEFF or 0100FEFF at 0x04");
+                //return;
             }
             int fileSize = br.ReadInt32();
             int headerSize = br.ReadInt16();

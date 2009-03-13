@@ -7,7 +7,7 @@ namespace TiledGGD.BindingTools
     /// <summary>
     /// A class that loads, parses and applies a Lua plugin
     /// </summary>
-    class LuaTool
+    class LuaTool : IDisposable
     {
         #region Fields & Properties
         /// <summary>
@@ -47,6 +47,15 @@ namespace TiledGGD.BindingTools
                 throw new Exception("No Lua file specified");
         }
 
-        
+
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this.parentBinding = null;
+        }
+
+        #endregion
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TiledGGD.BindingTools
 {
-    interface IFilter
+    interface IFilter : IDisposable
     {
         bool Passes(String filename);
     }

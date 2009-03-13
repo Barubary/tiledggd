@@ -831,6 +831,24 @@ namespace TiledGGD
         }
         #endregion
 
+        #region Reload the binding set
+        private void reloadBindingsTSMI_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BindingSet.Reload();
+                MessageBox.Show("Bindings succesfully reloaded");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to reload the bindings, the following exception happened:\n"
+                + ex.Message + "\n"
+                + ex.StackTrace);
+            }
+            
+        }
+        #endregion
+
 
         #endregion
 

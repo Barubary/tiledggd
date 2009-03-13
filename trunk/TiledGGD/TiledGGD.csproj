@@ -10,6 +10,8 @@
     <RootNamespace>TiledGGD</RootNamespace>
     <AssemblyName>TiledGGD</AssemblyName>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>program_icon.ico</ApplicationIcon>
+    <StartupObject>TiledGGD.Program</StartupObject>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -20,10 +22,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationVersion>1.2.3.0</ApplicationVersion>
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>program_icon.ico</ApplicationIcon>
-    <StartupObject>TiledGGD.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

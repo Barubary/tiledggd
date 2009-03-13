@@ -5,7 +5,7 @@
 
 If you came here hoping that I would explain how to determine the format of a file; tough luck. All that can be said about that is: practise, look at (a lot of) examples, and experiment.
 
-Instead, I will explain how the plugin system works, and what you should put in the plugin if you want it to work. A copy of this tutorial is found in the readme-file in the Plugins-folder.
+Instead, I will explain how the plugin system works briefly, and what you should put in the plugin if you want it to work. A copy of this tutorial is found in the readme-file in the Plugins-folder.
 
 
 == Bindings ==

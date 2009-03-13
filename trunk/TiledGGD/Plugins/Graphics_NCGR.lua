@@ -42,6 +42,11 @@ else
     -- read the word that could be the tiled-flag, but probably isn't
     tiled = readWORD(0x20) == 0;
     
+    -- generally, the only tilesize used for tiled NCGRs is 8x8
+    if tiled then
+		tilesize = {8, 8};
+	end
+    
     -- set the data after reading the image length
     setData2(0x30, readDWORD(0x28));
 

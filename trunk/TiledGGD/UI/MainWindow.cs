@@ -216,7 +216,8 @@ namespace TiledGGD
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
             }
         }
 
@@ -764,7 +765,7 @@ namespace TiledGGD
             gtod.ShowDialog();
             bool rel;
             long off;
-            BrowseableData bd;
+            BrowsableData bd;
             if (sender == graphGoToTSMI)
                 bd = graphicsData;
             else if (sender == palGoToTSMI)

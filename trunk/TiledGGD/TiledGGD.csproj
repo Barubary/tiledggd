@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingTools\PluginException.cs" />
     <Compile Include="UI\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,7 +74,7 @@
     <Compile Include="BindingTools\Filter.cs" />
     <Compile Include="BindingTools\IFilter.cs" />
     <Compile Include="BindingTools\LuaTool.cs" />
-    <Compile Include="Data\BrowseableData.cs" />
+    <Compile Include="Data\BrowsableData.cs" />
     <Compile Include="UI\ControlShorts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +131,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Plugins\Graphics_NCGR.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -8,7 +8,7 @@ using System.IO;
 
 namespace TiledGGD
 {
-    class PaletteData : BrowseableData
+    class PaletteData : BrowsableData
     {
         #region Fields
 

@@ -168,7 +168,7 @@ namespace TiledGGD.BindingTools
             switch (this.TargetType)
             {
                 case TargetType.METHOD:
-                    BrowseableData bd;
+                    BrowsableData bd;
                     switch (this.BindingType)
                     {
                         case BindingType.GRAPHICS:

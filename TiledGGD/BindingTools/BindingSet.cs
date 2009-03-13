@@ -13,14 +13,11 @@ namespace TiledGGD.BindingTools
         /// <summary>
         /// Create a new BindingSet using the default xml-location (Plugins/Bindings.xml)
         /// </summary>
-        public BindingSet() : this(MainWindow.getPath() + "Plugins/Bindings.xml") { }
-
-        /// <summary>
-        /// Create a new BindingSet
-        /// </summary>
-        /// <param name="xmlfilename">The path to the Xml file defining this BindingSet</param>
-        public BindingSet(string xmlfilename)
-            : this(toXmlDoc(xmlfilename)) { }
+        public BindingSet()
+        {
+            bindings = new List<Binding>();
+            this.Reload();
+        }
 
         /// <summary>
         /// Loads an xml-document
@@ -44,24 +41,6 @@ namespace TiledGGD.BindingTools
                 MainWindow.Quit();
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Create a new BindingSet
-        /// </summary>
-        /// <param name="xmlDoc">The document the BindingSet is defined in</param>
-        public BindingSet(XmlDocument xmlDoc)
-            : this(xmlDoc.SelectSingleNode("Bindings")) { }
-
-        /// <summary>
-        /// Create a new BindingSet
-        /// </summary>
-        /// <param name="bindingsNode">The XmlNode the BindingSet is defined in</param>
-        public BindingSet(XmlNode bindingsNode)
-        {
-            this.bindings = new List<Binding>();
-            foreach (XmlNode bnode in bindingsNode.SelectNodes("Binding"))
-                this.bindings.Add(new Binding(bnode));
         }
         #endregion
 
@@ -119,6 +98,25 @@ namespace TiledGGD.BindingTools
             return this.bindings.GetEnumerator();
         }
 
+        #endregion
+
+        #region Method: Reload
+        /// <summary>
+        /// (Re)load the bindings defined in the default bindings-file (Plugins/Bindings.xml)
+        /// </summary>
+        internal void Reload()
+        {
+            foreach (Binding b in this.bindings)
+                b.Dispose();
+            bindings.Clear();
+
+            XmlDocument doc = toXmlDoc(MainWindow.getPath() + "Plugins/Bindings.xml");
+            XmlNode bindingsNode = doc.SelectSingleNode("Bindings");
+
+            this.bindings = new List<Binding>();
+            foreach (XmlNode bnode in bindingsNode.SelectNodes("Binding"))
+                this.bindings.Add(new Binding(bnode));
+        }
         #endregion
     }
 }

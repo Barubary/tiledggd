@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace TiledGGD.BindingTools
 {
-    class Binding
+    class Binding : IDisposable
     {
         #region Fields & Properties
 
@@ -89,6 +89,13 @@ namespace TiledGGD.BindingTools
             get { return this.enabled; }
             private set { this.enabled = value; }
         }
+        #endregion
+
+        #region luaTools
+        /// <summary>
+        /// The last used LuaTool
+        /// </summary>
+        private LuaTool tool;
         #endregion
 
         #endregion
@@ -184,7 +191,9 @@ namespace TiledGGD.BindingTools
                     }
                 case TargetType.LUA:
 
-                    LuaTool tool = new LuaTool(this, this.Target);
+                    if (tool != null)
+                        tool.Dispose();
+                    tool = new LuaTool(this, this.Target);
                     return new FileProcessor(tool.loadFile);
 
                 default:
@@ -214,6 +223,19 @@ namespace TiledGGD.BindingTools
             // dummy method; do nothing. is used for when errors occur during getTarget()
         }
 
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (tool != null)
+                tool.Dispose();
+            this.tool = null;
+            this.filterSet.Dispose();
+            this.filterSet = null;
+        }
+
+        #endregion
     }
     public enum BindingType
     {

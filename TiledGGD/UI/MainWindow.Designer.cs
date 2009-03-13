@@ -126,6 +126,8 @@ namespace TiledGGD
             this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
             this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
             this.aboutBox = new TiledGGD.AboutBox();
+            this.reloadBindingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.DataPanel.SuspendLayout();
             this.SuspendLayout();
@@ -153,6 +155,8 @@ namespace TiledGGD
             this.openPalTSMI,
             this.savePalTSMI,
             this.toolStripSeparator1,
+            this.reloadBindingsToolStripMenuItem,
+            this.toolStripSeparator3,
             this.quitTSMI});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
@@ -163,7 +167,7 @@ namespace TiledGGD
             this.openGraphTSMI.Name = "openGraphTSMI";
             this.openGraphTSMI.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openGraphTSMI.Size = new System.Drawing.Size(226, 22);
-            this.openGraphTSMI.Text = "Open...";
+            this.openGraphTSMI.Text = "Open Graphics...";
             this.openGraphTSMI.Click += new System.EventHandler(this.openGraphTSMI_Click);
             // 
             // saveGraphTSMI
@@ -780,35 +784,35 @@ namespace TiledGGD
             // palSS_1byteTSMI
             // 
             this.palSS_1byteTSMI.Name = "palSS_1byteTSMI";
-            this.palSS_1byteTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palSS_1byteTSMI.Size = new System.Drawing.Size(136, 22);
             this.palSS_1byteTSMI.Text = "1 Byte";
             this.palSS_1byteTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
             // palSS_1colTSMI
             // 
             this.palSS_1colTSMI.Name = "palSS_1colTSMI";
-            this.palSS_1colTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palSS_1colTSMI.Size = new System.Drawing.Size(136, 22);
             this.palSS_1colTSMI.Text = "1 Colour";
             this.palSS_1colTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
             // palSS_16colTSMI
             // 
             this.palSS_16colTSMI.Name = "palSS_16colTSMI";
-            this.palSS_16colTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palSS_16colTSMI.Size = new System.Drawing.Size(136, 22);
             this.palSS_16colTSMI.Text = "16 Colours";
             this.palSS_16colTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
             // palSS_256colTSMI
             // 
             this.palSS_256colTSMI.Name = "palSS_256colTSMI";
-            this.palSS_256colTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palSS_256colTSMI.Size = new System.Drawing.Size(136, 22);
             this.palSS_256colTSMI.Text = "256 Colours";
             this.palSS_256colTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
             // palSS_64kbytesTSMI
             // 
             this.palSS_64kbytesTSMI.Name = "palSS_64kbytesTSMI";
-            this.palSS_64kbytesTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palSS_64kbytesTSMI.Size = new System.Drawing.Size(136, 22);
             this.palSS_64kbytesTSMI.Text = "64k Bytes";
             this.palSS_64kbytesTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
@@ -949,6 +953,18 @@ namespace TiledGGD
             this.aboutBox.Text = "About TiledGGD";
             this.aboutBox.Visible = false;
             // 
+            // reloadBindingsToolStripMenuItem
+            // 
+            this.reloadBindingsToolStripMenuItem.Name = "reloadBindingsToolStripMenuItem";
+            this.reloadBindingsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.reloadBindingsToolStripMenuItem.Text = "Reload Bindings";
+            this.reloadBindingsToolStripMenuItem.Click += new System.EventHandler(this.reloadBindingsTSMI_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(223, 6);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1072,6 +1088,8 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem palReload_specTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphSS_1tlTSMI;
         private System.Windows.Forms.ToolStripMenuItem saveAllGraphicsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadBindingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

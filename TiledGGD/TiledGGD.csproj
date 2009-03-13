@@ -62,10 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
+    <Compile Include="UI\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutBox.Designer.cs">
+    <Compile Include="UI\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="BindingTools\Binding.cs" />
@@ -73,46 +73,46 @@
     <Compile Include="BindingTools\Filter.cs" />
     <Compile Include="BindingTools\IFilter.cs" />
     <Compile Include="BindingTools\LuaTool.cs" />
-    <Compile Include="BrowseableData.cs" />
-    <Compile Include="ControlShorts.cs">
+    <Compile Include="Data\BrowseableData.cs" />
+    <Compile Include="UI\ControlShorts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ControlShorts.Designer.cs">
+    <Compile Include="UI\ControlShorts.Designer.cs">
       <DependentUpon>ControlShorts.cs</DependentUpon>
     </Compile>
-    <Compile Include="DoubleBufferedPanel.cs">
+    <Compile Include="UI\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="BindingTools\FilterSet.cs" />
-    <Compile Include="GoToOffsetDialog.cs">
+    <Compile Include="UI\GoToOffsetDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GoToOffsetDialog.Designer.cs">
+    <Compile Include="UI\GoToOffsetDialog.Designer.cs">
       <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.cs">
+    <Compile Include="UI\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow.Designer.cs">
+    <Compile Include="UI\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphicsData.cs" />
-    <Compile Include="PaletteData.cs" />
+    <Compile Include="Data\GraphicsData.cs" />
+    <Compile Include="Data\PaletteData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
+    <EmbeddedResource Include="UI\AboutBox.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ControlShorts.resx">
+    <EmbeddedResource Include="UI\ControlShorts.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ControlShorts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GoToOffsetDialog.resx">
+    <EmbeddedResource Include="UI\GoToOffsetDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>GoToOffsetDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
+    <EmbeddedResource Include="UI\MainWindow.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,7 +121,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="TileSizeDialog.resx">
+    <EmbeddedResource Include="UI\TileSizeDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TileSizeDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -139,10 +139,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TileSizeDialog.cs">
+    <Compile Include="UI\TileSizeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TileSizeDialog.Designer.cs">
+    <Compile Include="UI\TileSizeDialog.Designer.cs">
       <DependentUpon>TileSizeDialog.cs</DependentUpon>
     </Compile>
   </ItemGroup>

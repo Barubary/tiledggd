@@ -121,6 +121,15 @@ namespace TiledGGD.BindingTools
             }
         }
         #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            // nothing to do here; as all fields are primitive types
+        }
+
+        #endregion
     }
     public enum FilterType
     {

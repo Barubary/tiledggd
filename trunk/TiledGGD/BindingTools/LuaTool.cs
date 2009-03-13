@@ -43,6 +43,11 @@ namespace TiledGGD.BindingTools
         /// The current data. only exists while loadfile is being called.
         /// </summary>
         private byte[] theData;
+
+        /// <summary>
+        /// If one of the setData methods has been used
+        /// </summary>
+        private bool usedSetData = false;
         #endregion
 
         /// <summary>
@@ -75,6 +80,7 @@ namespace TiledGGD.BindingTools
             this.theData = System.IO.File.ReadAllBytes(filename);
 
             interp = new Lua();
+            this.usedSetData = false;
 
             #region register predefined functions & variables
             // register the functions
@@ -229,6 +235,9 @@ namespace TiledGGD.BindingTools
                         }
                         #endregion
                     }
+
+                    if (!usedSetData)
+                        this.bData.Data = this.theData;
                 }
             }
             catch (Exception e)
@@ -391,6 +400,7 @@ namespace TiledGGD.BindingTools
             for (int i = 0; i < newdata.Length; i++)
                 newdata[i] = this.theData[i + o];
             this.bData.Data = newdata;
+            this.usedSetData = true;
         }
         #endregion
 
@@ -417,12 +427,12 @@ namespace TiledGGD.BindingTools
                                                    + "Desired data length: 0x{0:x}\n"
                                                    + "Actual length: 0x{1:x}", 
                                                    (int)length, newdata.Length));
+
+            this.usedSetData = true;
         }
         #endregion
 
         #endregion
-
-
 
         #region IDisposable Members
 

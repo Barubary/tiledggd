@@ -9,7 +9,7 @@ using System.IO;
 
 namespace TiledGGD
 {
-    class GraphicsData : BrowseableData
+    class GraphicsData : BrowsableData
     {
         #region Fields
 
@@ -27,10 +27,10 @@ namespace TiledGGD
             set
             {
                 uint newW = value;
-                if (Tiled && newW % TileSize.X != 0)
-                    newW += (uint)TileSize.X - newW % (uint)TileSize.X;
                 if (newW < WidthSkipSizeUInt)
                     newW = WidthSkipSizeUInt;
+                if (Tiled && newW % TileSize.X != 0)
+                    newW += (uint)TileSize.X - newW % (uint)TileSize.X;
                 if (width != newW)
                 {
                     width = newW;
@@ -65,10 +65,10 @@ namespace TiledGGD
             set
             {
                 uint newH = value;
-                if (Tiled && newH % TileSize.Y != 0)
-                    newH += (uint)TileSize.Y - newH % (uint)TileSize.Y;
                 if (newH < HeightSkipSizeUInt)
                     newH = HeightSkipSizeUInt;
+                if (Tiled && newH % TileSize.Y != 0)
+                    newH += (uint)TileSize.Y - newH % (uint)TileSize.Y;
                 if (height != newH)
                 {
                     height = newH;

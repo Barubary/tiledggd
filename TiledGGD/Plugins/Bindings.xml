@@ -14,12 +14,19 @@
 >
 <!-- NOTE: Filter-values for Filename filters are parsed as a Regex-object. -->
 <Bindings>
-	<Binding type="GRAPHICS">
+	<Binding type="GRAPHICS" enabled="0">
 		<Name>NCGR and NCBR Files</Name>
 		<FilterSet method="AND">
 			<Filter type="MAGIC">RGCN</Filter>
 		</FilterSet>
 		<Target type="METHOD">loadFileAsNCGR</Target>
+	</Binding>
+	<Binding type="GRAPHICS" enabled="1">
+		<Name>NCGR and NCBR Files (Lua version)</Name>
+		<FilterSet method="AND">
+			<Filter type="MAGIC">RGCN</Filter>
+		</FilterSet>
+		<Target type="LUA">Graphics_NCGR.lua</Target>
 	</Binding>
 	<Binding type="PALETTE">
 		<Name>NCLR files</Name>

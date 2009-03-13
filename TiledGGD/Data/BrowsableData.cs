@@ -9,7 +9,7 @@ using TiledGGD.BindingTools;
 
 namespace TiledGGD
 {
-    abstract unsafe class BrowseableData
+    abstract unsafe class BrowsableData
     {
         #region Fields
 
@@ -52,19 +52,38 @@ namespace TiledGGD
         /// </summary>
         private byte[] data;
         /// <summary>
-        /// The actual data. Should only be set within the load() method.
+        /// The actual data. Should only be set within the load() method (or LuaTool.loadFile()).
         /// </summary>
-        protected byte[] Data { get { return this.data; } set { this.data = value; 
-            offset = 0; 
-            ResetPtr(); } }
+        internal byte[] Data
+        {
+            get { return this.data; }
+            set
+            {
+                this.data = value;
+                offset = 0;
+                ResetPtr();
+            }
+        }
         /// <summary>
         /// Get a byte of data
         /// </summary>
         /// <param name="idx">The index of the byte</param>
         /// <returns>The byte at index idx, or 0 if it's out of range</returns>
-        protected byte getData(long idx, out bool end) {
+        protected byte getData(long idx, out bool end)
+        {
             try { end = false; return this.data[idx]; }
             catch (IndexOutOfRangeException) { end = true; return 0; }
+        }
+        /// <summary>
+        /// Gets a byte of data
+        /// </summary>
+        /// <param name="idx">the index of the byte</param>
+        /// <param name="b">The byte at the index iff this method returns true</param>
+        /// <returns>true iff the index is in range</returns>
+        internal bool getData(long idx, out byte b)
+        {
+            try { b = 0; b = data[idx]; return true; }
+            catch (IndexOutOfRangeException) { b = 0; return false; }
         }
         #endregion
 
@@ -105,7 +124,8 @@ namespace TiledGGD
         /// <summary>
         /// Resets the pointer to the start of visible data
         /// </summary>
-        protected void ResetPtr() {
+        protected void ResetPtr()
+        {
             if (data == null || Length == 0)
                 return;
             if (offset != Length || offset == 0)
@@ -116,7 +136,7 @@ namespace TiledGGD
         #endregion
 
         /// <summary>
-        /// If this BrowseableData has data
+        /// If this BrowsableData has data
         /// </summary>
         internal bool HasData { get { return this.data != null; } }
 
@@ -135,7 +155,7 @@ namespace TiledGGD
         #endregion
 
         /// <summary>
-        /// Load a file, and interpret it as BrowseableData. (either graphics or palette)
+        /// Load a file, and interpret it as BrowsableData. (either graphics or palette)
         /// </summary>
         /// <param name="filename">The name of the file to load</param>
         internal abstract void load(string filename);
@@ -199,7 +219,7 @@ namespace TiledGGD
         private string reverseString(string instr)
         {
             string outstr = "";
-            foreach(char c in instr)
+            foreach (char c in instr)
                 outstr = c + outstr;
             return outstr;
         }

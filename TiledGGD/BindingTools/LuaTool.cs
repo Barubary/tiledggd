@@ -238,6 +238,9 @@ namespace TiledGGD.BindingTools
 
                     if (!usedSetData)
                         this.bData.Data = this.theData;
+
+                    if (interp["warning"] != null)
+                        MainWindow.ShowWarning(interp.GetString("warning"));
                 }
             }
             catch (Exception e)

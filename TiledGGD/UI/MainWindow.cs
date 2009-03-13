@@ -399,7 +399,15 @@ namespace TiledGGD
         /// <param name="p">The string to show as an error</param>
         internal static void showError(string p)
         {
-            MessageBox.Show(p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show(p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+        }
+        /// <summary>
+        /// Shows a warning message
+        /// </summary>
+        /// <param name="w">The string to show as a warning</param>
+        internal static void ShowWarning(string w)
+        {
+            MessageBox.Show(w, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
 
         /// <summary>

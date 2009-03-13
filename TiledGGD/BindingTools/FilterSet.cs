@@ -183,7 +183,10 @@ namespace TiledGGD.BindingTools
 
         public void Dispose()
         {
-            
+            foreach (IFilter f in this.filters)
+                f.Dispose();
+            this.filters.Clear();
+            this.filters = null;
         }
 
         #endregion

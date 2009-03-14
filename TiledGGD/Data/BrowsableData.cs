@@ -182,7 +182,7 @@ namespace TiledGGD
         {
             try
             {
-                FileStream fstr = new FileStream(filename, FileMode.Open);
+                FileStream fstr = File.OpenRead(filename);
 
                 if (fstr.Length > int.MaxValue)
                 {

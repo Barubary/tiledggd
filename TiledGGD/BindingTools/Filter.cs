@@ -108,14 +108,14 @@ namespace TiledGGD.BindingTools
                     Match m = re.Match(filename.Replace('\\', '/'));
                     return m.Success;
                 case FilterType.MAGIC:
-                    BinaryReader br = new BinaryReader(new FileStream(filename, FileMode.Open));
+                    FileStream fstr = File.OpenRead(filename);
                     foreach (char c in this.Value)
-                        if ((char)br.ReadByte() != c)
+                        if ((char)fstr.ReadByte() != c)
                         {
-                            br.Close();
+                            fstr.Close();
                             return false;
                         }
-                    br.Close();
+                    fstr.Close();
                     return true;
                 default: throw new Exception("Invalid FilterType @ Filter.Passes(string): " + this.FilterType.ToString());
             }

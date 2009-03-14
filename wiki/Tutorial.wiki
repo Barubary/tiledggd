@@ -154,3 +154,9 @@ You can zoom up to 800%, using either the !NumPad + and -, or the menu Image->Zo
 === 4.7 Endianness ===
 
 99 out of 100 (if not more) of the games have their data stored !BigEndian; which means that the bytes that provide the most information are stored at the end of a set of bytes. If a game happens to use a !LittleEndian approach, you can use Ctrl+(Shift+)E to toggle the Endianness of the graphics and/or the palette. Of course, you can also use the menus Image/Palette->Endianness
+
+=== 4.8 Reloading the Bindings ===
+
+If you make an adjustment to the XML file defining the bindings, you can either reload the program for the changes to take effect, but you can also use the menu item File->Reload Bindings.
+Plug-ins do not need to be reloaded manually; they are re-read every time a new file using that plug-in is opened.
+See the PluginTutorial for a turorial of some sorts for the bindings and plug-ins.

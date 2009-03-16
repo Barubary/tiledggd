@@ -634,6 +634,7 @@ namespace TiledGGD
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.RestoreDirectory = true;
+            sfd.FileName = GraphicsData.Filename;
             DialogResult res = sfd.ShowDialog();
 
             if (res == DialogResult.OK || res == DialogResult.Yes)
@@ -656,6 +657,7 @@ namespace TiledGGD
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.RestoreDirectory = true;
+            sfd.FileName = PaletteData.Filename;
             DialogResult res = sfd.ShowDialog();
 
             if (res == DialogResult.OK || res == DialogResult.Yes)

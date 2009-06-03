@@ -46,8 +46,10 @@ Functions
 							 bounds. Offset is 0-based.
 - readWORD(offset) : function that reads a WORD (2 bytes, big-endian style) from offset. Offset is 
 					 0-based. Note that a WORD is an unsigned value; 0xFFFF == 65535.
+- readlWORD(offset) : same as readWORD, only reads a little-endian WORD.
 - readDWORD(offset) : function that reads a DWORD (4 bytes, big-endian style) from offset. Offset
 					  is 0-based. Note that DWORD is a signed value; 0xFFFFFFFF == -0x7FFFFFFF.
+- readlDWORD(offset) : same as readDWORD, only reads a little-endian DWORD.					  
 - readString(offset) : function that reads a string from offset. It will only stop reading until the 
 					   end of the file has been reached, or a \0 has been read. Offset is 0-based.
 - readString2(offset, maxlength) : same as readString(offset), only the resulting string will not be 

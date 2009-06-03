@@ -70,13 +70,13 @@ The following variables can be set for any type of plugin:
  * `invalid` : string that will be displayed at the end as an error message. The file will not use the plugin if this variable is set.
  * `warning` : string that will be displayed at the end as a message. Will not prevent the plugin from being applied.
  * `format` : integer indicating the format of the graphics or palette. It can only be one of these values: (graphics format | palette format)
-  * - 1 ( 1 bpp | N/A)
-  * - 2 ( 2 bpp | N/A)
-  * - 3 ( 4 bpp | N/A)
-  * - 4 ( 8 bpp | N/A)
-  * - 5 (16 bpp | 2 Bppal)
-  * - 6 (24 bpp | 3 Bppal)
-  * - 7 (32 bpp | 4 Bppal)
+  * 1 ( 1 bpp | N/A)
+  * 2 ( 2 bpp | N/A)
+  * 3 ( 4 bpp | N/A)
+  * 4 ( 8 bpp | N/A)
+  * 5 (16 bpp | 2 Bppal)
+  * 6 (24 bpp | 3 Bppal)
+  * 7 (32 bpp | 4 Bppal)
  Invalid values are made known to the user, and are ignored afterward. If the value is not set (or invalid), the format will not change. Note that these (or at least the 3 and 4) are the values most commonly used to denote what format an image is.
  * `order` : The order of the palette. This will be ignored for the graphics if the format < 5. It is a 3-letter string containing the letters R, G and B in an arbitrary order.
  * `bigendian` : Flags if the data is big-endian. (boolean, so either true/false) If it is false, the data is LittleEndian.

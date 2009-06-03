@@ -38,7 +38,7 @@ namespace TiledGGD
         /// <summary>
         /// The palette order
         /// </summary>
-        private static PaletteOrder palOrder = PaletteOrder.ORDER_BGR;
+        private static PaletteOrder palOrder = PaletteOrder.BGR;
         /// <summary>
         /// The palette order
         /// </summary>
@@ -140,7 +140,7 @@ namespace TiledGGD
         #region Constructors
 
         internal PaletteData()
-            : this(PaletteFormat.FORMAT_2BPP, PaletteOrder.ORDER_BGR)
+            : this(PaletteFormat.FORMAT_2BPP, PaletteOrder.BGR)
         {
         }
 
@@ -296,7 +296,7 @@ namespace TiledGGD
             this.Data = dt;
             PalFormat = PaletteFormat.FORMAT_2BPP;
             alphaLoc = AlphaLocation.NONE;
-            PalOrder = PaletteOrder.ORDER_BGR;
+            PalOrder = PaletteOrder.BGR;
 
             br.Close();
         }
@@ -479,7 +479,7 @@ namespace TiledGGD
             switch (palOrder)
             {
                 #region case BGR
-                case PaletteOrder.ORDER_BGR:
+                case PaletteOrder.BGR:
                     b = fst;
                     g = scn;
                     r = thd;
@@ -487,7 +487,7 @@ namespace TiledGGD
                 #endregion
 
                 #region case BRG
-                case PaletteOrder.ORDER_BRG:
+                case PaletteOrder.BRG:
                     b = fst;
                     r = scn;
                     g = thd;
@@ -495,7 +495,7 @@ namespace TiledGGD
                 #endregion
 
                 #region case GBR
-                case PaletteOrder.ORDER_GBR:
+                case PaletteOrder.GBR:
                     g = fst;
                     b = scn;
                     r = thd;
@@ -503,7 +503,7 @@ namespace TiledGGD
                 #endregion
 
                 #region case GRB
-                case PaletteOrder.ORDER_GRB:
+                case PaletteOrder.GRB:
                     g = fst;
                     r = scn;
                     b = thd;
@@ -511,7 +511,7 @@ namespace TiledGGD
                 #endregion
 
                 #region case RBG
-                case PaletteOrder.ORDER_RBG:
+                case PaletteOrder.RBG:
                     r = fst;
                     b = scn;
                     g = thd;
@@ -519,7 +519,7 @@ namespace TiledGGD
                 #endregion
 
                 #region case RGB
-                case PaletteOrder.ORDER_RGB:
+                case PaletteOrder.RGB:
                     r = fst;
                     g = scn;
                     b = thd;
@@ -689,42 +689,42 @@ namespace TiledGGD
             switch (palOrder)
             {
                 #region case BGR
-                case PaletteOrder.ORDER_BGR:
+                case PaletteOrder.BGR:
                     //bitmap = fst; g = scn; r = thd;
                     argb = (a << 24) | (thd << 16) | (scn << 8) | fst;
                     return;
                 #endregion
 
                 #region case BRG
-                case PaletteOrder.ORDER_BRG:
+                case PaletteOrder.BRG:
                     //bitmap = fst; r = scn; g = thd;
                     argb = (a << 24) | (scn << 16) | (thd << 8) | fst;
                     return;
                 #endregion
 
                 #region case GBR
-                case PaletteOrder.ORDER_GBR:
+                case PaletteOrder.GBR:
                     //g = fst; bitmap = scn; r = thd;
                     argb = (a << 24) | (thd << 16) | (fst << 8) | scn;
                     return;
                 #endregion
 
                 #region case GRB
-                case PaletteOrder.ORDER_GRB:
+                case PaletteOrder.GRB:
                     //g = fst; r = scn; bitmap = thd;
                     argb = (a << 24) | (scn << 16) | (fst << 8) | thd;
                     return;
                 #endregion
 
                 #region case RBG
-                case PaletteOrder.ORDER_RBG:
+                case PaletteOrder.RBG:
                     //r = fst; bitmap = scn; g = thd;
                     argb = (a << 24) | (fst << 16) | (thd << 8) | scn;
                     return;
                 #endregion
 
                 #region case RGB
-                case PaletteOrder.ORDER_RGB:
+                case PaletteOrder.RGB:
                     //r = fst; g = scn; bitmap = thd;
                     argb = (a << 24) | (fst << 16) | (scn << 8) | thd;
                     return;
@@ -811,12 +811,12 @@ namespace TiledGGD
     }
     public enum PaletteOrder : int
     {
-        ORDER_BGR = 0,
-        ORDER_RGB = 1,
-        ORDER_RBG = 2,
-        ORDER_GRB = 3,
-        ORDER_GBR = 4,
-        ORDER_BRG = 5
+        BGR = 0,
+        RGB = 1,
+        RBG = 2,
+        GRB = 3,
+        GBR = 4,
+        BRG = 5
     }
     public enum AlphaLocation : int
     {

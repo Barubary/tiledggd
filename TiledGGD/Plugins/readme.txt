@@ -58,6 +58,7 @@ Functions
 - setData(offset) : sets from where the actual data starts. The data ends at the end of the file.
 - setData2(offset, length) : sets from where the actual data starts, and how long the actual data is. 
 							 If this function and setData(offset) is not used, setData(0) is assumed.
+- toHexadecimal(number) : converts an integer into its hexadecimal representation (outputs a string)
 					   
 Variables
 - length : the length of the data in bytes.
@@ -84,6 +85,8 @@ The following variables can be set for any type of plugin:
 			what format an image is.
 - order : The order of the palette. This will be ignored for the graphics if the format < 5.
 		  It is a 3-letter string containing the letters R, G and B in an arbitrary order.
+- bigendian : Flags if the data is BigEndian. (boolean, so either true/false) If it is false, the
+			  data is LittleEndian.
 
 The following variables can be set for each Graphics-plugin:
 - width : integer indicating what the width of the canvas should be. The width will not be altered 

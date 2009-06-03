@@ -87,12 +87,15 @@ namespace TiledGGD.BindingTools
             interp.RegisterFunction("read", this, this.GetType().GetMethod("read"));
             interp.RegisterFunction("read2", this, this.GetType().GetMethod("read2"));
             interp.RegisterFunction("readWORD", this, this.GetType().GetMethod("readWORD"));
+            interp.RegisterFunction("readlWORD", this, this.GetType().GetMethod("readlWORD"));
             interp.RegisterFunction("readDWORD", this, this.GetType().GetMethod("readDWORD"));
+            interp.RegisterFunction("readlDWORD", this, this.GetType().GetMethod("readlDWORD"));
             interp.RegisterFunction("readString", this, this.GetType().GetMethod("readString"));
             interp.RegisterFunction("readString2", this, this.GetType().GetMethod("readString2"));
             interp.RegisterFunction("stringToInt", this, this.GetType().GetMethod("stringToInt"));
             interp.RegisterFunction("setData", this, this.GetType().GetMethod("setData"));
             interp.RegisterFunction("setData2", this, this.GetType().GetMethod("setData2"));
+            interp.RegisterFunction("toHexadecimal", this, this.GetType().GetMethod("ToHexadecimal"));
 
             // register the default variables
             interp["filesize"] = theData.Length;
@@ -149,6 +152,20 @@ namespace TiledGGD.BindingTools
                             else
                                 PaletteData.PalOrder = (PaletteOrder)Enum.Parse(typeof(PaletteOrder), s);
                         }
+                    #endregion
+
+                    #region Endianness
+                    if (interp["bigendian"] != null)
+                    {
+                        bool isBE = (bool)interp["bigendian"];
+                        switch (this.Parent.BindingType)
+                        {
+                            case BindingType.GRAPHICS:
+                                GraphicsData.IsBigEndian = isBE; break;
+                            case BindingType.PALETTE:
+                                PaletteData.IsBigEndian = isBE; break;
+                        }
+                    }
                     #endregion
 
                     if (this.Parent.BindingType == BindingType.GRAPHICS)
@@ -318,6 +335,25 @@ namespace TiledGGD.BindingTools
         }
         #endregion
 
+        #region readlWORD(offset)
+        /// <summary>
+        /// Reads a LittleEndian WORD from the input file
+        /// </summary>
+        /// <param name="offset">The offset at which to read a LittleEndian WORD</param>
+        /// <param name="w">The WORD read</param>
+        /// <exception cref="PluginException">When the offset is out of range.</exception>
+        public void readlWORD(double offset, out int w)
+        {
+            byte b;
+            w = 0;
+            // abuse the read(offset) method
+            read(offset + 1, out b);
+            w |= b;
+            read(offset, out b);
+            w |= b << 8;
+        }
+        #endregion
+
         #region readDWORD(offset)
         /// <summary>
         /// Reads a DWORD from the input file
@@ -333,6 +369,25 @@ namespace TiledGGD.BindingTools
             readWORD(offset, out i);
             dw |= i;
             readWORD(offset + 2, out i);
+            dw |= i << 16;
+        }
+        #endregion
+
+        #region readlDWORD(offset)
+        /// <summary>
+        /// Reads a LittleEndian DWORD from the input file
+        /// </summary>
+        /// <param name="offset">The offset at which to read a LittleEndian DWORD</param>
+        /// <param name="dw">The DWORD read</param>
+        /// <exception cref="PluginException">When the offset is out of range.</exception>
+        public void readlDWORD(double offset, out int dw)
+        {
+            int i;
+            dw = 0;
+            // abuse the readlWORD(offset) method
+            readlWORD(offset + 2, out i);
+            dw |= i;
+            readlWORD(offset, out i);
             dw |= i << 16;
         }
         #endregion
@@ -386,6 +441,18 @@ namespace TiledGGD.BindingTools
             i = 0;
             for (int p = 0; p < 4 && p < str.Length; p++)
                 i |= (byte)str[p] << (p * 8);
+        }
+        #endregion
+
+        #region ToHexadecimal
+        /// <summary>
+        /// Convert an integer into an hexadecimal string.
+        /// </summary>
+        /// <param name="i">The integer to convert</param>
+        /// <param name="str">The hexadecimal representation of the given integer</param>
+        public void ToHexadecimal(int i, out string str)
+        {
+            str = String.Format("{0:X}", i);
         }
         #endregion
 

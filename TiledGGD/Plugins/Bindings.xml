@@ -49,4 +49,48 @@
 		</FilterSet>
 		<Target type="METHOD">loadFileAsGFNT</Target>
 	</Binding>
+	<Binding type="GRAPHICS">
+		<Name>CG4/CG8 file (Summon Night series)</Name>
+		<FilterSet method="OR">
+			<Filter type="MAGIC">CG4</Filter>
+			<Filter type="MAGIC">CG8</Filter>
+		</FilterSet>
+		<Target type="LUA">Graphics_CG48.lua</Target>
+	</Binding>
+	<Binding type="PALETTE">
+		<Name>CG4/CG8 file (Summon Night series)</Name>
+		<FilterSet method="OR">
+			<Filter type="MAGIC">CG4</Filter>
+			<Filter type="MAGIC">CG8</Filter>
+		</FilterSet>
+		<Target type="LUA">Palette_CG48.lua</Target>
+	</Binding>
+	<Binding type="GRAPHICS">
+		<Name>Ryuusei no Rockman file</Name>
+		<FilterSet method="AND">
+			<Filter type="FILENAME">rnr.?dat</Filter>
+		</FilterSet>
+		<Target type="LUA">Graphics_RNR.lua</Target>
+	</Binding>
+	<Binding type="PALETTE">
+		<Name>Ryuusei no Rockman file</Name>
+		<FilterSet method="AND">
+			<Filter type="FILENAME">rnr.?dat</Filter>
+		</FilterSet>
+		<Target type="LUA">Palette_RNR.lua</Target>
+	</Binding>
+	<Binding type="GRAPHICS">
+		<Name>Final Fantasy IV: The After Years file</Name>
+		<FilterSet method="AND">
+			<Filter type="FILENAME">f4dat</Filter>
+		</FilterSet>
+		<Target type="LUA">Graphics_FFIVR.lua</Target>
+	</Binding>
+	<Binding type="PALETTE">
+		<Name>Final Fantasy IV: The After Years file</Name>
+		<FilterSet method="AND">
+			<Filter type="FILENAME">f4dat</Filter>
+		</FilterSet>
+		<Target type="LUA">Palette_FFIVR.lua</Target>
+	</Binding>
 </Bindings>

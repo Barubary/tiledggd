@@ -32,7 +32,7 @@ namespace TiledGGD
             this.DoubleBuffered = true;
             mainWindow = this;
 
-            paletteData = new PaletteData(PaletteFormat.FORMAT_2BPP, PaletteOrder.ORDER_BGR);
+            paletteData = new PaletteData(PaletteFormat.FORMAT_2BPP, PaletteOrder.BGR);
             graphicsData = new GraphicsData(paletteData);           
 
             this.previousSize = this.Size;
@@ -332,7 +332,6 @@ namespace TiledGGD
             this.listBox2.Items.Add("Format:\t\t" + val);
 
             val = PaletteData.PalOrder.ToString();
-            val = val.Substring(6);
             this.listBox2.Items.Add("Colour Order:\t" + val);
 
             switch (PaletteData.IsBigEndian)
@@ -570,17 +569,17 @@ namespace TiledGGD
         private void palOrderTSMI_Click(object sender, EventArgs e)
         {
             if (sender == palOrder_bgrTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_BGR;
+                PaletteData.PalOrder = PaletteOrder.BGR;
             else if (sender == palOrder_brgTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_BRG;
+                PaletteData.PalOrder = PaletteOrder.BRG;
             else if (sender == palOrder_gbrTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_GBR;
+                PaletteData.PalOrder = PaletteOrder.GBR;
             else if (sender == palOrder_grbTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_GRB;
+                PaletteData.PalOrder = PaletteOrder.GRB;
             else if (sender == palOrder_rbgTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_RBG;
+                PaletteData.PalOrder = PaletteOrder.RBG;
             else if (sender == palOrder_rgbTSMI)
-                PaletteData.PalOrder = PaletteOrder.ORDER_RGB;
+                PaletteData.PalOrder = PaletteOrder.RGB;
             else
                 throw new Exception("Invalid palette order action");
             DoRefresh();

@@ -62,7 +62,7 @@ For a plugin to be able to do anything, I predefined some functions and variable
 					   
 === Variables ===
 These are the predefined variables
- * `length` : the length of the data in bytes.
+ * `filesize` : the length of the data in bytes.
  * `filepath` : the path of the file, including the name. All path-separators are '/'s.
  * `filename` : the name of the file, without the path.
 

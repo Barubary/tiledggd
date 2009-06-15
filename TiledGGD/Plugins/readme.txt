@@ -63,7 +63,7 @@ Functions
 - toHexadecimal(number) : converts an integer into its hexadecimal representation (outputs a string)
 					   
 Variables
-- length : the length of the data in bytes.
+- filesize : the length of the data in bytes.
 - filepath : the path of the file, including the name. All path-separators are '/'s.
 - filename : the name of the file, without the path.
 

@@ -75,6 +75,12 @@
     <Compile Include="BindingTools\IFilter.cs" />
     <Compile Include="BindingTools\LuaTool.cs" />
     <Compile Include="Data\BrowsableData.cs" />
+    <Compile Include="UI\AlphaPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AlphaPanel.Designer.cs">
+      <DependentUpon>AlphaPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ControlShorts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="program_icon.ico" />
+    <EmbeddedResource Include="UI\AlphaPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AlphaPanel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

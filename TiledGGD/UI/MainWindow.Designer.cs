@@ -37,6 +37,8 @@ namespace TiledGGD
             this.openPalTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.savePalTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.reloadBindingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.quitTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphFormatTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,10 +97,9 @@ namespace TiledGGD
             this.palEndianTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palEndian_bigTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palEndian_littleTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlphaTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlpha_startTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlpha_endTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.palAlpha_noneTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palModeTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palMode_LinearTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palMode_TiledTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrderTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrder_bgrTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palOrder_rgbTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +113,8 @@ namespace TiledGGD
             this.palSS_16colTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palSS_256colTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palSS_64kbytesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.palAlphaTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.tileSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.palGoToTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.palReloadTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,11 +126,9 @@ namespace TiledGGD
             this.DataPanel = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.GraphicsPanel = new TiledGGD.DoubleBufferedPanel();
-            this.PalettePanel = new TiledGGD.DoubleBufferedPanel();
-            this.aboutBox = new TiledGGD.AboutBox();
-            this.reloadBindingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.GraphicsPanel = new TiledGGD.UI.DoubleBufferedPanel();
+            this.PalettePanel = new TiledGGD.UI.DoubleBufferedPanel();
+            this.aboutBox = new TiledGGD.UI.AboutBox();
             this.menuStrip1.SuspendLayout();
             this.DataPanel.SuspendLayout();
             this.SuspendLayout();
@@ -212,6 +213,18 @@ namespace TiledGGD
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
+            // 
+            // reloadBindingsToolStripMenuItem
+            // 
+            this.reloadBindingsToolStripMenuItem.Name = "reloadBindingsToolStripMenuItem";
+            this.reloadBindingsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.reloadBindingsToolStripMenuItem.Text = "Reload Bindings";
+            this.reloadBindingsToolStripMenuItem.Click += new System.EventHandler(this.reloadBindingsTSMI_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(223, 6);
             // 
             // quitTSMI
             // 
@@ -619,9 +632,11 @@ namespace TiledGGD
             this.paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.palFormatTSMI,
             this.palEndianTSMI,
-            this.palAlphaTSMI,
+            this.palModeTSMI,
             this.palOrderTSMI,
             this.palSSTSMI,
+            this.palAlphaTSMI,
+            this.tileSizeToolStripMenuItem,
             this.copyPaletteToolStripMenuItem,
             this.palGoToTSMI,
             this.palReloadTSMI});
@@ -683,36 +698,27 @@ namespace TiledGGD
             this.palEndian_littleTSMI.Text = "LittleEndian";
             this.palEndian_littleTSMI.Click += new System.EventHandler(this.palEndianTSMI_Click);
             // 
-            // palAlphaTSMI
+            // palModeTSMI
             // 
-            this.palAlphaTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.palAlpha_startTSMI,
-            this.palAlpha_endTSMI,
-            this.palAlpha_noneTSMI});
-            this.palAlphaTSMI.Name = "palAlphaTSMI";
-            this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
-            this.palAlphaTSMI.Text = "Alpha location";
+            this.palModeTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.palMode_LinearTSMI,
+            this.palMode_TiledTSMI});
+            this.palModeTSMI.Name = "palModeTSMI";
+            this.palModeTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palModeTSMI.Text = "Mode";
             // 
-            // palAlpha_startTSMI
+            // palMode_LinearTSMI
             // 
-            this.palAlpha_startTSMI.Name = "palAlpha_startTSMI";
-            this.palAlpha_startTSMI.Size = new System.Drawing.Size(128, 22);
-            this.palAlpha_startTSMI.Text = "Beginning";
-            this.palAlpha_startTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
+            this.palMode_LinearTSMI.Name = "palMode_LinearTSMI";
+            this.palMode_LinearTSMI.Size = new System.Drawing.Size(106, 22);
+            this.palMode_LinearTSMI.Text = "Linear";
             // 
-            // palAlpha_endTSMI
+            // palMode_TiledTSMI
             // 
-            this.palAlpha_endTSMI.Name = "palAlpha_endTSMI";
-            this.palAlpha_endTSMI.Size = new System.Drawing.Size(128, 22);
-            this.palAlpha_endTSMI.Text = "End";
-            this.palAlpha_endTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
-            // 
-            // palAlpha_noneTSMI
-            // 
-            this.palAlpha_noneTSMI.Name = "palAlpha_noneTSMI";
-            this.palAlpha_noneTSMI.Size = new System.Drawing.Size(128, 22);
-            this.palAlpha_noneTSMI.Text = "None";
-            this.palAlpha_noneTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
+            this.palMode_TiledTSMI.Name = "palMode_TiledTSMI";
+            this.palMode_TiledTSMI.Size = new System.Drawing.Size(106, 22);
+            this.palMode_TiledTSMI.Text = "Tiled";
+            this.palMode_TiledTSMI.Click += new System.EventHandler(this.tiledToolStripMenuItem_Click);
             // 
             // palOrderTSMI
             // 
@@ -816,6 +822,22 @@ namespace TiledGGD
             this.palSS_64kbytesTSMI.Text = "64k Bytes";
             this.palSS_64kbytesTSMI.Click += new System.EventHandler(this.palSSTSMI_Click);
             // 
+            // palAlphaTSMI
+            // 
+            this.palAlphaTSMI.Name = "palAlphaTSMI";
+            this.palAlphaTSMI.Size = new System.Drawing.Size(243, 22);
+            this.palAlphaTSMI.Text = "Alpha Settings...";
+            this.palAlphaTSMI.Click += new System.EventHandler(this.palAlphaTSMI_Click);
+            // 
+            // tileSizeToolStripMenuItem
+            // 
+            this.tileSizeToolStripMenuItem.Name = "tileSizeToolStripMenuItem";
+            this.tileSizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.T)));
+            this.tileSizeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.tileSizeToolStripMenuItem.Text = "Set Tile Size...";
+            this.tileSizeToolStripMenuItem.Click += new System.EventHandler(this.setTileSizePalTSMI_Click);
+            // 
             // copyPaletteToolStripMenuItem
             // 
             this.copyPaletteToolStripMenuItem.Name = "copyPaletteToolStripMenuItem";
@@ -887,7 +909,7 @@ namespace TiledGGD
             this.DataPanel.Controls.Add(this.listBox1);
             this.DataPanel.Location = new System.Drawing.Point(516, 27);
             this.DataPanel.Name = "DataPanel";
-            this.DataPanel.Size = new System.Drawing.Size(256, 291);
+            this.DataPanel.Size = new System.Drawing.Size(256, 323);
             this.DataPanel.TabIndex = 2;
             this.DataPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DataPanel_Paint);
             this.DataPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DataPanel_DragDrop);
@@ -898,9 +920,9 @@ namespace TiledGGD
             this.listBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listBox2.Enabled = false;
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(0, 170);
+            this.listBox2.Location = new System.Drawing.Point(0, 176);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(256, 121);
+            this.listBox2.Size = new System.Drawing.Size(256, 147);
             this.listBox2.TabIndex = 1;
             // 
             // listBox1
@@ -921,7 +943,7 @@ namespace TiledGGD
             this.GraphicsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GraphicsPanel.Location = new System.Drawing.Point(0, 27);
             this.GraphicsPanel.Name = "GraphicsPanel";
-            this.GraphicsPanel.Size = new System.Drawing.Size(510, 553);
+            this.GraphicsPanel.Size = new System.Drawing.Size(510, 585);
             this.GraphicsPanel.TabIndex = 3;
             this.GraphicsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphicsPanel_Paint);
             this.GraphicsPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.GraphicsPanel_DragDrop);
@@ -930,7 +952,7 @@ namespace TiledGGD
             // PalettePanel
             // 
             this.PalettePanel.AllowDrop = true;
-            this.PalettePanel.Location = new System.Drawing.Point(516, 324);
+            this.PalettePanel.Location = new System.Drawing.Point(516, 356);
             this.PalettePanel.Name = "PalettePanel";
             this.PalettePanel.Size = new System.Drawing.Size(256, 256);
             this.PalettePanel.TabIndex = 1;
@@ -953,23 +975,11 @@ namespace TiledGGD
             this.aboutBox.Text = "About TiledGGD";
             this.aboutBox.Visible = false;
             // 
-            // reloadBindingsToolStripMenuItem
-            // 
-            this.reloadBindingsToolStripMenuItem.Name = "reloadBindingsToolStripMenuItem";
-            this.reloadBindingsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.reloadBindingsToolStripMenuItem.Text = "Reload Bindings";
-            this.reloadBindingsToolStripMenuItem.Click += new System.EventHandler(this.reloadBindingsTSMI_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(223, 6);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 592);
+            this.ClientSize = new System.Drawing.Size(784, 624);
             this.Controls.Add(this.GraphicsPanel);
             this.Controls.Add(this.DataPanel);
             this.Controls.Add(this.PalettePanel);
@@ -998,9 +1008,9 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem savePalTSMI;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem quitTSMI;
-        private DoubleBufferedPanel PalettePanel;
+        private UI.DoubleBufferedPanel PalettePanel;
         private System.Windows.Forms.Panel DataPanel;
-        private DoubleBufferedPanel GraphicsPanel;
+        private UI.DoubleBufferedPanel GraphicsPanel;
         private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem graphFormatTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphFormat_1bppTSMI;
@@ -1019,8 +1029,6 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem palFormat_3BpcTSMI;
         private System.Windows.Forms.ToolStripMenuItem palFormat_4BpcTSMI;
         private System.Windows.Forms.ToolStripMenuItem palAlphaTSMI;
-        private System.Windows.Forms.ToolStripMenuItem palAlpha_endTSMI;
-        private System.Windows.Forms.ToolStripMenuItem palAlpha_startTSMI;
         private System.Windows.Forms.ToolStripMenuItem palOrderTSMI;
         private System.Windows.Forms.ToolStripMenuItem palOrder_bgrTSMI;
         private System.Windows.Forms.ToolStripMenuItem palOrder_rgbTSMI;
@@ -1046,8 +1054,8 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem copyPaletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutTSMI;
-        private AboutBox aboutBox;
-        private ControlShorts controlShortBox;
+        private UI.AboutBox aboutBox;
+        private UI.ControlShorts controlShortBox;
         private System.Windows.Forms.ToolStripMenuItem shortcutsTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphEndianTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphEndian_bigTSMI;
@@ -1072,7 +1080,6 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem setTileSizeTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphWSS_1tileTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphHSS_1tileTSMI;
-        private System.Windows.Forms.ToolStripMenuItem palAlpha_noneTSMI;
         private System.Windows.Forms.ToolStripMenuItem graphGoToTSMI;
         private System.Windows.Forms.ToolStripMenuItem palGoToTSMI;
         private System.Windows.Forms.ToolStripMenuItem zoomTSMI;
@@ -1090,6 +1097,10 @@ namespace TiledGGD
         private System.Windows.Forms.ToolStripMenuItem saveAllGraphicsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadBindingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem palModeTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palMode_TiledTSMI;
+        private System.Windows.Forms.ToolStripMenuItem palMode_LinearTSMI;
+        private System.Windows.Forms.ToolStripMenuItem tileSizeToolStripMenuItem;
     }
 }
 

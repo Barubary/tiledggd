@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TiledGGD
+namespace TiledGGD.UI
 {
     public partial class ControlShorts : Form
     {
@@ -22,7 +22,8 @@ namespace TiledGGD
             this.dataGridView1.Rows.Add("Toggle Graphics Format", "B");
             this.dataGridView1.Rows.Add("Toggle Palette Format", "O");
             this.dataGridView1.Rows.Add("Toggle Palette Order", "P");
-            this.dataGridView1.Rows.Add("Toggle Tiled/Linear", "F");
+            this.dataGridView1.Rows.Add("Toggle Tiled/Linear for graphics", "F");
+            this.dataGridView1.Rows.Add("Toggle Tiled/Linear for palette", "Shift+F");
             this.dataGridView1.Rows.Add("Skip graphics data forward", "PageDown");
             this.dataGridView1.Rows.Add("Skip graphics data backward", "PageUp");
             this.dataGridView1.Rows.Add("Skip palette forward", "End");

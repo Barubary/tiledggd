@@ -95,6 +95,8 @@ namespace TiledGGD.BindingTools
             interp.RegisterFunction("stringToInt", this, this.GetType().GetMethod("stringToInt"));
             interp.RegisterFunction("setData", this, this.GetType().GetMethod("setData"));
             interp.RegisterFunction("setData2", this, this.GetType().GetMethod("setData2"));
+            interp.RegisterFunction("addData", this, this.GetType().GetMethod("addData"));
+            interp.RegisterFunction("addData2", this, this.GetType().GetMethod("addData2"));
             interp.RegisterFunction("toHexadecimal", this, this.GetType().GetMethod("ToHexadecimal"));
 
             // register the default variables
@@ -501,6 +503,62 @@ namespace TiledGGD.BindingTools
             this.usedSetData = true;
         }
         #endregion
+
+        #region addData(offset)
+        /// <summary>
+        /// Adds data to the underlying BrosableData
+        /// </summary>
+        /// <param name="offset">Where the actual data in the file begins</param>
+        public void addData(double offset)
+        {
+            int o = (int)offset;
+            if (o >= this.theData.Length)
+                throw new PluginException("Cannot set the data to begin after the file");
+            byte[] newdata = new byte[this.theData.Length - o];
+            for (int i = 0; i < newdata.Length; i++)
+                newdata[i] = this.theData[i + o];
+
+            byte[] completeData = new byte[this.bData.Length + newdata.Length];
+            this.bData.Data.CopyTo(completeData, 0);
+            newdata.CopyTo(completeData, this.bData.Length);
+
+            this.bData.Data = completeData;
+            this.usedSetData = true;
+        }
+        #endregion
+
+        #region addData2(offset, length)
+        /// <summary>
+        /// Adds data to the underlying BrosableData
+        /// </summary>
+        /// <param name="offset">Where the actual data in the file begins</param>
+        /// <param name="length">The (maximum) length of the data</param>
+        public void addData2(double offset, double length)
+        {
+            int o = (int)offset;
+            if (o >= this.theData.Length)
+                throw new PluginException("Cannot set the data to begin after the file");
+            byte[] newdata = new byte[(int)Math.Min(this.theData.Length - o, length)];
+
+            for (int i = 0; i < newdata.Length; i++)
+                newdata[i] = this.theData[i + o];
+
+            byte[] completeData = new byte[this.bData.Length + newdata.Length];
+            this.bData.Data.CopyTo(completeData, 0);
+            newdata.CopyTo(completeData, this.bData.Length);
+
+            this.bData.Data = completeData;
+
+            if (newdata.Length < length)
+                MainWindow.showError(String.Format("Plugin warning: no more data to read.\n"
+                                                   + "Desired data length: 0x{0:x}\n"
+                                                   + "Actual length: 0x{1:x}",
+                                                   (int)length, newdata.Length));
+
+            this.usedSetData = true;
+        }
+        #endregion
+
 
         #endregion
 

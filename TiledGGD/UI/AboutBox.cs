@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace TiledGGD
+namespace TiledGGD.UI
 {
     partial class AboutBox : Form
     {

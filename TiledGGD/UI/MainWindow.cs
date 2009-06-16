@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using TiledGGD.BindingTools;
+using TiledGGD.UI;
 
 namespace TiledGGD
 {
@@ -94,7 +95,7 @@ namespace TiledGGD
                 case Keys.PageDown: graphicsData.DoSkip(true); break;
                 case Keys.PageUp: graphicsData.DoSkip(false); break;
                 case Keys.B: graphicsData.toggleGraphicsFormat(); break;
-                case Keys.F: graphicsData.toggleTiled(); break;
+                case Keys.F: if (e.Shift) paletteData.toggleTiled(); else graphicsData.toggleTiled(); break;
                 case Keys.E: if (e.Control) graphicsData.toggleEndianness(); else if (e.Shift) paletteData.toggleEndianness(); else return; break;
                 case Keys.Z: if (e.Control) graphicsData.toggleSkipSize(); else if (e.Shift) paletteData.toggleSkipSize(); else return; break;
                 case Keys.W: graphicsData.toggleWidthSkipSize(); break;
@@ -134,11 +135,6 @@ namespace TiledGGD
             foreach (ToolStripMenuItem tsme in this.graphSSTSMI.DropDownItems)
                 tsme.Checked = false;
             (this.graphSSTSMI.DropDownItems[(int)GraphicsData.SkipSize] as ToolStripMenuItem).Checked = true;
-
-            // palette alpha location
-            foreach (ToolStripMenuItem tsmi in this.palAlphaTSMI.DropDownItems)
-                tsmi.Checked = false;
-            (this.palAlphaTSMI.DropDownItems[(int)PaletteData.alphaLoc] as ToolStripMenuItem).Checked = true;
 
             // palette order
             foreach (ToolStripMenuItem tsme in palOrderTSMI.DropDownItems)
@@ -322,6 +318,8 @@ namespace TiledGGD
 
             this.listBox2.Items.Add("Offset:\t\t0x" + String.Format("{0:X}", paletteData.Offset));
 
+            this.listBox2.Items.Add(string.Format("Tile Size: \t{0:g} x {1:g}", PaletteData.TileSize.X, PaletteData.TileSize.Y));
+
             switch (PaletteData.PalFormat)
             {
                 case PaletteFormat.FORMAT_2BPP: val = "2 Bytes/colour"; break;
@@ -342,13 +340,18 @@ namespace TiledGGD
             }
             this.listBox2.Items.Add("Endianness:\t" + val);
 
-            switch (PaletteData.alphaLoc)
+            this.listBox2.Items.Add(string.Format("Mode: \t\t{0:s}", PaletteData.Tiled ? "Tiled" : "Linear"));
+
+            switch (PaletteData.AlphaSettings.Location)
             {
                 case AlphaLocation.START: val = "Start"; break;
                 case AlphaLocation.END: val = "End"; break;
-                case AlphaLocation.NONE: val = "Start, but ignored"; break;
                 default: val = "ERROR"; break;
             }
+            if (PaletteData.AlphaSettings.IgnoreAlpha)
+                val += ", but ignored";
+             else if (PaletteData.AlphaSettings.Stretch)
+                val += string.Format(" [0x{0:X}, 0x{1:X}]", PaletteData.AlphaSettings.Minimum, PaletteData.AlphaSettings.Maximum);
             this.listBox2.Items.Add("Alpha Location:\t" + val);
 
             switch (PaletteData.SkipMetric)
@@ -484,6 +487,20 @@ namespace TiledGGD
         }
         #endregion
 
+        #region palette mode
+        private void tiledToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender == palMode_LinearTSMI)
+                PaletteData.Tiled = false;
+            else if (sender == palMode_TiledTSMI)
+                PaletteData.Tiled = true;
+            else
+                throw new Exception("Invalid Linear/Tiled action");
+            DoRefresh();
+            updateMenu();
+        }
+        #endregion
+
         #region shortcuts
         private void shortcutsTSMI_Click(object sender, EventArgs e)
         {
@@ -493,7 +510,7 @@ namespace TiledGGD
         }
         #endregion
 
-        #region raphical endianness
+        #region graphical endianness
         private void graphEndianTSMI_Click(object sender, EventArgs e)
         {
             if (sender == graphEndian_bigTSMI)
@@ -544,22 +561,6 @@ namespace TiledGGD
                 PaletteData.IsBigEndian = false;
             else
                 throw new Exception("Invalid Palette Endianness action");
-            DoRefresh();
-            updateMenu();
-        }
-        #endregion
-
-        #region palette alpha location
-        private void palAlphaTSMI_Click(object sender, EventArgs e)
-        {
-            if (sender == palAlpha_endTSMI)
-                PaletteData.alphaLoc = AlphaLocation.END;
-            else if (sender == palAlpha_startTSMI)
-                PaletteData.alphaLoc = AlphaLocation.START;
-            else if (sender == palAlpha_noneTSMI)
-                PaletteData.alphaLoc = AlphaLocation.NONE;
-            else
-                throw new Exception("Invalid Alpha location action");
             DoRefresh();
             updateMenu();
         }
@@ -633,13 +634,15 @@ namespace TiledGGD
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.RestoreDirectory = true;
-            sfd.FileName = GraphicsData.Filename;
+            sfd.FileName = GraphicsData.Filename + ".png";
             DialogResult res = sfd.ShowDialog();
 
             if (res == DialogResult.OK || res == DialogResult.Yes)
             {
                 string flnm = sfd.FileName;
-                graphicsData.toBitmap().Save(flnm);
+                if (!flnm.ToLower().EndsWith(".png"))
+                    flnm += ".png";
+                graphicsData.toBitmap().Save(flnm, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
         #endregion
@@ -662,6 +665,8 @@ namespace TiledGGD
             if (res == DialogResult.OK || res == DialogResult.Yes)
             {
                 string flnm = sfd.FileName;
+                if (!flnm.ToLower().EndsWith(".png"))
+                    flnm += ".png";
                 paletteData.toBitmap().Save(flnm);
             }
         }
@@ -765,6 +770,14 @@ namespace TiledGGD
                 MessageBox.Show("The dimensions of a tile can not be odd", "Invalid Tile Size");
             }
         }
+
+        private void setTileSizePalTSMI_Click(object sender, EventArgs e)
+        {
+            TileSizeDialog tsd = new TileSizeDialog(PaletteData.TileSize);
+            tsd.ShowDialog();
+            PaletteData.TileSize = tsd.NewTileSize;
+            this.DataPanel_Paint(this, null);
+        }
         #endregion
 
         #region go to
@@ -830,13 +843,15 @@ namespace TiledGGD
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.RestoreDirectory = true;
+            sfd.FileName = GraphicsData.Filename;
             DialogResult res = sfd.ShowDialog();
 
             if (res == DialogResult.OK || res == DialogResult.Yes)
             {
                 string flnm = sfd.FileName;
-
-                graphicsData.toFullBitmap().Save(flnm);
+                if (!flnm.ToLower().EndsWith(".png"))
+                    flnm += ".png";
+                graphicsData.toFullBitmap().Save(flnm, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
         #endregion
@@ -858,6 +873,12 @@ namespace TiledGGD
             
         }
         #endregion
+
+        private void palAlphaTSMI_Click(object sender, EventArgs e)
+        {
+            AlphaPanel panel = new AlphaPanel(PaletteData.AlphaSettings);
+            panel.ShowDialog(); // the panel will automatically alter the settings when OK is clicked / enter is pressed
+        }
 
 
         #endregion

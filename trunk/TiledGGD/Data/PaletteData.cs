@@ -56,25 +56,17 @@ namespace TiledGGD
         }
         #endregion
 
-        #region Field: Alpha Location
+        #region Field: Alpha Setting
         /// <summary>
         /// The location of the Alpha value
         /// </summary>
-        private static AlphaLocation alphaLocation = AlphaLocation.NONE;
+        private static AlphaSettings alphaSettings = new AlphaSettings();
         /// <summary>
         /// The location of the Alpha value
         /// </summary>
-        internal static AlphaLocation alphaLoc
+        internal static AlphaSettings AlphaSettings
         {
-            get { return alphaLocation; }
-            set
-            {
-                if (alphaLocation != value)
-                {
-                    alphaLocation = value;
-                    MainWindow.DoRefresh();
-                }
-            }
+            get { return alphaSettings; }
         }
         #endregion
 
@@ -134,6 +126,46 @@ namespace TiledGGD
         /// The name of the loaded file
         /// </summary>
         public static string Filename { get { return fname; } }
+
+        #region Field: Tiled
+        /// <summary>
+        /// If the palette is tiled or not
+        /// </summary>
+        private static bool tiled = false;
+        /// <summary>
+        /// If the palette is tiled or not
+        /// </summary>
+        public static bool Tiled
+        {
+            get { return tiled; }
+            set
+            {
+                if (value != tiled)
+                {
+                    tiled = value;
+                    MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #region Field: TileSize
+        private static Point tilesize = new Point(8, 2);
+        /// <summary>
+        /// The size of a palette tile
+        /// </summary>
+        public static Point TileSize
+        {
+            get { return tilesize; }
+            set
+            {
+                if (16 % value.X != 0 || 16 % value.Y != 0)
+                    MainWindow.showError("16 must be a multiple of the width and height of a palette tile.");
+                else
+                    tilesize = value;
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -295,7 +327,8 @@ namespace TiledGGD
             byte[] dt = br.ReadBytes(nBytesForPal);
             this.Data = dt;
             PalFormat = PaletteFormat.FORMAT_2BPP;
-            alphaLoc = AlphaLocation.NONE;
+            alphaSettings.Location = AlphaLocation.START;
+            alphaSettings.IgnoreAlpha = true;
             PalOrder = PaletteOrder.BGR;
 
             br.Close();
@@ -379,14 +412,8 @@ namespace TiledGGD
                         bt = (b1 << 8) | b2;
                         // if alphalocation == none, assume alpha at start
                         // default: (a)bgr(a)
-                        switch (alphaLocation)
+                        switch (AlphaSettings.Location)
                         {
-                            case AlphaLocation.NONE:
-                                a = 1;
-                                fst = (bt & 0x7C00) >> 7;//>> 10) << 3;
-                                scn = (bt & 0x03E0) >> 2;//>> 5) << 3;
-                                thd = (bt & 0x001F) << 3;//>> 0) << 3;
-                                break;
                             case AlphaLocation.START:
                                 a = (bt & 0x8000) >> 15;
                                 fst = (bt & 0x7C00) >> 7;//>> 10) << 3;
@@ -399,8 +426,10 @@ namespace TiledGGD
                                 thd = (bt & 0x003E) << 2;//>> 1) << 3;
                                 a = (bt & 0x0001) >> 0;
                                 break;
-                            default: throw new Exception("Unknown Error: invalid alpha position " + alphaLocation.ToString());
+                            default: throw new Exception("Unknown Error: invalid alpha position " + AlphaSettings.Location.ToString());
                         }
+                        if (AlphaSettings.IgnoreAlpha)
+                            a = 1;
                         a *= 0xFF;
                         break;
                     #endregion
@@ -442,14 +471,8 @@ namespace TiledGGD
                         }
                         // deafult: (a)bgr(a)
                         // assume argb with a = 0xFF always if no a
-                        switch (alphaLocation)
+                        switch (AlphaSettings.Location)
                         {
-                            case AlphaLocation.NONE:
-                                a = 0xFF;
-                                fst = b2;
-                                scn = b3;
-                                thd = b4;
-                                break;
                             case AlphaLocation.START:
                                 a = b1;
                                 fst = b2;
@@ -462,8 +485,10 @@ namespace TiledGGD
                                 thd = b3;
                                 a = b4;
                                 break;
-                            default: throw new Exception("Unknown Error: invalid alpha position " + alphaLocation.ToString());
+                            default: throw new Exception("Unknown Error: invalid alpha position " + AlphaSettings.Location.ToString());
                         }
+                        if (AlphaSettings.IgnoreAlpha)
+                            a = 0xFF;
                         break;
                     #endregion
 
@@ -565,14 +590,8 @@ namespace TiledGGD
                         }
                         bt = fst | (scn << 8);
 
-                        switch (alphaLoc)
+                        switch (AlphaSettings.Location)
                         {
-                            case AlphaLocation.NONE:
-                                a = 0xFF;
-                                fst = (byte)((bt & 0x7C00) >> 7);//>> 10) << 3;
-                                scn = (byte)((bt & 0x03E0) >> 2);//>> 5) << 3;
-                                thd = (byte)((bt & 0x001F) << 3);//>> 0) << 3;
-                                break;
                             case AlphaLocation.START:
                                 a = (byte)((bt & 0x8000) >> 15);
                                 fst = (byte)((bt & 0x7C00) >> 7);//>> 10) << 3;
@@ -585,8 +604,9 @@ namespace TiledGGD
                                 thd = (byte)((bt & 0x003E) << 2);//>> 1) << 3;
                                 a = (byte)((bt & 0x0001) >> 0);
                                 break;
-                            default: throw new Exception("Unkown exception: invalid AlphaLocation " + alphaLoc.ToString());
+                            default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                         }
+                        a *= 0xFF;
                         parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
                     }
                     break;
@@ -627,12 +647,8 @@ namespace TiledGGD
                         a = Next(out atEnd);
                         if (IsBigEndian)
                         {
-                            switch (alphaLoc)
+                            switch (AlphaSettings.Location)
                             {
-                                case AlphaLocation.NONE:
-                                    parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
-                                    fullpal[i] |= 0xFF << 24;
-                                    break;
                                 case AlphaLocation.START:
                                     //thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++]; a = Data[currIdx++];
                                     parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
@@ -641,17 +657,13 @@ namespace TiledGGD
                                     //a = Data[currIdx++]; thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++];
                                     parsePalOrder(ref scn, ref thd, ref a, ref fst, out fullpal[i]);
                                     break;
-                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + alphaLoc.ToString());
+                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                             }
                         }
                         else
                         {
-                            switch (alphaLoc)
+                            switch (AlphaSettings.Location)
                             {
-                                case AlphaLocation.NONE:
-                                    parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[i]);
-                                    fullpal[i] |= 0xFF << 24;
-                                    break;
                                 case AlphaLocation.START:
                                     //a = Data[currIdx++]; fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++];
                                     parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[i]);
@@ -660,7 +672,7 @@ namespace TiledGGD
                                     //fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++]; a = Data[currIdx++];
                                     parsePalOrder(ref fst, ref a, ref thd, ref scn, out fullpal[i]);
                                     break;
-                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + alphaLoc.ToString());
+                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                             }
                         }
                         //parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
@@ -670,7 +682,47 @@ namespace TiledGGD
 
                 default: throw new Exception("Unkown exception: invalid PaletteFormat " + palFormat.ToString());
             }
-            return fullpal;
+            apply_alphasettings(fullpal);
+            return Tiled ? tile(fullpal) : fullpal;
+        }
+
+        internal void apply_alphasettings(int[] pal)
+        {
+            float rangesize = AlphaSettings.Maximum-AlphaSettings.Minimum;
+            for (int p = 0; p < pal.Length; p++)
+            {
+                if (AlphaSettings.IgnoreAlpha)
+                {
+                    pal[p] |= 0xFF << 24;
+                    continue;
+                }
+                if (AlphaSettings.Stretch)
+                {
+                    byte alpha = (byte)(pal[p] >> 24);
+                    if (alpha >= AlphaSettings.Maximum)
+                        alpha = 0xFF;
+                    else if (alpha <= AlphaSettings.Minimum)
+                        alpha = 0;
+                    else
+                        alpha = (byte)(0xFF * ((float)(alpha - AlphaSettings.Minimum) / rangesize));
+                    pal[p] = (pal[p] & 0xFFFFFF) | (alpha << 24);
+                }
+            }
+        }
+
+        internal int[] tile(int[] pal)
+        {
+            int[] outpal = new int[256];
+            int ntx = 16 / tilesize.X,
+                nty = 16 / tilesize.Y;
+            int i=0;
+            for (int ty = 0; ty < nty; ty++)
+                for (int tx = 0; tx < ntx; tx++)
+                    for (int y = 0; y < tilesize.Y; y++)
+                        for (int x = 0; x < tilesize.X; x++)
+                            outpal[(ty * tilesize.Y + y) * 16 + (tx * tilesize.X + x)] = pal[i++];
+
+            return outpal;
         }
 
         internal Color[] getFullPaletteAsColor()
@@ -775,6 +827,10 @@ namespace TiledGGD
                     } break;
             }
         }
+        internal void toggleTiled()
+        {
+            Tiled = !Tiled;
+        }
         internal void toggleEndianness()
         {
             IsBigEndian = !IsBigEndian;
@@ -802,6 +858,142 @@ namespace TiledGGD
         }
     }
 
+    #region class: AlphaSettings
+    public class AlphaSettings
+    {
+        #region Fields & Properties
+
+        #region Location
+        /// <summary>
+        /// The location of the alpha value
+        /// </summary>
+        private AlphaLocation location;
+        /// <summary>
+        /// The location of the alpha value
+        /// </summary>
+        public AlphaLocation Location
+        {
+            get { return this.location; }
+            set
+            {
+                if (this.location != value)
+                {
+                    this.location = value;
+                    MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #region IgnoreAlpha
+        /// <summary>
+        /// If the alpha value should be ignored
+        /// </summary>
+        private bool ignoreAlpha;
+        /// <summary>
+        /// If the alpha value should be ignored
+        /// </summary>
+        public bool IgnoreAlpha
+        {
+            get { return this.ignoreAlpha; }
+            set
+            {
+                if (this.ignoreAlpha != value)
+                {
+                    this.ignoreAlpha = value;
+                    MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #region Stretch
+        /// <summary>
+        /// If the alpha value should be stretched
+        /// </summary>
+        private bool stretch;
+        /// <summary>
+        /// If the alpha value should be stretched
+        /// </summary>
+        public bool Stretch
+        {
+            get { return this.stretch; }
+            set
+            {
+                if (this.stretch != value)
+                {
+                    this.stretch = value;
+                    MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #region Minimum
+        /// <summary>
+        /// Which value of alpha should be mapped to 0
+        /// </summary>
+        private byte min;
+        /// <summary>
+        /// Which value of alpha should be mapped to 0
+        /// </summary>
+        public byte Minimum
+        {
+            get { return this.min; }
+            set
+            {
+                if (value > max)
+                    MainWindow.showError("Alpha minimum cannot be larger than alpha maximum");
+                else if (min != value)
+                {
+                    min = value;
+                    if (Stretch)
+                        MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #region Maximum
+        /// <summary>
+        /// Which value of alpha should be mapped to 255
+        /// </summary>
+        private byte max;
+        /// <summary>
+        /// Which value of alpha should be mapped to 255
+        /// </summary>
+        public byte Maximum
+        {
+            get { return this.max; }
+            set
+            {
+                if (value < min)
+                    MainWindow.showError("Alpha maximum cannot be smaller than alpha minimum");
+                else if (max != value)
+                {
+                    max = value;
+                    if (Stretch)
+                        MainWindow.DoRefresh();
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        public AlphaSettings() : this(AlphaLocation.START, true, false, 0, 0xFF) { }
+        public AlphaSettings(AlphaLocation loc, bool ignore, bool scale, byte min, byte max)
+        {
+            this.Maximum = max;
+            this.Minimum = min;
+            this.IgnoreAlpha = ignore;
+            this.Stretch = scale;
+            this.Location = loc;
+        }
+
+    }
+    #endregion
+
     #region Palette enums (PaletteFormat, PaletteOrder, AlphaLocation, PaletteSkipMetric
     public enum PaletteFormat : int
     {
@@ -821,8 +1013,7 @@ namespace TiledGGD
     public enum AlphaLocation : int
     {
         START = 0,
-        END = 1,
-        NONE = 2
+        END = 1
     }
     public enum PaletteSkipMetric
     {

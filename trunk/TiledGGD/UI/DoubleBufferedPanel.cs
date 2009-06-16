@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TiledGGD
+namespace TiledGGD.UI
 {
-    class DoubleBufferedPanel:Panel
+    class DoubleBufferedPanel : Panel
     {
         public DoubleBufferedPanel()
             : base()

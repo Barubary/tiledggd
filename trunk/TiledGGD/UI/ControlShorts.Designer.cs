@@ -1,4 +1,4 @@
-namespace TiledGGD
+namespace TiledGGD.UI
 {
     partial class ControlShorts
     {

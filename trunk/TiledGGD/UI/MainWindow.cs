@@ -131,6 +131,9 @@ namespace TiledGGD
             // graphics mode
             graphMode_LinearTSMI.Checked = !(graphMode_tiledTSMI.Checked = GraphicsData.Tiled);
 
+            // graphics mode
+            palMode_LinearTSMI.Checked = !(palMode_TiledTSMI.Checked = PaletteData.Tiled);
+
             // graphics skip size
             foreach (ToolStripMenuItem tsme in this.graphSSTSMI.DropDownItems)
                 tsme.Checked = false;

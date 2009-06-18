@@ -60,6 +60,10 @@ Functions
 - setData(offset) : sets from where the actual data starts. The data ends at the end of the file.
 - setData2(offset, length) : sets from where the actual data starts, and how long the actual data is. 
 							 If this function and setData(offset) is not used, setData(0) is assumed.
+- addData(offset) : similar to setData. However, the already present data will not be deleted, and 
+					the read data will be added instead.
+- addData2(offset, length) : similar to setData2. However, the already present data will not be 
+							 deleted, and the read data will be added instead.
 - toHexadecimal(number) : converts an integer into its hexadecimal representation (outputs a string)
 					   
 Variables
@@ -85,17 +89,31 @@ The following variables can be set for any type of plugin:
 			not set (or invalid), the format will not change.
 			Note that these (or at least the 3 and 4) are the values most commonly used to denote 
 			what format an image is.
-- order : The order of the palette. This will be ignored for the graphics if the format < 5.
-		  It is a 3-letter string containing the letters R, G and B in an arbitrary order.
 - bigendian : Flags if the data is BigEndian. (boolean, so either true/false) If it is false, the
 			  data is LittleEndian.
+- tilesize : a table with two entries (x and y, or 0 and 1), indicating the desired tile-size. The 
+			 tile size will not be altered if this is not set. Invalid values will be made known to
+			 the user, and ignored afterwards. The indices x and y take precedence over 0 and 1.
+- tiled : boolean variable indicating if the data is tiled or not. An invalid value will be
+		  ignored.
+		  
+The following variables can also be set for any type of plugin, but will be ignored for graphics
+with format < 5.
+- order : The order of the palette. It is a 3-letter string containing the letters R, G and B in an 
+		  arbitrary order.
+- alphaAtStart : boolean value (true or false), indicating if the alpha value of the colour is
+				 located at the start of the colour value. If set to false, the alpha value is 
+				 located at the end of the colour value.
+- ignoreAlpha : boolean value (true or false), indicating if the alpha value of colours should be
+				ignored. If set, all colours will be fully opaque.
+- enableAlphaStrech : boolean value (true or false), indicating if alpha stretch is enabled.
+- alphaStretch : a table with two entries (min and max, or 0 and 1). When alpha stretch is enabled, 
+				 the alpha value of the colours will be stretched, so that the minimum value 
+				 (min or 0) and anything below it is mapped onto alpha value 0, and the maximum
+				 value (max or 1) is mapped onto alpha value 255. Anything in-between will keep its
+				 relative position between the given minimum and maximum values.
 
 The following variables can be set for each Graphics-plugin:
 - width : integer indicating what the width of the canvas should be. The width will not be altered 
 			if this is not set. Invalid values are made known to the user, and ignored afterward.
 - height : similar as width, only for the height of the canvas.
-- tilesize : a table with two entries (x and y, or 0 and 1), indicating the desired tile-size. The 
-			 tile size will not be altered if this is not set. Invalid values will be made known to
-			 the user, and ignored afterwards. The indices x and y take precedence over 0 and 1.
-- tiled : boolean variable indicating if the graphics is tiled or not. An invalid value will be
-		  ignored.

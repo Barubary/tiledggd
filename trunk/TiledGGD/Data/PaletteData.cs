@@ -555,7 +555,9 @@ namespace TiledGGD
             }
             #endregion
 
-            return (a << 24) | (r << 16) | (g << 8) | b;
+            int[] col = new int[]{(int)((a << 24) | (r << 16) | (g << 8) | b)};
+            apply_alphasettings(col, 1);
+            return (uint)col[0];
         }
         #endregion
 
@@ -570,11 +572,12 @@ namespace TiledGGD
             int bt;
             byte fst, scn, thd, a;
             bool atEnd = false;
+            int palNo;
             switch (PalFormat)
             {
                 #region case 2BPP
                 case PaletteFormat.FORMAT_2BPP:
-                    for (int i = 0; i < 256 && !atEnd; i++)
+                    for (palNo = 0; palNo < 256 && !atEnd; palNo++)
                     {
                         if (IsBigEndian)
                         {
@@ -607,14 +610,14 @@ namespace TiledGGD
                             default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                         }
                         a *= 0xFF;
-                        parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
+                        parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
                     }
                     break;
                 #endregion
 
                 #region case 3BPP
                 case PaletteFormat.FORMAT_3BPP:
-                    for (int i = 0; i < 256 && !atEnd; i++)
+                    for (palNo = 0; palNo < 256 && !atEnd; palNo++)
                     {
                         a = 0xFF;
                         if (IsBigEndian)
@@ -631,14 +634,14 @@ namespace TiledGGD
                             scn = Next(out atEnd);
                             fst = Next(out atEnd);
                         }
-                        parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
+                        parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
                     }
                     break;
                 #endregion
 
                 #region case 4BPP
                 case PaletteFormat.FORMAT_4BPP:
-                    for (int i = 0; i < 256 && !atEnd; i++)
+                    for (palNo = 0; palNo < 256 && !atEnd; palNo++)
                     {
                         thd = Next(out atEnd);
                         if (atEnd) break;
@@ -651,11 +654,11 @@ namespace TiledGGD
                             {
                                 case AlphaLocation.START:
                                     //thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++]; a = Data[currIdx++];
-                                    parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
+                                    parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
                                     break;
                                 case AlphaLocation.END:
                                     //a = Data[currIdx++]; thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++];
-                                    parsePalOrder(ref scn, ref thd, ref a, ref fst, out fullpal[i]);
+                                    parsePalOrder(ref scn, ref thd, ref a, ref fst, out fullpal[palNo]);
                                     break;
                                 default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                             }
@@ -666,30 +669,30 @@ namespace TiledGGD
                             {
                                 case AlphaLocation.START:
                                     //a = Data[currIdx++]; fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++];
-                                    parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[i]);
+                                    parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[palNo]);
                                     break;
                                 case AlphaLocation.END:
                                     //fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++]; a = Data[currIdx++];
-                                    parsePalOrder(ref fst, ref a, ref thd, ref scn, out fullpal[i]);
+                                    parsePalOrder(ref fst, ref a, ref thd, ref scn, out fullpal[palNo]);
                                     break;
                                 default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
                             }
                         }
-                        //parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[i]);
+                        //parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
                     }
                     break;
                 #endregion
 
                 default: throw new Exception("Unkown exception: invalid PaletteFormat " + palFormat.ToString());
             }
-            apply_alphasettings(fullpal);
+            apply_alphasettings(fullpal, palNo);
             return Tiled ? tile(fullpal) : fullpal;
         }
 
-        internal void apply_alphasettings(int[] pal)
+        internal void apply_alphasettings(int[] pal, int palCount)
         {
             float rangesize = AlphaSettings.Maximum-AlphaSettings.Minimum;
-            for (int p = 0; p < pal.Length; p++)
+            for (int p = 0; p < palCount; p++)
             {
                 if (AlphaSettings.IgnoreAlpha)
                 {

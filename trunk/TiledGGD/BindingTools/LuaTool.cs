@@ -118,7 +118,7 @@ namespace TiledGGD.BindingTools
                 }
                 else
                 {
-                    #region format output variable
+                    #region format
                     // try to read the format
                     if (interp["format"] != null)
                     {
@@ -143,9 +143,10 @@ namespace TiledGGD.BindingTools
                     }
                     #endregion
 
-                    #region palette order
-                    if (interp["order"] != null)
-                        if (this.Parent.BindingType == BindingType.PALETTE || (int)GraphicsData.GraphFormat >= 5)
+                    if (this.parentBinding.BindingType == BindingType.PALETTE || (int)GraphicsData.GraphFormat >= 5)
+                    {
+                        #region palette order
+                        if (interp["order"] != null)
                         {
                             string s = ((string)interp["order"]).ToUpper();
                             if (s.Length != 3 || !s.Contains("R") || !s.Contains("G") || !s.Contains("B"))
@@ -154,7 +155,49 @@ namespace TiledGGD.BindingTools
                             else
                                 PaletteData.PalOrder = (PaletteOrder)Enum.Parse(typeof(PaletteOrder), s);
                         }
-                    #endregion
+                        #endregion
+
+                        #region alpha location
+                        if (interp["alphaAtStart"] != null)
+                        {
+                            bool atStart = (bool)interp["alphaAtStart"];
+                            PaletteData.AlphaSettings.Location = atStart ? AlphaLocation.START : AlphaLocation.END;
+                        }
+                        #endregion
+
+                        #region ignore alpha
+                        if (interp["ignoreAlpha"] != null)
+                        {
+                            bool ignore = (bool)interp["ignoreAlpha"];
+                            PaletteData.AlphaSettings.IgnoreAlpha = ignore;
+                        }
+                        #endregion
+
+                        #region enable stretch
+                        if (interp["enableAlphaStrech"] != null)
+                        {
+                            bool enable = (bool)interp["enableAlphaStrech"];
+                            PaletteData.AlphaSettings.Stretch = enable;
+                        }
+                        #endregion
+
+                        #region stretch settings
+                        if (interp["alphaStretch"] != null)
+                        {
+                            LuaTable t = interp.GetTable("alphaStretch");
+
+                            if (t["min"] != null)
+                                PaletteData.AlphaSettings.Minimum = (byte)(double)t["min"];
+                            else if(t[0] != null)
+                                PaletteData.AlphaSettings.Minimum = (byte)(double)t[0];
+
+                            if (t["max"] != null)
+                                PaletteData.AlphaSettings.Maximum = (byte)(double)t["max"];
+                            else if (t[0] != null)
+                                PaletteData.AlphaSettings.Maximum = (byte)(double)t[1];
+                        }
+                        #endregion
+                    }
 
                     #region Endianness
                     if (interp["bigendian"] != null)
@@ -166,6 +209,77 @@ namespace TiledGGD.BindingTools
                                 GraphicsData.IsBigEndian = isBE; break;
                             case BindingType.PALETTE:
                                 PaletteData.IsBigEndian = isBE; break;
+                        }
+                    }
+                    #endregion
+
+                    #region tile size
+                    if (interp["tilesize"] != null)
+                    {
+                        System.Drawing.Point size, oldSize;
+                        switch(this.parentBinding.BindingType)
+                        {
+                            case BindingType.GRAPHICS: size = oldSize = GraphicsData.TileSize; break;
+                            case BindingType.PALETTE: size = oldSize = PaletteData.TileSize; break;
+                            default: throw new Exception(string.Format("Unknown BindingType {0:s}", this.parentBinding.BindingType.ToString()));
+                        }
+                        try
+                        {
+                            LuaTable t = interp.GetTable("tilesize");
+
+                            if (t["x"] != null)
+                                size.X = (int)(double)t["x"];
+                            else if (t[0] != null)
+                                size.X = (int)(double)t[0];
+
+                            if (t["y"] != null)
+                                size.Y = (int)(double)t["y"];
+                            else if (t[1] != null)
+                                size.Y = (int)(double)t[1];
+
+                            switch (this.parentBinding.BindingType)
+                            {
+                                case BindingType.GRAPHICS: GraphicsData.TileSize = size; break;
+                                case BindingType.PALETTE: PaletteData.TileSize = size; break;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                            switch (this.parentBinding.BindingType)
+                            {
+                                case BindingType.GRAPHICS: GraphicsData.TileSize = oldSize; break;
+                                case BindingType.PALETTE: PaletteData.TileSize = oldSize; break;
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region tiled
+                    if (interp["tiled"] != null)
+                    {
+                        bool tl;
+                        switch (this.parentBinding.BindingType)
+                        {
+                            case BindingType.GRAPHICS:
+                                tl = GraphicsData.Tiled;
+                                try { GraphicsData.Tiled = (bool)interp["tiled"]; }
+                                catch (Exception)
+                                {
+                                    MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                                    GraphicsData.Tiled = tl;
+                                }
+                                break;
+                            case BindingType.PALETTE:
+                                tl = PaletteData.Tiled;
+                                try { PaletteData.Tiled = (bool)interp["tiled"]; }
+                                catch (Exception)
+                                {
+                                    MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                                    PaletteData.Tiled = tl;
+                                }
+                                break;
+                            default: throw new Exception(string.Format("Unknown BindingType {0:s}", this.parentBinding.BindingType.ToString()));
                         }
                     }
                     #endregion
@@ -204,52 +318,6 @@ namespace TiledGGD.BindingTools
                                 GraphicsData.Height = origH;
                                 MainWindow.showError("Plugin warning: invalid height.\n"
                                                      + "Value " + interp.GetString("height") + " is ignored.");
-                            }
-                        }
-                        #endregion
-
-                        #region tile size
-                        if (interp["tilesize"] != null)
-                        {
-                            System.Drawing.Point pt = GraphicsData.TileSize;
-                            try
-                            {
-                                System.Drawing.Point p = new System.Drawing.Point(pt.X, pt.Y);
-
-                                LuaTable t = interp.GetTable("tilesize");
-
-                                if (t["x"] != null)
-                                    p.X = (int)(double)t["x"];
-                                else if (t[0] != null)
-                                    p.X = (int)(double)t[0];
-
-                                if (t["y"] != null)
-                                    p.Y = (int)(double)t["y"];
-                                else if (t[1] != null)
-                                    p.Y = (int)(double)t[1];
-
-                                GraphicsData.TileSize = p;
-                            }
-                            catch (Exception)
-                            {
-                                MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
-                                GraphicsData.TileSize = pt;
-                            }
-                        }
-                        #endregion
-
-                        #region tiled
-                        if (interp["tiled"] != null)
-                        {
-                            bool tl = GraphicsData.Tiled;
-                            try
-                            {
-                                GraphicsData.Tiled = (bool)interp["tiled"];
-                            }
-                            catch (Exception)
-                            {
-                                MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
-                                GraphicsData.Tiled = tl;
                             }
                         }
                         #endregion
@@ -437,7 +505,7 @@ namespace TiledGGD.BindingTools
         /// Converts the first 4 characters of a string tino an integer, by reading them as bytes in a big-endian fashion
         /// </summary>
         /// <param name="str">The string to read</param>
-        /// <param name="i">The first 4 characters of the string converted to a big-endian integer</param>
+        /// <param name="palNo">The first 4 characters of the string converted to a big-endian integer</param>
         public void stringToInt(string str, out int i)
         {
             i = 0;
@@ -450,7 +518,7 @@ namespace TiledGGD.BindingTools
         /// <summary>
         /// Convert an integer into an hexadecimal string.
         /// </summary>
-        /// <param name="i">The integer to convert</param>
+        /// <param name="palNo">The integer to convert</param>
         /// <param name="str">The hexadecimal representation of the given integer</param>
         public void ToHexadecimal(int i, out string str)
         {

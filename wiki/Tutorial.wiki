@@ -159,6 +159,11 @@ You can enter the offset as either a decimal or hexadecimal number, and you can 
 
 Generally, when an image is tiled, the tile size is 8x8. However, as always, there are some exceptions. I've seen tiles of 16x16 and 32x32, but also of 16x8 and 32x8, but almost any dimension is possible. Use Ctrl+T or the menu Image->Set Tile Size... to use this functionality.
 
+==== 4.5.1 Palette tiling ====
+
+In ever rarer cases, the palette is also tiled. In general, that tile size will be 8x2. Use Ctrl+Shift+T to change the tile size (or the menu Palette->Set Tile Size...), and Shift+F to toggle between a tiled and linear palette (or the menu items in Palette->Mode).
+<a href="http://img.photobucket.com/albums/v175/barubary/tggdtut/19_tiledpal.png">This is an example</a> of a tiled palette, as found in Persona 3 and 4 Bust-ups. The left version is the linear palette, the right one is how it shows up with the tiled mode with a tile size of 8 x 2.
+
 === 4.6 Zooming ===
 
 You can zoom up to 800%, using either the !NumPad + and -, or the menu Image->Zoom.

@@ -134,9 +134,21 @@ Most games save their palette in a 2 Bytes per colour format. However, some use 
 
 As with the palette format, the palette order of a palette is generally B->G->R. Should this happen to be different, use the P key or the menu Palette->Colour order to change the order.
 
-=== 4.3 Alpha location ===
+=== 4.3 Alpha Settings===
 
-With some games, the palette also contains data about the transparency. Usually, this data is stored before the colour data, but not always. Use the menu Palette->Alpha location to change the setting. (None means that it's actually in front of the colour data, but it is simply ignored)
+With some games, the palette also contains data about the transparency. Usually, this data is stored before the colour data, but not always. Use the menu Palette->Alpha Settings... to change some settings.
+
+==== 4.3.1 Alpha location ====
+
+This is where the alpha value is located. 'Start' implies the alpha value is stored in the Most Significant Byte(s), 'End' in the Least Significant Byte(s).
+
+==== 4.3.2 Alpha Stretch ====
+
+Some formats do not use the full range of 0 - 255 for alpha values. Use this to stretch the used range back to 0 - 255. It at all necessary, the range actually used is generally 0 - 128.
+
+==== 4.3.3 Ignore Alpha ====
+
+This lets you ignore the alpha value of colours. If enabled, all colours will be fully opaque, regardless of the alpha value.
 
 === 4.4 Go to Offset ===
 

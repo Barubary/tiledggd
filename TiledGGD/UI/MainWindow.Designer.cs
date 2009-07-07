@@ -710,15 +710,16 @@ namespace TiledGGD
             // palMode_LinearTSMI
             // 
             this.palMode_LinearTSMI.Name = "palMode_LinearTSMI";
-            this.palMode_LinearTSMI.Size = new System.Drawing.Size(106, 22);
+            this.palMode_LinearTSMI.Size = new System.Drawing.Size(152, 22);
             this.palMode_LinearTSMI.Text = "Linear";
+            this.palMode_LinearTSMI.Click += new System.EventHandler(this.paletteModeTSMI_CLick);
             // 
             // palMode_TiledTSMI
             // 
             this.palMode_TiledTSMI.Name = "palMode_TiledTSMI";
-            this.palMode_TiledTSMI.Size = new System.Drawing.Size(106, 22);
+            this.palMode_TiledTSMI.Size = new System.Drawing.Size(152, 22);
             this.palMode_TiledTSMI.Text = "Tiled";
-            this.palMode_TiledTSMI.Click += new System.EventHandler(this.tiledToolStripMenuItem_Click);
+            this.palMode_TiledTSMI.Click += new System.EventHandler(this.paletteModeTSMI_CLick);
             // 
             // palOrderTSMI
             // 

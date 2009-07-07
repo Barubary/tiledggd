@@ -491,7 +491,7 @@ namespace TiledGGD
         #endregion
 
         #region palette mode
-        private void tiledToolStripMenuItem_Click(object sender, EventArgs e)
+        private void paletteModeTSMI_CLick(object sender, EventArgs e)
         {
             if (sender == palMode_LinearTSMI)
                 PaletteData.Tiled = false;

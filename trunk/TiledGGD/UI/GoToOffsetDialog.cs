@@ -41,6 +41,8 @@ namespace TiledGGD.UI
             }
             try
             {
+                if (this.textBox1.Text.StartsWith("0x"))
+                    this.textBox1.Text = this.textBox1.Text.Substring(2);
                 offset = long.Parse(this.textBox1.Text, System.Globalization.NumberStyles.HexNumber);
                 return true;
             }

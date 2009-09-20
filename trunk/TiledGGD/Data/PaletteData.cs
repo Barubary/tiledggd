@@ -264,7 +264,10 @@ namespace TiledGGD
             int palStart = br.ReadInt32();
             int palEnd = br.ReadInt32();
             int unkn = br.ReadInt32();
-            this.Data = br.ReadBytes(palEnd - palStart);
+            int palLen = palEnd - palStart;
+            if (palLen == 0)
+                palLen = plttSize * 0x18; // tbh: I cannot remember why this is actually * 0x18
+            this.Data = br.ReadBytes(Math.Min(palLen, plttSize - 0x18));
 
             switch (pltype)
             {
@@ -455,7 +458,7 @@ namespace TiledGGD
 
                     #region case 4BPP
                     case PaletteFormat.FORMAT_4BPP:
-                        if (bendian)
+                        if (!bendian)
                         {
                             b1 = (UInt32)data[0];
                             b2 = (UInt32)data[1];
@@ -570,7 +573,7 @@ namespace TiledGGD
                 return fullpal;
 
             int bt;
-            byte fst, scn, thd, a;
+            byte fst, scn, thd, fth, a;
             bool atEnd = false;
             int palNo;
             switch (PalFormat)
@@ -643,42 +646,32 @@ namespace TiledGGD
                 case PaletteFormat.FORMAT_4BPP:
                     for (palNo = 0; palNo < 256 && !atEnd; palNo++)
                     {
-                        thd = Next(out atEnd);
-                        if (atEnd) break;
-                        scn = Next(out atEnd);
-                        fst = Next(out atEnd);
-                        a = Next(out atEnd);
-                        if (IsBigEndian)
+                        if (isBigEndian)
                         {
-                            switch (AlphaSettings.Location)
-                            {
-                                case AlphaLocation.START:
-                                    //thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++]; a = Data[currIdx++];
-                                    parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
-                                    break;
-                                case AlphaLocation.END:
-                                    //a = Data[currIdx++]; thd = Data[currIdx++]; scn = Data[currIdx++]; fst = Data[currIdx++];
-                                    parsePalOrder(ref scn, ref thd, ref a, ref fst, out fullpal[palNo]);
-                                    break;
-                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
-                            }
+                            fth = Next(out atEnd);
+                            if (atEnd) break;
+                            thd = Next(out atEnd);
+                            scn = Next(out atEnd);
+                            fst = Next(out atEnd);
                         }
                         else
                         {
-                            switch (AlphaSettings.Location)
-                            {
-                                case AlphaLocation.START:
-                                    //a = Data[currIdx++]; fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++];
-                                    parsePalOrder(ref a, ref thd, ref scn, ref fst, out fullpal[palNo]);
-                                    break;
-                                case AlphaLocation.END:
-                                    //fst = Data[currIdx++]; scn = Data[currIdx++]; thd = Data[currIdx++]; a = Data[currIdx++];
-                                    parsePalOrder(ref fst, ref a, ref thd, ref scn, out fullpal[palNo]);
-                                    break;
-                                default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
-                            }
+                            fst = Next(out atEnd);
+                            if (atEnd) break;
+                            scn = Next(out atEnd);
+                            thd = Next(out atEnd);
+                            fth = Next(out atEnd);
                         }
-                        //parsePalOrder(ref fst, ref scn, ref thd, ref a, out fullpal[palNo]);
+                        switch (AlphaSettings.Location)
+                        {
+                            case AlphaLocation.START:
+                                parsePalOrder(ref scn, ref thd, ref fth, ref fst, out fullpal[palNo]);
+                                break;
+                            case AlphaLocation.END:
+                                parsePalOrder(ref fst, ref scn, ref thd, ref fth, out fullpal[palNo]);
+                                break;
+                            default: throw new Exception("Unkown exception: invalid AlphaLocation " + AlphaSettings.Location.ToString());
+                        }
                     }
                     break;
                 #endregion

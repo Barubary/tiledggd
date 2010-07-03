@@ -710,14 +710,14 @@ namespace TiledGGD
             // palMode_LinearTSMI
             // 
             this.palMode_LinearTSMI.Name = "palMode_LinearTSMI";
-            this.palMode_LinearTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palMode_LinearTSMI.Size = new System.Drawing.Size(106, 22);
             this.palMode_LinearTSMI.Text = "Linear";
             this.palMode_LinearTSMI.Click += new System.EventHandler(this.paletteModeTSMI_CLick);
             // 
             // palMode_TiledTSMI
             // 
             this.palMode_TiledTSMI.Name = "palMode_TiledTSMI";
-            this.palMode_TiledTSMI.Size = new System.Drawing.Size(152, 22);
+            this.palMode_TiledTSMI.Size = new System.Drawing.Size(106, 22);
             this.palMode_TiledTSMI.Text = "Tiled";
             this.palMode_TiledTSMI.Click += new System.EventHandler(this.paletteModeTSMI_CLick);
             // 
@@ -906,6 +906,7 @@ namespace TiledGGD
             // DataPanel
             // 
             this.DataPanel.AllowDrop = true;
+            this.DataPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DataPanel.Controls.Add(this.listBox2);
             this.DataPanel.Controls.Add(this.listBox1);
             this.DataPanel.Location = new System.Drawing.Point(516, 27);
@@ -940,6 +941,9 @@ namespace TiledGGD
             // GraphicsPanel
             // 
             this.GraphicsPanel.AllowDrop = true;
+            this.GraphicsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.GraphicsPanel.AutoScroll = true;
             this.GraphicsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GraphicsPanel.Location = new System.Drawing.Point(0, 27);
@@ -953,6 +957,7 @@ namespace TiledGGD
             // PalettePanel
             // 
             this.PalettePanel.AllowDrop = true;
+            this.PalettePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PalettePanel.Location = new System.Drawing.Point(516, 356);
             this.PalettePanel.Name = "PalettePanel";
             this.PalettePanel.Size = new System.Drawing.Size(256, 256);
@@ -989,7 +994,6 @@ namespace TiledGGD
             this.Name = "MainWindow";
             this.Text = "TiledGGD";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
-            this.ResizeEnd += new System.EventHandler(this.ReconfigurePanels);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.DataPanel.ResumeLayout(false);

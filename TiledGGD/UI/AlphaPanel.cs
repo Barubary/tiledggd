@@ -57,7 +57,7 @@ namespace TiledGGD.UI
                 loc = AlphaLocation.END;
             else
             {
-                MainWindow.showError("Unknown Alpha location");
+                MainWindow.ShowError("Unknown Alpha location");
                 return;
             }
 
@@ -65,12 +65,12 @@ namespace TiledGGD.UI
             byte min, max;
             if (!byte.TryParse(min_box.Text, out min) || !byte.TryParse(max_box.Text, out max))
             {
-                MainWindow.showError("Minimum and maximum values are only valid in the range [0,255].");
+                MainWindow.ShowError("Minimum and maximum values are only valid in the range [0,255].");
                 return;
             }
             if (min > max)
             {
-                MainWindow.showError("Minimum value cannot be larger than maximum value");
+                MainWindow.ShowError("Minimum value cannot be larger than maximum value");
                 return;
             }
             bool stretch = strech_enable.Checked;

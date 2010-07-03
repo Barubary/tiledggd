@@ -34,7 +34,7 @@ namespace TiledGGD.BindingTools
             }
             catch (XmlException e)
             {
-                MainWindow.showError("Could not load the XML file " + filename + ", possibly because it is invalid.\n"
+                MainWindow.ShowError("Could not load the XML file " + filename + ", possibly because it is invalid.\n"
                 + "Message & Stack trace:\n"
                 + e.Message + "\n"
                 + e.StackTrace);

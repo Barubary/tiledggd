@@ -120,19 +120,19 @@ namespace TiledGGD.BindingTools
             {
                 case "GRAPHICS": this.BindingType = BindingType.GRAPHICS; break;
                 case "PALETTE": this.BindingType = BindingType.PALETTE; break;
-                default: MainWindow.showError("Invalid Binding: " + nm + " has an invalid value for BindingType: " + btype); return;
+                default: MainWindow.ShowError("Invalid Binding: " + nm + " has an invalid value for BindingType: " + btype); return;
             }
             this.Target = tval;
             switch (ttype.ToUpper())
             {
                 case "METHOD": this.TargetType = TargetType.METHOD; break;
                 case "LUA": this.TargetType = TargetType.LUA; break;
-                default: MainWindow.showError("Invalid Binding: " + nm + " has an invalid value for TargetType: " + ttype); return;
+                default: MainWindow.ShowError("Invalid Binding: " + nm + " has an invalid value for TargetType: " + ttype); return;
             }
             XmlNode fsetnode = xmlnode.SelectSingleNode("FilterSet");
             if (fsetnode == null)
             {
-                MainWindow.showError("Invalid Binding: " + nm + " does not have a FilterSet.");
+                MainWindow.ShowError("Invalid Binding: " + nm + " does not have a FilterSet.");
                 return;
             }
             this.filterSet = new FilterSet(fsetnode);
@@ -175,18 +175,18 @@ namespace TiledGGD.BindingTools
                             bd = MainWindow.GraphData; break;
                         case BindingType.PALETTE:
                             bd = MainWindow.PalData; break;
-                        default: MainWindow.showError("Invalid binding: "+this.Name+" has an invalid BindingType value: "+this.bindingType.ToString()); return this.loadNothing;
+                        default: MainWindow.ShowError("Invalid binding: "+this.Name+" has an invalid BindingType value: "+this.bindingType.ToString()); return this.loadNothing;
                     }
                     MethodInfo mi;
                     try { mi = bd.GetType().GetMethod(this.Target, new Type[] { typeof(String) }); }
-                    catch { MainWindow.showError("Invalid Binding: no such method " + this.Target); return this.loadNothing; }
+                    catch { MainWindow.ShowError("Invalid Binding: no such method " + this.Target); return this.loadNothing; }
                     try
                     {
                         return FileProcessor.CreateDelegate(typeof(FileProcessor), bd, mi, true) as FileProcessor;
                     }
                     catch(Exception e)
                     {
-                        MainWindow.showError("Something went wrong in Binding.GetTarget; " + e.Message);
+                        MainWindow.ShowError("Something went wrong in Binding.GetTarget; " + e.Message);
                         return this.loadNothing;
                     }
                 case TargetType.LUA:
@@ -197,7 +197,7 @@ namespace TiledGGD.BindingTools
                     return new FileProcessor(tool.loadFile);
 
                 default:
-                    MainWindow.showError("Invalid binding: "+this.Name+" has as invalid TargetType: "+this.TargetType.ToString());
+                    MainWindow.ShowError("Invalid binding: "+this.Name+" has as invalid TargetType: "+this.TargetType.ToString());
                     return this.loadNothing;
             }
         }

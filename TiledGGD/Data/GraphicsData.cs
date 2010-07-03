@@ -346,7 +346,7 @@ namespace TiledGGD
             int val = br.ReadInt32();
             if (val != 0x0101FEFF && val != 0x0100FEFF)
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCGR file.\n It does not have the magic constant 0x0101FEFF or 0100FEFF at 0x04");
+                MainWindow.ShowError("Given file " + filename + " is not a valid NCGR file.\n It does not have the magic constant 0x0101FEFF or 0100FEFF at 0x04");
                 //return;
             }
             int fileSize = br.ReadInt32();
@@ -354,13 +354,13 @@ namespace TiledGGD
             int nSections = br.ReadInt16();
             if (nSections > 2 || nSections == 0)
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The amount of sections is invalid (" + nSections + ")");
+                MainWindow.ShowError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The amount of sections is invalid (" + nSections + ")");
                 return;
             }
             // should now be at CHAR section
             if (br.ReadChar() != 'R' || br.ReadChar() != 'A' || br.ReadChar() != 'H' || br.ReadChar() != 'C')
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The CHAR section does not follow the NCGR header");
+                MainWindow.ShowError("Given file " + filename + " is not a valid NCGR file or of an unsupported type.\n The CHAR section does not follow the NCGR header");
                 return;
             }
 
@@ -376,7 +376,7 @@ namespace TiledGGD
                 case 3: GraphFormat = GraphicsFormat.FORMAT_4BPP; break;
                 case 2: GraphFormat = GraphicsFormat.FORMAT_2BPP; break;
                 case 1: GraphFormat = GraphicsFormat.FORMAT_1BPP; break;
-                default: MainWindow.showError("Unknown GraphicsFormat in NCGR file: " + ptype); break;
+                default: MainWindow.ShowError("Unknown GraphicsFormat in NCGR file: " + ptype); break;
             }
             Tiled = br.ReadInt32() == 0;
             if (Tiled)
@@ -393,13 +393,13 @@ namespace TiledGGD
             int t = br.ReadInt32();
 #if DEBUG
             if (t > 1)
-                MainWindow.showError("Padding in NCGR>CHAR is not padding");
+                MainWindow.ShowError("Padding in NCGR>CHAR is not padding");
 #endif
             int imLength = br.ReadInt32();
             
 #if DEBUG
             if (br.ReadInt32() != 0x18)
-                MainWindow.showError("Value at end of CHAR header isn't 0x18");
+                MainWindow.ShowError("Value at end of CHAR header isn't 0x18");
 #else
             br.ReadInt32();
 #endif
@@ -451,7 +451,7 @@ namespace TiledGGD
                 case 5: nBytesForIm *= 2; break;
                 case 6: nBytesForIm *= 1; imbpp = 4; break;
                 case 7: nBytesForIm *= 4; break;
-                default: MainWindow.showError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
+                default: MainWindow.ShowError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
             }
 
             this.Data = br.ReadBytes(nBytesForIm);

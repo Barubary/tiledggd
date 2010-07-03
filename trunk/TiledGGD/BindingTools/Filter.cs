@@ -55,7 +55,7 @@ namespace TiledGGD.BindingTools
         {
             if (filterNode == null || !filterNode.Name.Equals("Filter"))
             {
-                MainWindow.showError("Unable to make a Filter out of an empty or non-Filter XmlNode");
+                MainWindow.ShowError("Unable to make a Filter out of an empty or non-Filter XmlNode");
                 return;
             }
             string typeStr = filterNode.Attributes["type"].Value;
@@ -68,11 +68,11 @@ namespace TiledGGD.BindingTools
                 case "FILENAME":
                     this.FilterType = FilterType.FILENAME; break;
                 default:
-                    MainWindow.showError("Invalid Filter: invalid FilterType " + typeStr); return;
+                    MainWindow.ShowError("Invalid Filter: invalid FilterType " + typeStr); return;
             }
             this.Value = valueStr.Trim();
             if (this.Value.Length == 0)
-                MainWindow.showError("Possible improper filter: empty value. This filter will pass anything");
+                MainWindow.ShowError("Possible improper filter: empty value. This filter will pass anything");
 
             this.IsValid = true;
         }

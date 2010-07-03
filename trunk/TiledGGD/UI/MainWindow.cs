@@ -23,8 +23,6 @@ namespace TiledGGD
         private static BindingSet bindingSet;
         internal static BindingSet BindingSet { get { return bindingSet; } }
 
-        private Size previousSize;
-
         #region constructor
         public MainWindow()
         {
@@ -36,8 +34,6 @@ namespace TiledGGD
             paletteData = new PaletteData(PaletteFormat.FORMAT_2BPP, PaletteOrder.BGR);
             graphicsData = new GraphicsData(paletteData);           
 
-            this.previousSize = this.Size;
-
             this.Icon = new Icon(this.GetType().Assembly.GetManifestResourceStream("TiledGGD.program_icon.ico"));
 
             updateMenu();
@@ -46,23 +42,6 @@ namespace TiledGGD
         static MainWindow()
         {
             bindingSet = new BindingSet(); // load the default binding set
-        }
-        #endregion
-
-        #region method: ReconfigurePanels
-        /// <summary>
-        /// resizes and relocates the panels when the window is resized
-        /// </summary>
-        void ReconfigurePanels(object sender, EventArgs e)
-        {
-            int dw = this.Size.Width - this.previousSize.Width;
-            int dh = this.Size.Height - this.previousSize.Height;
-
-            this.PalettePanel.Location = new Point(this.PalettePanel.Location.X + dw, this.PalettePanel.Location.Y);
-            this.DataPanel.Location = new Point(this.DataPanel.Location.X + dw, this.DataPanel.Location.Y);
-            this.GraphicsPanel.Size = new Size(this.GraphicsPanel.Size.Width + dw, this.GraphicsPanel.Size.Height + dh);
-
-            this.previousSize = this.Size;
         }
         #endregion
 
@@ -402,9 +381,9 @@ namespace TiledGGD
         /// Shows an error message
         /// </summary>
         /// <param name="p">The string to show as an error</param>
-        internal static void showError(string p)
+        internal static void ShowError(string p)
         {
-            MessageBox.Show(p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            MessageBox.Show(mainWindow, p, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
         /// <summary>
         /// Shows a warning message
@@ -412,7 +391,7 @@ namespace TiledGGD
         /// <param name="w">The string to show as a warning</param>
         internal static void ShowWarning(string w)
         {
-            MessageBox.Show(w, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show(mainWindow, w, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
 
         /// <summary>
@@ -854,7 +833,15 @@ namespace TiledGGD
                 string flnm = sfd.FileName;
                 if (!flnm.ToLower().EndsWith(".png"))
                     flnm += ".png";
-                graphicsData.toFullBitmap().Save(flnm, System.Drawing.Imaging.ImageFormat.Png);
+
+                try
+                {
+                    graphicsData.toFullBitmap().Save(flnm, System.Drawing.Imaging.ImageFormat.Png);
+                }
+                catch (System.Runtime.InteropServices.ExternalException)
+                {
+                    ShowError("Unable to save all graphics, possibly\nbecause the file is too large.");
+                }
             }
         }
         #endregion
@@ -885,6 +872,7 @@ namespace TiledGGD
 
 
         #endregion
+
 
     }
 }

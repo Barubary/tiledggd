@@ -49,7 +49,7 @@ namespace TiledGGD.BindingTools
         {
             if (filtersetnode == null|| filtersetnode.Name != "FilterSet")
             {
-                MainWindow.showError("Unable to make a Filterset out of an empty or non-FilterSet XmlNode");
+                MainWindow.ShowError("Unable to make a Filterset out of an empty or non-FilterSet XmlNode");
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace TiledGGD.BindingTools
                 case "AND": this.FilterMethod = FilterMethod.AND; break;
                 case "XOR": this.FilterMethod = FilterMethod.XOR; break;
                 case "NAND": this.FilterMethod = FilterMethod.NAND; break;
-                default: MainWindow.showError("Invalid FilterSet: invalid FilterMethod " + mstr); return;
+                default: MainWindow.ShowError("Invalid FilterSet: invalid FilterMethod " + mstr); return;
             }
             foreach (XmlNode fnode in filtersetnode.SelectNodes("Filter"))
                 this.filters.Add(new Filter(fnode));
@@ -71,7 +71,7 @@ namespace TiledGGD.BindingTools
                 this.filters.Add(new FilterSet(fsnode));
 
             if (filters.Count == 0)
-                MainWindow.showError("Invalid FilterSet: a FilterSet should have at least one sub-Filter or sub-filterSet. The FilterSet will now pass anything.");
+                MainWindow.ShowError("Invalid FilterSet: a FilterSet should have at least one sub-Filter or sub-filterSet. The FilterSet will now pass anything.");
 
             this.IsValid = true;
         }

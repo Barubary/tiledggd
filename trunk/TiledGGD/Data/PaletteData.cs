@@ -160,7 +160,7 @@ namespace TiledGGD
             set
             {
                 if (16 % value.X != 0 || 16 % value.Y != 0)
-                    MainWindow.showError("16 must be a multiple of the width and height of a palette tile.");
+                    MainWindow.ShowError("16 must be a multiple of the width and height of a palette tile.");
                 else
                     tilesize = value;
             }
@@ -242,7 +242,7 @@ namespace TiledGGD
 
             if (br.ReadInt32() != 0x0100FEFF)
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCLR file.\n It does not have the magic constant 0x0100FEFF at 0x04");
+                MainWindow.ShowError("Given file " + filename + " is not a valid NCLR file.\n It does not have the magic constant 0x0100FEFF at 0x04");
                 br.Close();
                 return;
             }
@@ -254,7 +254,7 @@ namespace TiledGGD
             // should now be at PLTT section
             if (br.ReadChar() != 'T' || br.ReadChar() != 'T' || br.ReadChar() != 'L' || br.ReadChar() != 'P')
             {
-                MainWindow.showError("Given file " + filename + " is not a valid NCLR file or of an unsupported type.\n The PLTT section does not follow the NCLR header");
+                MainWindow.ShowError("Given file " + filename + " is not a valid NCLR file or of an unsupported type.\n The PLTT section does not follow the NCLR header");
                 br.Close();
                 return;
             }
@@ -273,7 +273,7 @@ namespace TiledGGD
             {
                 case 3:
                 case 4: PalFormat = PaletteFormat.FORMAT_2BPP; break;
-                default: MainWindow.showError("Unknown palette format " + pltype); break;
+                default: MainWindow.ShowError("Unknown palette format " + pltype); break;
             }
 
             br.Close();
@@ -323,7 +323,7 @@ namespace TiledGGD
                 case 5: nBytesForIm *= 2; nBytesForPal = 0; break;
                 case 6: nBytesForIm *= 1; imbpp = 4; nBytesForPal *= 256; break;
                 case 7: nBytesForIm *= 4; nBytesForPal = 0; break;
-                default: MainWindow.showError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
+                default: MainWindow.ShowError("Possibly invalid GFNT file: unknown GraphicsFormat " + imbpp); br.Close(); return;
             }
 
             br.BaseStream.Seek(nBytesForIm, SeekOrigin.Current);
@@ -939,7 +939,7 @@ namespace TiledGGD
             set
             {
                 if (value > max)
-                    MainWindow.showError("Alpha minimum cannot be larger than alpha maximum");
+                    MainWindow.ShowError("Alpha minimum cannot be larger than alpha maximum");
                 else if (min != value)
                 {
                     min = value;
@@ -964,7 +964,7 @@ namespace TiledGGD
             set
             {
                 if (value < min)
-                    MainWindow.showError("Alpha maximum cannot be smaller than alpha minimum");
+                    MainWindow.ShowError("Alpha maximum cannot be smaller than alpha minimum");
                 else if (max != value)
                 {
                     max = value;

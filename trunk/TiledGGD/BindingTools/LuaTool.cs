@@ -113,7 +113,7 @@ namespace TiledGGD.BindingTools
                 // if the variable invalid has been set, display it, and reset the data
                 if (interp["invalid"] != null)
                 {
-                    MainWindow.showError(interp.GetString("invalid"));
+                    MainWindow.ShowError(interp.GetString("invalid"));
                     this.bData.Data = new byte[0];
                 }
                 else
@@ -127,14 +127,14 @@ namespace TiledGGD.BindingTools
                         {
                             case BindingType.GRAPHICS:
                                 if (format < 1 || format > 7)
-                                    MainWindow.showError("Plugin warning: the format of the graphics should range from 1 up to and including 7.\n"
+                                    MainWindow.ShowError("Plugin warning: the format of the graphics should range from 1 up to and including 7.\n"
                                                               + "Value " + format + " is ignored");
                                 else
                                     GraphicsData.GraphFormat = (GraphicsFormat)format;
                                 break;
                             case BindingType.PALETTE:
                                 if (format < 5 || format > 7)
-                                    MainWindow.showError("Plugin warning: the format of the palette should range from 5 up to and including 7.\n"
+                                    MainWindow.ShowError("Plugin warning: the format of the palette should range from 5 up to and including 7.\n"
                                                               + "Value " + format + " is ignored");
                                 else
                                     PaletteData.PalFormat = (PaletteFormat)format;
@@ -150,7 +150,7 @@ namespace TiledGGD.BindingTools
                         {
                             string s = ((string)interp["order"]).ToUpper();
                             if (s.Length != 3 || !s.Contains("R") || !s.Contains("G") || !s.Contains("B"))
-                                MainWindow.showError("Plugin warning: the colour order is invalid.\n"
+                                MainWindow.ShowError("Plugin warning: the colour order is invalid.\n"
                                                      + "Value " + s + " is ignored.");
                             else
                                 PaletteData.PalOrder = (PaletteOrder)Enum.Parse(typeof(PaletteOrder), s);
@@ -245,7 +245,7 @@ namespace TiledGGD.BindingTools
                         }
                         catch (Exception)
                         {
-                            MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                            MainWindow.ShowError("Plugin warning: invalid tile size provided.\nValue is ignored.");
                             switch (this.parentBinding.BindingType)
                             {
                                 case BindingType.GRAPHICS: GraphicsData.TileSize = oldSize; break;
@@ -266,7 +266,7 @@ namespace TiledGGD.BindingTools
                                 try { GraphicsData.Tiled = (bool)interp["tiled"]; }
                                 catch (Exception)
                                 {
-                                    MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                                    MainWindow.ShowError("Plugin warning: invalid tile size provided.\nValue is ignored.");
                                     GraphicsData.Tiled = tl;
                                 }
                                 break;
@@ -275,7 +275,7 @@ namespace TiledGGD.BindingTools
                                 try { PaletteData.Tiled = (bool)interp["tiled"]; }
                                 catch (Exception)
                                 {
-                                    MainWindow.showError("Plugin warning: invalid tile size provided.\nValue is ignored.");
+                                    MainWindow.ShowError("Plugin warning: invalid tile size provided.\nValue is ignored.");
                                     PaletteData.Tiled = tl;
                                 }
                                 break;
@@ -298,7 +298,7 @@ namespace TiledGGD.BindingTools
                             catch (Exception)
                             {
                                 GraphicsData.Width = origW;
-                                MainWindow.showError("Plugin warning: invalid width.\n"
+                                MainWindow.ShowError("Plugin warning: invalid width.\n"
                                                      + "Value " + interp.GetString("width") + " is ignored.");
                             }
                         }
@@ -316,7 +316,7 @@ namespace TiledGGD.BindingTools
                             catch (Exception)
                             {
                                 GraphicsData.Height = origH;
-                                MainWindow.showError("Plugin warning: invalid height.\n"
+                                MainWindow.ShowError("Plugin warning: invalid height.\n"
                                                      + "Value " + interp.GetString("height") + " is ignored.");
                             }
                         }
@@ -332,7 +332,7 @@ namespace TiledGGD.BindingTools
             }
             catch (Exception e)
             {
-                MainWindow.showError("Plugin error: \n" + e.Message);
+                MainWindow.ShowError("Plugin error: \n" + e.Message);
             }
 
             // close and delete the interpreter, and delete the data
@@ -563,7 +563,7 @@ namespace TiledGGD.BindingTools
             this.bData.Data = newdata;
 
             if (newdata.Length < length)
-                MainWindow.showError(String.Format("Plugin warning: no more data to read.\n"
+                MainWindow.ShowError(String.Format("Plugin warning: no more data to read.\n"
                                                    + "Desired data length: 0x{0:x}\n"
                                                    + "Actual length: 0x{1:x}", 
                                                    (int)length, newdata.Length));
@@ -618,7 +618,7 @@ namespace TiledGGD.BindingTools
             this.bData.Data = completeData;
 
             if (newdata.Length < length)
-                MainWindow.showError(String.Format("Plugin warning: no more data to read.\n"
+                MainWindow.ShowError(String.Format("Plugin warning: no more data to read.\n"
                                                    + "Desired data length: 0x{0:x}\n"
                                                    + "Actual length: 0x{1:x}",
                                                    (int)length, newdata.Length));

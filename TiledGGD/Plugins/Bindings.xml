@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE Bindings[
 	<!ELEMENT Bindings (Binding*)>
 	<!ELEMENT Binding (Name, FilterSet, Target)>
@@ -55,7 +55,7 @@
 			<Filter type="MAGIC">CG4</Filter>
 			<Filter type="MAGIC">CG8</Filter>
 		</FilterSet>
-		<Target type="LUA">Graphics_CG48.lua</Target>
+		<Target type="LUA">Graphics_CG84.lua</Target>
 	</Binding>
 	<Binding type="PALETTE">
 		<Name>CG4/CG8 file (Summon Night series)</Name>
@@ -63,7 +63,7 @@
 			<Filter type="MAGIC">CG4</Filter>
 			<Filter type="MAGIC">CG8</Filter>
 		</FilterSet>
-		<Target type="LUA">Palette_CG48.lua</Target>
+		<Target type="LUA">Palette_CG84.lua</Target>
 	</Binding>
 	<Binding type="GRAPHICS">
 		<Name>Ryuusei no Rockman file</Name>
